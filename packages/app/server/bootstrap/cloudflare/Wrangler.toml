@@ -1,0 +1,25 @@
+name = "celestia-site"
+main = "build/worker/shim.mjs"
+compatibility_date = "2024-07-01"
+account_id = "00000000000000000000000000000000"
+
+[[d1_databases]]
+binding = "site"
+database_name = "site"
+database_id = "00000000-0000-0000-0000-000000000000"
+
+[[kv_namespaces]]
+binding = "token-expired"
+id = "00000000000000000000000000000000"
+
+[[kv_namespaces]]
+binding = "global-config"
+id = "00000000000000000000000000000000"
+
+[[r2_buckets]]
+binding = 'static'
+bucket_name = 'static'
+
+[build]
+# command = "cargo install -q worker-build && worker-build --release"
+command = "worker-build --release"

@@ -1,0 +1,31 @@
+[package]
+name = "_server_bootstrap_cloudflare"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+_server_routes = { path = "../../routes", features = ["cloudflare"] }
+_server_functions = { path = "../../functions", features = ["cloudflare"] }
+_server_database = { path = "../../database" }
+_utils = { path = "../../../../lib/utils" }
+
+tairitsu-database = { workspace = true, features = ["cloudflare"] }
+
+anyhow = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+once_cell = { workspace = true }
+async-trait = { workspace = true }
+
+worker = { workspace = true }
+worker-macros = { workspace = true }
+axum = { workspace = true }
+tower-service = "^0.3"
+
+console_error_panic_hook = { version = "^0.1" }
+wasm-bindgen = { workspace = true }
+wasm-bindgen-futures = { workspace = true }
+getrandom = { version = "*", features = ["js"] }

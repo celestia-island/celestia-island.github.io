@@ -1,0 +1,40 @@
+[package]
+name = "_server_bootstrap_docker"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+_server_routes = { path = "../../routes", features = ["native"] }
+_server_functions = { path = "../../functions", features = ["native"] }
+_utils = { path = "../../../../lib/utils" }
+
+hikari-boot = { workspace = true }
+tairitsu-utils = { workspace = true }
+
+anyhow = { workspace = true }
+async-trait = { workspace = true }
+derive_more = { workspace = true }
+once_cell = { workspace = true }
+
+base64 = { workspace = true }
+bytes = { workspace = true }
+percent-encoding = { workspace = true }
+chrono = { workspace = true }
+futures = { workspace = true }
+
+serde = { workspace = true }
+serde_json = { workspace = true }
+strum = { workspace = true }
+uuid = { workspace = true }
+
+log = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+tracing-appender = { workspace = true }
+
+tokio = { workspace = true }
+tower = { version = "^0.4", features = ["full"] }
+
+axum = { workspace = true, features = ["default", "query", "multipart"] }
+sea-orm = { workspace = true }
+yew = { workspace = true }

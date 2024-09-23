@@ -1,0 +1,51 @@
+[package]
+name = "_client_view"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+_types = { path = "../../../lib/types" }
+_utils = { path = "../../../lib/utils" }
+_resources = { path = "../../../lib/resources" }
+_client_functions = { path = "../functions" }
+
+hikari-components = { workspace = true }
+hikari-boot = { workspace = true }
+tairitsu-utils = { workspace = true }
+
+anyhow = { workspace = true }
+async-trait = { workspace = true }
+derive_more = { workspace = true }
+once_cell = { workspace = true }
+
+base64 = { workspace = true }
+bytes = { workspace = true }
+percent-encoding = { workspace = true }
+chrono = { workspace = true }
+futures = { workspace = true }
+
+serde = { workspace = true }
+serde_json = { workspace = true }
+strum = { workspace = true }
+uuid = { workspace = true }
+
+log = { workspace = true }
+console_log = { workspace = true }
+
+web-sys = { workspace = true }
+js-sys = { workspace = true }
+wasm-bindgen = { workspace = true }
+wasm-bindgen-futures = { workspace = true }
+serde-wasm-bindgen = { workspace = true }
+gloo = { workspace = true }
+
+stylist = { workspace = true }
+yew = { workspace = true }
+yew-router = { workspace = true }
+reqwest = { workspace = true }
+
+[features]
+default = []

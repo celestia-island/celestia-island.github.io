@@ -1,0 +1,100 @@
+[config]
+default_to_workspace = false
+skip_core_tasks = true
+
+[tasks.boot]
+script = '''
+#!@duckscript
+
+cm_run_task _boot_${1}
+'''
+
+[tasks._boot_]
+private = true
+extend = "_boot_cloudflare"
+
+[tasks._boot_cloudflare]
+private = true
+script = '''
+#!@duckscript
+
+exec cargo build -r --target wasm32-unknown-unknown -p _client_bootstrap_web
+exec wasm-bindgen --out-dir ./target/wasm32-html --out-name app --target no-modules --no-typescript --no-modules-global wasm_vendor_entry ./target/wasm32-unknown-unknown/release/_client_bootstrap_web.wasm
+
+cd ./packages/app/server/bootstrap/cloudflare
+if is_windows
+    exec pwsh -Command npx wrangler r2 object put static/app.wasm --local --file ../../../../../target/wasm32-html/app_bg.wasm
+    exec pwsh -Command npx wrangler r2 object put static/app.js --local --file ../../../../../target/wasm32-html/app.js
+    exec pwsh -Command npx wrangler dev
+else
+    exec npx wrangler r2 object put static/app.wasm --local --file ../../../../../target/wasm32-html/app_bg.wasm
+    exec npx wrangler r2 object put static/app.js --local --file ../../../../../target/wasm32-html/app.js
+    exec npx wrangler dev
+end
+'''
+
+[tasks._boot_docker]
+private = true
+script = '''
+#!@duckscript
+
+exec cargo build -r --target wasm32-unknown-unknown -p _client_bootstrap_web
+exec wasm-bindgen --out-dir ./target/wasm32-html --out-name app --target no-modules --no-typescript --no-modules-global wasm_vendor_entry ./target/wasm32-unknown-unknown/release/_client_bootstrap_web.wasm
+
+cp ./target/wasm32-html/app_bg.wasm ./target/cache/static-resources/app.wasm
+cp ./target/wasm32-html/app.js ./target/cache/static-resources/app.js
+
+exec cargo run -p _server_bootstrap_docker
+'''
+
+[tasks.configure]
+script = '''
+#!@duckscript
+
+cm_run_task _configure_${1}_${2}
+'''
+
+[tasks.publish]
+script = '''
+#!@duckscript
+
+cm_run_task _publish_${1}
+'''
+
+[tasks._publish_]
+private = true
+extend = "_publish_cloudflare"
+
+[tasks._publish_cloudflare]
+private = true
+script = '''
+#!@duckscript
+
+exec cargo build -r --target wasm32-unknown-unknown -p _client_bootstrap_web
+exec wasm-bindgen --out-dir ./target/wasm32-html --out-name app --target no-modules --no-typescript --no-modules-global wasm_vendor_entry ./target/wasm32-unknown-unknown/release/_client_bootstrap_web.wasm
+
+cd ./packages/app/server/bootstrap/cloudflare
+if is_windows
+    exec pwsh -Command npx wrangler r2 object put static/app.wasm --file ../../../../../target/wasm32-html/app_bg.wasm
+    exec pwsh -Command npx wrangler r2 object put static/app.js --file ../../../../../target/wasm32-html/app.js
+    exec pwsh -Command npx wrangler deploy
+else
+    exec npx wrangler r2 object put static/app.wasm --file ../../../../../target/wasm32-html/app_bg.wasm
+    exec npx wrangler r2 object put static/app.js --file ../../../../../target/wasm32-html/app.js
+    exec npx wrangler deploy
+end
+'''
+
+[tasks.clean]
+script = '''
+#!@duckscript
+
+exec cargo clean
+
+rm -r ./packages/app/server/bootstrap/cloudflare/.wrangler
+rm -r ./packages/app/server/bootstrap/cloudflare/build
+rm -r ./packages/app/server/bootstrap/cloudflare/dist
+rm -r ./packages/app/server/bootstrap/cloudflare/node_modules
+
+rm -r ./cache
+'''

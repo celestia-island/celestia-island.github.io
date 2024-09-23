@@ -1,0 +1,58 @@
+[package]
+name = "_utils"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+_types = { path = "../types" }
+
+hikari-boot = { workspace = true }
+
+anyhow = { workspace = true }
+async-trait = { workspace = true }
+derive_more = { workspace = true }
+once_cell = { workspace = true }
+cfg-if = { workspace = true }
+
+base64 = { workspace = true }
+bytes = { workspace = true }
+percent-encoding = { workspace = true }
+chrono = { workspace = true }
+
+serde = { workspace = true }
+serde_json = { workspace = true }
+toml = { workspace = true }
+postcard = { workspace = true }
+strum = { workspace = true }
+uuid = { workspace = true }
+
+log = { workspace = true }
+futures = { workspace = true }
+oneshot = { workspace = true }
+env_logger = { workspace = true }
+
+web-sys = { workspace = true }
+js-sys = { workspace = true }
+wasm-bindgen = { workspace = true }
+wasm-bindgen-futures = { workspace = true }
+gloo = { workspace = true }
+serde-wasm-bindgen = { workspace = true }
+
+yew = { workspace = true }
+yew-router = { workspace = true }
+reqwest = { workspace = true }
+bcrypt = "^0.15"
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+tokio = { workspace = true }
+tauri = { workspace = true }
+
+[build-dependencies]
+anyhow = { workspace = true }
+
+serde = { workspace = true }
+postcard = { workspace = true }
+strum = { workspace = true }
+
+[features]
+native = []

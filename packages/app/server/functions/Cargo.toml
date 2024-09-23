@@ -1,0 +1,49 @@
+[package]
+name = "_server_functions"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+_server_database = { path = "../database" }
+_types = { path = "../../../lib/types" }
+_utils = { path = "../../../lib/utils" }
+
+tairitsu-database = { workspace = true }
+
+anyhow = { workspace = true }
+async-trait = { workspace = true }
+derive_more = { workspace = true }
+once_cell = { workspace = true }
+cfg-if = { workspace = true }
+
+base64 = { workspace = true }
+bytes = { workspace = true }
+percent-encoding = { workspace = true }
+chrono = { workspace = true }
+futures = { workspace = true }
+oneshot = { workspace = true }
+
+serde = { workspace = true }
+serde_json = { workspace = true }
+strum = { workspace = true }
+uuid = { workspace = true }
+
+axum = { workspace = true }
+sea-orm = { workspace = true }
+worker = { workspace = true }
+
+reqwest = { workspace = true }
+jsonwebtoken = "^9"
+sha3 = "^0.10"
+sqids = "^0.4"
+fancy-regex = "^0.13"
+
+[features]
+default = []
+
+cloudflare = ["tairitsu-database/cloudflare"]
+native = ["tairitsu-database/native"]
+wasi = ["tairitsu-database/wasi"]
