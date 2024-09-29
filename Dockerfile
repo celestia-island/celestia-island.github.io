@@ -33,7 +33,7 @@ WORKDIR /home
 RUN cargo build --offline --package _server_bootstrap_docker --release
 
 # Stage 2 for server build, used to integrate the build result of client and generate the final image
-FROM rust:latest AS stage-server-build2
+FROM ubuntu:24.10 AS stage-server-build2
 
 COPY --from=stage-client-build2 /home/target/wasm32-html/app.js /home/target/cache/static-resources/app.js
 COPY --from=stage-client-build2 /home/target/wasm32-html/app_bg.wasm /home/target/cache/static-resources/app.wasm
