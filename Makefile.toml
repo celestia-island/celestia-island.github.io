@@ -11,7 +11,7 @@ cm_run_task _boot_${1}
 
 [tasks._boot_]
 private = true
-extend = "_boot_cloudflare"
+extend = "_boot_local"
 
 [tasks._boot_cloudflare]
 private = true
@@ -34,6 +34,14 @@ end
 '''
 
 [tasks._boot_docker]
+script = '''
+#!@duckscript
+
+exec docker build -t celestia.world-boot .
+exec docker run -p 8787:8787 -d celestia.world-boot
+'''
+
+[tasks._boot_local]
 private = true
 script = '''
 #!@duckscript
@@ -41,6 +49,7 @@ script = '''
 exec cargo build -r --target wasm32-unknown-unknown -p _client_bootstrap_web
 exec wasm-bindgen --out-dir ./target/wasm32-html --out-name app --target no-modules --no-typescript --no-modules-global wasm_vendor_entry ./target/wasm32-unknown-unknown/release/_client_bootstrap_web.wasm
 
+mkdir -p ./target/cache/static-resources
 cp ./target/wasm32-html/app_bg.wasm ./target/cache/static-resources/app.wasm
 cp ./target/wasm32-html/app.js ./target/cache/static-resources/app.js
 
@@ -63,26 +72,15 @@ cm_run_task _publish_${1}
 
 [tasks._publish_]
 private = true
-extend = "_publish_cloudflare"
+extend = "_publish_docker"
 
-[tasks._publish_cloudflare]
-private = true
+[tasks._publish_docker]
 script = '''
 #!@duckscript
 
-exec cargo build -r --target wasm32-unknown-unknown -p _client_bootstrap_web
-exec wasm-bindgen --out-dir ./target/wasm32-html --out-name app --target no-modules --no-typescript --no-modules-global wasm_vendor_entry ./target/wasm32-unknown-unknown/release/_client_bootstrap_web.wasm
-
-cd ./packages/app/server/bootstrap/cloudflare
-if is_windows
-    exec pwsh -Command npx wrangler r2 object put static/app.wasm --file ../../../../../target/wasm32-html/app_bg.wasm
-    exec pwsh -Command npx wrangler r2 object put static/app.js --file ../../../../../target/wasm32-html/app.js
-    exec pwsh -Command npx wrangler deploy
-else
-    exec npx wrangler r2 object put static/app.wasm --file ../../../../../target/wasm32-html/app_bg.wasm
-    exec npx wrangler r2 object put static/app.js --file ../../../../../target/wasm32-html/app.js
-    exec npx wrangler deploy
-end
+exec docker build -t celestia.world-boot .
+exec docker tag celestia.world-boot:latest registry.cn-shanghai.aliyuncs.com/langyo/celestia.world-boot:latest
+exec docker push registry.cn-shanghai.aliyuncs.com/langyo/celestia.world-boot:latest
 '''
 
 [tasks.clean]

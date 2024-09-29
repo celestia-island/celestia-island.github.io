@@ -2,6 +2,7 @@
 members = [
     "packages/lib/resources",
     "packages/lib/types",
+    "packages/lib/utils",
     "packages/app/client/bootstrap/web",
     "packages/app/client/functions",
     "packages/app/client/view",
@@ -10,7 +11,6 @@ members = [
     "packages/app/server/database",
     "packages/app/server/functions",
     "packages/app/server/routes",
-    "packages/lib/utils",
 ]
 resolver = "2"
 
@@ -48,6 +48,7 @@ chrono = { version = "^0.4", features = ["serde", "unstable-locales"] }
 futures = "^0.3"
 oneshot = "^0.1"
 flume = "^0.11"
+tokio = { version = "^1", features = ["full"] }
 
 serde = { version = "^1", features = ["derive"] }
 serde_json = "^1"
@@ -118,10 +119,6 @@ stylist = { version = "^0.13", features = [
 ] }
 yew = { version = "^0.21", features = ["ssr", "hydration"] }
 yew-router = "^0.18"
-
-tokio = { version = "^1", features = ["full"] }
-tauri = "2.0.0-rc.15"
-tauri-build = { version = "2.0.0-rc.12", features = ["config-toml"] }
 
 sea-orm = { version = "^1", default-features = false, features = [
     "macros",

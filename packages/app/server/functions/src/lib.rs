@@ -89,47 +89,33 @@ cfg_if::cfg_if! {
     } else if #[cfg(feature = "native")]{
         impl RouteEnv {
             pub async fn new(_param: InitRouteEnvParams) -> Result<Self> {
-                let mut pwd = std::env::current_dir().map_err(
-                    |err| anyhow::anyhow!("Failed to get current directory: {}", err)
-                )?;
-                pwd.push("target/cache");
-                std::fs::create_dir_all(&pwd).map_err(
-                    |err| anyhow::anyhow!("Failed to create directory: {}", err)
-                )?;
+                    let mut pwd = std::env::current_dir().map_err(
+                        |err| anyhow::anyhow!("Failed to get current directory: {}", err)
+                    )?;
+                    pwd.push("target/cache");
+                    std::fs::create_dir_all(&pwd).map_err(
+                        |err| anyhow::anyhow!("Failed to create directory: {}", err)
+                    )?;
 
                 Ok(Self {
                     sql: Arc::new(init_db(InitSQLParams::Native {
                         url: {
-                            #[cfg(debug_assertions)]
-                            {
-                                 let mut pwd = std::env::current_dir().map_err(
-                                    |err| anyhow::anyhow!("Failed to get current directory: {}", err)
-                                )?;
-                                pwd.push("target/cache/site.db");
-                                format!("sqlite://{}?mode=rwc", pwd.to_string_lossy())
-                            }
-                            #[cfg(not(debug_assertions))]
-                            {
-                                "sqlite:/cache/sql/site.db".to_string()
-                            }
+                            let mut pwd = std::env::current_dir().map_err(
+                                |err| anyhow::anyhow!("Failed to get current directory: {}", err)
+                            )?;
+                            pwd.push("target/cache/site.db");
+                            format!("sqlite://{}?mode=rwc", pwd.to_string_lossy())
                         }
                     }).await?),
                     kv: RouteEnvKV {
                         token_expired: Arc::new(
                             init_kv(InitKVParams::Native {
                                 path: {
-                                    #[cfg(debug_assertions)]
-                                    {
-                                        let mut pwd = std::env::current_dir().map_err(
-                                            |err| anyhow::anyhow!("Failed to get current directory: {}", err)
-                                        )?;
-                                        pwd.push("target/cache/token-expired.db");
-                                        pwd.to_string_lossy().to_string()
-                                    }
-                                    #[cfg(not(debug_assertions))]
-                                    {
-                                        "/cache/kv/token-expired.db".to_string()
-                                    }
+                                    let mut pwd = std::env::current_dir().map_err(
+                                        |err| anyhow::anyhow!("Failed to get current directory: {}", err)
+                                    )?;
+                                    pwd.push("target/cache/token-expired.db");
+                                    pwd.to_string_lossy().to_string()
                                 }
                             })
                             .await?,
@@ -137,18 +123,11 @@ cfg_if::cfg_if! {
                         global_config: Arc::new(
                             init_kv(InitKVParams::Native {
                                 path: {
-                                    #[cfg(debug_assertions)]
-                                    {
-                                        let mut pwd = std::env::current_dir().map_err(
-                                            |err| anyhow::anyhow!("Failed to get current directory: {}", err)
-                                        )?;
-                                        pwd.push("target/cache/global-config.db");
-                                        pwd.to_string_lossy().to_string()
-                                    }
-                                    #[cfg(not(debug_assertions))]
-                                    {
-                                        "/cache/kv/global-config.db".to_string()
-                                    }
+                                    let mut pwd = std::env::current_dir().map_err(
+                                        |err| anyhow::anyhow!("Failed to get current directory: {}", err)
+                                    )?;
+                                    pwd.push("target/cache/global-config.db");
+                                    pwd.to_string_lossy().to_string()
                                 }
                             })
                             .await?,
@@ -158,23 +137,16 @@ cfg_if::cfg_if! {
                         static_resources: Arc::new(
                             init_bucket(InitBucketParams::Native {
                                 path: {
-                                    #[cfg(debug_assertions)]
-                                    {
-                                        let mut pwd = std::env::current_dir().map_err(
-                                            |err| anyhow::anyhow!("Failed to get current directory: {}", err)
-                                        )?;
-                                        pwd.push("target/cache/static-resources");
+                                    let mut pwd = std::env::current_dir().map_err(
+                                        |err| anyhow::anyhow!("Failed to get current directory: {}", err)
+                                    )?;
+                                    pwd.push("target/cache/static-resources");
 
-                                        std::fs::create_dir_all(&pwd).map_err(
-                                            |err| anyhow::anyhow!("Failed to create directory: {}", err)
-                                        )?;
+                                    std::fs::create_dir_all(&pwd).map_err(
+                                        |err| anyhow::anyhow!("Failed to create directory: {}", err)
+                                    )?;
 
-                                        pwd.to_string_lossy().to_string()
-                                    }
-                                    #[cfg(not(debug_assertions))]
-                                    {
-                                        "/cache/bucket/static-resources".to_string()
-                                    }
+                                    pwd.to_string_lossy().to_string()
                                 }
                             })
                             .await?,

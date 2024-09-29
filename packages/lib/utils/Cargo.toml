@@ -45,7 +45,6 @@ bcrypt = "^0.15"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 tokio = { workspace = true }
-tauri = { workspace = true }
 
 [build-dependencies]
 anyhow = { workspace = true }
