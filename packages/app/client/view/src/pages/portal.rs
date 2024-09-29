@@ -30,7 +30,17 @@ pub fn Portal() -> HtmlResult {
                 {"Building on progress"}
             </h1>
 
-            <a href={"https://github.com/celestia-island"}>
+            <a
+                target={"_blank"}
+                href={"https://github.com/celestia-island"}
+                class={css!("
+                    margin: 1rem;
+                    padding: 0.5rem 1rem;
+                    border-radius: 0.5rem;
+                    border: 1px solid var(--color-primary);
+                    user-select: none;
+                ")}
+            >
                 {"Github Homepage"}
             </a>
         </div>

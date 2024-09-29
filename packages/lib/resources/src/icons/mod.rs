@@ -48,3 +48,5 @@ icon!(Logout, "./logout.svg");
 icon!(Menu, "./menu.svg");
 icon!(MenuRight, "./menu_right.svg");
 icon!(MenuBack, "./menu_back.svg");
+
+pub const FAVICON: &[u8] = include_bytes!("favicon.ico");

@@ -9,6 +9,7 @@ use axum::{
 };
 
 use crate::RouteEnv;
+use _resources::icons::FAVICON;
 use tairitsu_database::prelude::*;
 
 pub async fn wasm(
@@ -53,6 +54,10 @@ pub async fn route(env: RouteEnv) -> Result<Router> {
     let router = Router::new()
         .route("/app.wasm", get(wasm))
         .route("/app.js", get(js))
+        .route(
+            "/favicon.ico",
+            get(|| async { FAVICON.to_vec().into_response() }),
+        )
         .with_state(env);
 
     Ok(router)

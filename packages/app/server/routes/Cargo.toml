@@ -8,6 +8,7 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 _types = { path = "../../../lib/types" }
+_resources = { path = "../../../lib/resources" }
 _server_database = { path = "../database" }
 _server_functions = { path = "../functions" }
 _client_view = { path = "../../client/view" }
