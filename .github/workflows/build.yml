@@ -38,7 +38,7 @@ jobs:
           sudo install just /usr/local/bin
       - run: just install
       - run: just build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: site-dist
           path: dist
