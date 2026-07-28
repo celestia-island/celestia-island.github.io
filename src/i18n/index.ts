@@ -13,11 +13,11 @@ try { savedLocale = localStorage.getItem('celestia-locale') } catch { /* localSt
 const browserLocale = navigator.language
 
 function detectLocale(): string {
-  if (savedLocale && ['en', 'zhs', 'zht', 'ja', 'ko', 'es', 'fr', 'ru'].includes(savedLocale)) {
+  if (savedLocale && ['en', 'zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'fr', 'ru'].includes(savedLocale)) {
     return savedLocale
   }
   if (browserLocale.startsWith('zh')) {
-    return browserLocale.includes('TW') || browserLocale.includes('HK') ? 'zht' : 'zhs'
+    return browserLocale.includes('TW') || browserLocale.includes('HK') ? 'zh-Hant' : 'zh-Hans'
   }
   if (browserLocale.startsWith('ja')) return 'ja'
   if (browserLocale.startsWith('ko')) return 'ko'
