@@ -5,7 +5,7 @@ FROM node:22-slim AS build
 
 WORKDIR /app
 
-RUN corepack enable && corepack prepare pnpm@9 --activate
+RUN corepack enable && corepack prepare pnpm@10 --activate
 # scripts/build.py generates the favicons with Pillow.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends python3 python3-pip \
