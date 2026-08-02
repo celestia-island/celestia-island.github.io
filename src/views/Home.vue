@@ -75,10 +75,73 @@ function scrollToPage(index: number) {
   if (el) snapContainer.value?.scrollTo({ top: (el as HTMLElement).offsetTop, behavior: 'smooth' })
 }
 
+// Gesture handling: a fast flick (wheel or touch) would otherwise skip
+// several pages via native scroll-snap. Each gesture is capped at one page,
+// with a lock window so a single swipe can never cascade into multiple pages.
+const PAGE_LOCK_MS = 650
+const WHEEL_THRESHOLD = 48
+const TOUCH_THRESHOLD = 24
+
+let lastPageChange = 0
+let wheelAccum = 0
+let touchTracking = false
+let touchStartY = 0
+let touchAccum = 0
+let snapContainerEl: HTMLDivElement | null = null
+
+function pageStep(direction: 1 | -1) {
+  const now = performance.now()
+  if (now - lastPageChange < PAGE_LOCK_MS) return
+  const last = sectionRefs.value.length - 1
+  const next = Math.min(last, Math.max(0, currentPage.value + direction))
+  if (next === currentPage.value) return
+  lastPageChange = now
+  scrollToPage(next)
+}
+
+function onWheel(e: WheelEvent) {
+  if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return
+  e.preventDefault()
+  wheelAccum += e.deltaY
+  if (Math.abs(wheelAccum) < WHEEL_THRESHOLD) return
+  const direction: 1 | -1 = wheelAccum >= 0 ? 1 : -1
+  wheelAccum = 0
+  pageStep(direction)
+}
+
+function onTouchStart(e: TouchEvent) {
+  if (e.touches.length !== 1) {
+    touchTracking = false
+    return
+  }
+  touchTracking = true
+  touchStartY = e.touches[0].clientY
+  touchAccum = 0
+}
+
+function onTouchMove(e: TouchEvent) {
+  if (!touchTracking || e.touches.length !== 1) return
+  e.preventDefault()
+  touchAccum = e.touches[0].clientY - touchStartY
+}
+
+function onTouchEnd() {
+  if (!touchTracking) return
+  touchTracking = false
+  if (Math.abs(touchAccum) < TOUCH_THRESHOLD) return
+  pageStep(touchAccum > 0 ? -1 : 1)
+}
+
 let observer: IntersectionObserver
 
 onMounted(() => {
   setSnapContainer(snapContainer.value ?? null)
+
+  snapContainerEl = snapContainer.value ?? null
+  snapContainerEl?.addEventListener('wheel', onWheel, { passive: false })
+  snapContainerEl?.addEventListener('touchstart', onTouchStart, { passive: true })
+  snapContainerEl?.addEventListener('touchmove', onTouchMove, { passive: false })
+  snapContainerEl?.addEventListener('touchend', onTouchEnd, { passive: true })
 
   observer = new IntersectionObserver((entries) => {
     for (const entry of entries) {
@@ -99,6 +162,10 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  snapContainerEl?.removeEventListener('wheel', onWheel)
+  snapContainerEl?.removeEventListener('touchstart', onTouchStart)
+  snapContainerEl?.removeEventListener('touchmove', onTouchMove)
+  snapContainerEl?.removeEventListener('touchend', onTouchEnd)
   setSnapContainer(null)
   observer?.disconnect()
 })
