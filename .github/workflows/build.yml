@@ -21,6 +21,11 @@ jobs:
   build:
     name: Build site
     runs-on: [self-hosted, linux, x64, local]
+    env:
+      # actions/setup-python cannot download standalone builds for Debian, so
+      # use the runner's system Python (3.11) and let pip install into the
+      # user site despite Debian's externally-managed marker (PEP 668).
+      PIP_BREAK_SYSTEM_PACKAGES: "1"
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
@@ -28,9 +33,6 @@ jobs:
         with:
           node-version: "20"
           cache: 'pnpm'
-      - uses: actions/setup-python@v7
-        with:
-          python-version: "3.11"
       - name: Install just
         run: |
           curl -sSL https://github.com/casey/just/releases/download/1.55.1/just-1.55.1-x86_64-unknown-linux-musl.tar.gz | tar xz
