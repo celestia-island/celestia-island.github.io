@@ -196,13 +196,23 @@ vec4 renderLayer(vec2 p, float base_t, float color_flow, float stroke_flow, floa
     return vec4(layerRgb, layerAlpha);
 }
 
+// Anchor the infinity logo toward the bottom-left of the viewport and shrink
+// it, reproducing the layout the pre-render-target build accidentally
+// produced on high-DPR screens (its u_resolution was in CSS pixels while the
+// drawing buffer was scaled by devicePixelRatio).
+// LOGO_ANCHOR is in screen-fraction units (bottom-left origin); uv-space is
+// x-normalized, so the y component must be scaled by res.y / res.x.
+const vec2 LOGO_ANCHOR = vec2(-1.0 / 3.0, -1.0 / 3.0);
+const float LOGO_ZOOM = 1.5;
+
 void main() {
     vec2 res = u_resolution;
     vec2 uv = (gl_FragCoord.xy - 0.5 * res) / (res.x * 0.5);
-    
+
     float anim = u_time;
     float breath = 1.0 + sin(anim * PI / 15.0) * 0.015;
-    vec2 p = uv / breath / u_scale;
+    vec2 anchor = vec2(LOGO_ANCHOR.x, LOGO_ANCHOR.y * res.y / res.x);
+    vec2 p = (uv - anchor) * LOGO_ZOOM / breath / u_scale;
 
     // Background early-out: the curve ribbon stays inside |y| < 0.45 and
     // |x| < 1.3 in p-space (the star rays and glow decay exponentially and

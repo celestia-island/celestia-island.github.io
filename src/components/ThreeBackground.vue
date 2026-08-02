@@ -182,8 +182,10 @@ function createLogoPlane() {
   })
 
   logoMesh = new Mesh(geometry, theme.value === 'dark' ? logoMaterial : lightMaterial)
-  // Anchor the infinity logo slightly toward the bottom-left of the viewport.
-  logoMesh.position.set(-0.28, -0.28, -1)
+  // Mesh position cannot move the logo: the fragment shaders anchor the
+  // pattern to gl_FragCoord. The bottom-left offset lives in the shaders
+  // (LOGO_OFFSET in logo.frag / logo-light.frag).
+  logoMesh.position.z = -1
   scene.add(logoMesh)
 }
 
