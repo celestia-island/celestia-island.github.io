@@ -32,7 +32,10 @@
           「{{ t('site.slogan') }}」
         </span>
         <span>{{ t('site.footer.copyright', { year: new Date().getFullYear() }) }}</span>
-        <span v-for="(item, index) in footerExtraItems" :key="index" class="footer-extra" v-html="item"></span>
+        <span v-for="(item, index) in footerExtraItems" :key="index" class="footer-extra">
+          <a v-if="typeof item === 'object'" :href="item.url" target="_blank" rel="noopener">{{ item.title }}</a>
+          <span v-else v-html="item"></span>
+        </span>
       </div>
     </footer>
   </section>
@@ -61,13 +64,31 @@ const renderedAboutText = computed(() => {
   return marked.parse(mdContent)
 })
 
-function parseFooterExtra(raw: string): string[] {
+interface FooterExtraLink {
+  title: string
+  url: string
+}
+
+type FooterExtraEntry = string | FooterExtraLink
+
+function isFooterExtraLink(item: unknown): item is FooterExtraLink {
+  return (
+    typeof item === 'object'
+    && item !== null
+    && typeof (item as FooterExtraLink).title === 'string'
+    && (item as FooterExtraLink).title.trim().length > 0
+    && typeof (item as FooterExtraLink).url === 'string'
+    && (item as FooterExtraLink).url.trim().length > 0
+  )
+}
+
+function parseFooterExtra(raw: string): FooterExtraEntry[] {
   const value = raw.trim()
   if (!value) return []
   try {
     const parsed: unknown = JSON.parse(value)
     if (Array.isArray(parsed)) {
-      return parsed.filter((item): item is string => typeof item === 'string' && item.trim().length > 0)
+      return parsed.filter((item): item is FooterExtraEntry => isFooterExtraLink(item) || (typeof item === 'string' && item.trim().length > 0))
     }
     if (typeof parsed === 'string') return [parsed]
   } catch {

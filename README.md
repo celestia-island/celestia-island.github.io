@@ -36,7 +36,7 @@ docker compose up -d --build
 
 | Variable          | Meaning                                                                                    |
 | ----------------- | ------------------------------------------------------------------------------------------ |
-| `FOOTER_EXTRA`    | Extra footer content rendered below the copyright line — one line per entry. Accepts a JSON array of raw-HTML strings (e.g. `["<a href=\"https://beian.miit.gov.cn/\" target=\"_blank\" rel=\"noopener\">苏ICP备2025155733号-2</a>"]`) or a single raw-HTML string. Injected into `index.html` at startup via `docker/entrypoint.sh`; omitted/empty on GitHub Pages renders nothing. |
+| `FOOTER_EXTRA`    | Extra footer content rendered below the copyright line — one line per entry. Accepts a JSON array of `{ "title", "url" }` objects (each renders as a link, e.g. `[{"title":"ICP filing number","url":"https://beian.miit.gov.cn/"}]`), a JSON array of raw-HTML strings, or a single raw-HTML string. Injected into `index.html` at startup via `docker/entrypoint.sh`; omitted/empty on GitHub Pages renders nothing. |
 
 The image is also published to GHCR (`ghcr.io/celestia-island/celestia-island.github.io`) on
 every `main` push, so nodes can pull instead of build:
