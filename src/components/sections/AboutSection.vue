@@ -32,7 +32,7 @@
           「{{ t('site.slogan') }}」
         </span>
         <span>{{ t('site.footer.copyright', { year: new Date().getFullYear() }) }}</span>
-        <span v-if="footerExtra" class="footer-extra" v-html="footerExtra"></span>
+        <span v-for="(item, index) in footerExtraItems" :key="index" class="footer-extra" v-html="item"></span>
       </div>
     </footer>
   </section>
@@ -61,18 +61,32 @@ const renderedAboutText = computed(() => {
   return marked.parse(mdContent)
 })
 
-const footerExtra = computed(() => {
-  let extra = ''
+function parseFooterExtra(raw: string): string[] {
+  const value = raw.trim()
+  if (!value) return []
   try {
-    extra = document.querySelector<HTMLMetaElement>('meta[name="celestia-footer-extra"]')?.content?.trim() ?? ''
+    const parsed: unknown = JSON.parse(value)
+    if (Array.isArray(parsed)) {
+      return parsed.filter((item): item is string => typeof item === 'string' && item.trim().length > 0)
+    }
+    if (typeof parsed === 'string') return [parsed]
+  } catch {
+    /* not JSON — treat as a single raw HTML string */
+  }
+  return [value]
+}
+
+const footerExtraItems = computed(() => {
+  let raw = ''
+  try {
+    raw = document.getElementById('celestia-footer-extra')?.textContent?.trim() ?? ''
   } catch {
     /* document unavailable in some prerender contexts — fall through */
   }
-  const unresolved = extra.startsWith('$') || extra.startsWith('__')
-  if (!extra || unresolved) {
-    extra = (import.meta.env.VITE_FOOTER_EXTRA as string | undefined)?.trim() ?? ''
+  if (!raw || raw.startsWith('$') || raw.startsWith('__')) {
+    raw = (import.meta.env.VITE_FOOTER_EXTRA as string | undefined)?.trim() ?? ''
   }
-  return extra
+  return parseFooterExtra(raw)
 })
 
 defineExpose({ el, triggerReveal })
