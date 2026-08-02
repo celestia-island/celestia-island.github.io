@@ -10,14 +10,15 @@ import { Scene } from 'three/src/scenes/Scene.js'
 import { OrthographicCamera } from 'three/src/cameras/OrthographicCamera.js'
 import { Mesh } from 'three/src/objects/Mesh.js'
 import { ShaderMaterial } from 'three/src/materials/ShaderMaterial.js'
+import { MeshBasicMaterial } from 'three/src/materials/MeshBasicMaterial.js'
 import { PointsMaterial } from 'three/src/materials/PointsMaterial.js'
 import { Points } from 'three/src/objects/Points.js'
 import { PlaneGeometry } from 'three/src/geometries/PlaneGeometry.js'
 import { BufferGeometry } from 'three/src/core/BufferGeometry.js'
 import { BufferAttribute } from 'three/src/core/BufferAttribute.js'
+import { WebGLRenderTarget } from 'three/src/renderers/WebGLRenderTarget.js'
 import { CanvasTexture } from 'three/src/textures/CanvasTexture.js'
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
-import { Clock } from 'three/src/core/Clock.js'
 import { Vector2 } from 'three/src/math/Vector2.js'
 import { AdditiveBlending, NormalBlending, LinearFilter } from 'three/src/constants.js'
 import logoVert from '../../shaders/logo.vert?raw'
@@ -38,8 +39,11 @@ let starMaterial: PointsMaterial
 let twinkleMaterial: PointsMaterial
 let starPoints: Points
 let starTwinkle: Points
+let halfTarget: WebGLRenderTarget
+let blitScene: Scene
+let blitMesh: Mesh
 let animationId: number
-let clock: Clock
+let startTime = 0
 let visible = true
 let observer: IntersectionObserver
 
@@ -49,8 +53,6 @@ watch(theme, (t) => {
     logoMesh.material = logoMaterial
     starPoints.visible = true
     starTwinkle.visible = true
-    clock = new Clock()
-    clock.start()
   } else {
     logoMesh.material = lightMaterial
     starPoints.visible = false
@@ -187,11 +189,14 @@ function createLogoPlane() {
 function init() {
   if (!containerRef.value) return
 
-  clock = new Clock()
-  clock.start()
+  startTime = performance.now()
 
   renderer = new WebGLRenderer({ alpha: true, antialias: false, powerPreference: 'low-power' })
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
+  // Cap the render resolution: touch devices get a lower DPR ceiling than
+  // desktops (the infinity logo fragment shader is fill-rate bound, and
+  // phones often report DPR 2-3).
+  const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isCoarsePointer ? 1.25 : 1.5))
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.setClearColor(0x000000, 0)
   containerRef.value.appendChild(renderer.domElement)
@@ -202,6 +207,24 @@ function init() {
 
   createStarfield()
   createLogoPlane()
+
+  // The infinity-logo fragment shader is fill-rate bound, so the whole scene
+  // is rendered at half resolution and upscaled with a cheap fullscreen blit.
+  // The soft glowing logo and star sprites lose no perceptible detail.
+  const halfW = Math.max(1, Math.round(window.innerWidth / 2))
+  const halfH = Math.max(1, Math.round(window.innerHeight / 2))
+  halfTarget = new WebGLRenderTarget(halfW, halfH, {
+    minFilter: LinearFilter,
+    magFilter: LinearFilter,
+    depthBuffer: false,
+    stencilBuffer: false,
+  })
+  blitScene = new Scene()
+  blitMesh = new Mesh(
+    new PlaneGeometry(2, 2),
+    new MeshBasicMaterial({ map: halfTarget.texture })
+  )
+  blitScene.add(blitMesh)
 
   if (theme.value !== 'dark') {
     starPoints.visible = false
@@ -221,7 +244,7 @@ function animate() {
   if (!visible) return
 
   if (theme.value === 'dark') {
-    const t = clock.getElapsedTime()
+    const t = (performance.now() - startTime) / 1000
 
     logoMaterial.uniforms.u_time.value = t
 
@@ -233,11 +256,21 @@ function animate() {
     starTwinkle.rotation.z += 0.00004
     twinkleMaterial.opacity = 0.22 + 0.12 * Math.sin(t * 0.5 + 1)
   } else {
-    const t = clock.getElapsedTime()
+    const t = (performance.now() - startTime) / 1000
     lightMaterial.uniforms.u_time.value = t
   }
 
+  // The logo shader derives p-space from gl_FragCoord vs u_resolution, so it
+  // must match the render-target size (not the full-res canvas).
+  const rtW = halfTarget.width
+  const rtH = halfTarget.height
+  logoMaterial.uniforms.u_resolution.value.set(rtW, rtH)
+  lightMaterial.uniforms.u_resolution.value.set(rtW, rtH)
+
+  renderer.setRenderTarget(halfTarget)
   renderer.render(scene, camera)
+  renderer.setRenderTarget(null)
+  renderer.render(blitScene, camera)
 }
 
 function getScale(w: number, h: number) {
@@ -256,11 +289,8 @@ function updateScale() {
 function onResize() {
   if (!renderer) return
   renderer.setSize(window.innerWidth, window.innerHeight)
-  if (logoMaterial) {
-    logoMaterial.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight)
-  }
-  if (lightMaterial) {
-    lightMaterial.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight)
+  if (halfTarget) {
+    halfTarget.setSize(Math.max(1, Math.round(window.innerWidth / 2)), Math.max(1, Math.round(window.innerHeight / 2)))
   }
   updateScale()
 }
@@ -284,6 +314,9 @@ onBeforeUnmount(() => {
     renderer.dispose()
     containerRef.value?.removeChild(renderer.domElement)
   }
+  halfTarget?.dispose()
+  blitMesh?.geometry.dispose()
+  ;(blitMesh?.material as MeshBasicMaterial | undefined)?.dispose()
   starMaterial?.map?.dispose()
   starPoints?.geometry.dispose()
   starMaterial?.dispose()

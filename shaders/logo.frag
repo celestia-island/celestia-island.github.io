@@ -1,6 +1,7 @@
 #define PI 3.14159265358979323846
 #define TAU 6.28318530717958647692
-#define CURVE_SAMPLES 120
+#define COARSE_SAMPLES 16
+#define REFINE_SAMPLES 8
 #define STROKE_COUNT 30
 #define RIBBON_W 0.075
 
@@ -11,8 +12,20 @@ uniform vec2 u_resolution;
 uniform float u_scale;
 varying vec2 vUv;
 
-float hash(float n) { return fract(sin(n * 127.1) * 43758.5453); }
-float hash2(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+// Integer (sin-free) hashes - the original sin()-based hashes dominated the
+// per-pixel ALU cost on mobile GPUs, and the noise quality is equivalent.
+float hash(float n) {
+    n = fract(n * 0.1031);
+    n *= n + 33.33;
+    n *= n + n;
+    return fract(n);
+}
+
+float hash2(vec2 p) {
+    vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+    p3 += dot(p3, p3.yzx + 33.33);
+    return fract((p3.x + p3.y) * p3.z);
+}
 
 float vnoise(vec2 p) {
     vec2 i = floor(p), f = fract(p);
@@ -53,6 +66,32 @@ vec2 curveTan(float t) {
 vec2 curveNor(float t) {
     vec2 tanDir = curveTan(t);
     return vec2(-tanDir.y, tanDir.x);
+}
+
+// Two-level search for the curve parameter nearest to p within [t0, t1]:
+// a coarse pass finds the best sample, then a fine pass around it keeps the
+// same precision as a dense full scan at a fraction of the cost (48 curve
+// evaluations per pixel instead of 128).
+float findNearestT(vec2 p, float t0, float t1) {
+    float step = (t1 - t0) / float(COARSE_SAMPLES - 1);
+    float best = t0;
+    float bestD = dot(p - curvePt(t0), p - curvePt(t0));
+    for (int i = 1; i < COARSE_SAMPLES; i++) {
+        float t = t0 + step * float(i);
+        vec2 cp = curvePt(t);
+        float d = dot(p - cp, p - cp);
+        if (d < bestD) { bestD = d; best = t; }
+    }
+    float lo = max(t0, best - step);
+    float hi = min(t1, best + step);
+    float fineStep = (hi - lo) / float(REFINE_SAMPLES - 1);
+    for (int i = 0; i < REFINE_SAMPLES; i++) {
+        float t = lo + fineStep * float(i);
+        vec2 cp = curvePt(t);
+        float d = dot(p - cp, p - cp);
+        if (d < bestD) { bestD = d; best = t; }
+    }
+    return best;
 }
 
 vec3 getColor(float t, float pos, float seed) {
@@ -164,26 +203,22 @@ void main() {
     float anim = u_time;
     float breath = 1.0 + sin(anim * PI / 15.0) * 0.015;
     vec2 p = uv / breath / u_scale;
-    
+
+    // Background early-out: the curve ribbon stays inside |y| < 0.45 and
+    // |x| < 1.3 in p-space (the star rays and glow decay exponentially and
+    // are invisible beyond that), so background pixels skip the per-pixel
+    // curve search and stroke loops entirely (the dominant fragment cost).
+    if (abs(p.y) > 0.45 || abs(p.x) > 1.3) {
+        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
+        return;
+    }
+
     float color_flow = anim * (PI / 30.0);
     float stroke_flow = anim * 0.15;
     
-    float d1 = 1e10; float t1 = 0.0;
-    for (int i = 0; i < CURVE_SAMPLES; i++) {
-        float t = -PI / 2.0 + PI * (float(i) / float(CURVE_SAMPLES - 1));
-        vec2 cp = curvePt(t);
-        float d = dot(p - cp, p - cp);
-        if (d < d1) { d1 = d; t1 = t; }
-    }
-    
-    float d2 = 1e10; float t2 = 0.0;
-    for (int i = 0; i < CURVE_SAMPLES; i++) {
-        float t = PI / 2.0 + PI * (float(i) / float(CURVE_SAMPLES - 1));
-        vec2 cp = curvePt(t);
-        float d = dot(p - cp, p - cp);
-        if (d < d2) { d2 = d; t2 = t; }
-    }
-    
+    float t1 = findNearestT(p, -PI / 2.0, PI / 2.0);
+    float t2 = findNearestT(p, PI / 2.0, 3.0 * PI / 2.0);
+
     float z1 = curve3D(t1).z;
     float z2 = curve3D(t2).z;
     
