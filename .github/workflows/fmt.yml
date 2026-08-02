@@ -16,11 +16,12 @@ jobs:
   format:
     name: Markdown format
     runs-on: [self-hosted, linux, x64, local]
+    env:
+      # See build.yml: setup-python has no Debian standalone builds; use the
+      # runner's system Python (3.11) with user-site pip installs (PEP 668).
+      PIP_BREAK_SYSTEM_PACKAGES: "1"
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
-        with:
-          python-version: "3.12"
       - name: Install just
         run: |
           curl -sSL https://github.com/casey/just/releases/download/1.55.1/just-1.55.1-x86_64-unknown-linux-musl.tar.gz | tar xz
