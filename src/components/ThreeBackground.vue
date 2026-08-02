@@ -182,7 +182,8 @@ function createLogoPlane() {
   })
 
   logoMesh = new Mesh(geometry, theme.value === 'dark' ? logoMaterial : lightMaterial)
-  logoMesh.position.z = -1
+  // Anchor the infinity logo slightly toward the bottom-left of the viewport.
+  logoMesh.position.set(-0.28, -0.28, -1)
   scene.add(logoMesh)
 }
 
@@ -196,7 +197,8 @@ function init() {
   // desktops (the infinity logo fragment shader is fill-rate bound, and
   // phones often report DPR 2-3).
   const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isCoarsePointer ? 1.25 : 1.5))
+  const dpr = Math.min(window.devicePixelRatio || 1, isCoarsePointer ? 1.25 : 1.5)
+  renderer.setPixelRatio(dpr)
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.setClearColor(0x000000, 0)
   containerRef.value.appendChild(renderer.domElement)
@@ -208,17 +210,13 @@ function init() {
   createStarfield()
   createLogoPlane()
 
-  // The infinity-logo fragment shader is fill-rate bound, so the whole scene
-  // is rendered at half resolution and upscaled with a cheap fullscreen blit.
-  // The soft glowing logo and star sprites lose no perceptible detail.
-  const halfW = Math.max(1, Math.round(window.innerWidth / 2))
-  const halfH = Math.max(1, Math.round(window.innerHeight / 2))
-  halfTarget = new WebGLRenderTarget(halfW, halfH, {
-    minFilter: LinearFilter,
-    magFilter: LinearFilter,
-    depthBuffer: false,
-    stencilBuffer: false,
-  })
+  // The infinity-logo fragment shader is fill-rate bound, so the scene is
+  // rendered into an offscreen target and upscaled with a cheap fullscreen
+  // blit. The scale is chosen per device against a pixel budget instead of a
+  // fixed half: small screens render at full resolution (crisp), large/4K
+  // screens downsample just enough to keep the shader cheap.
+  resizeRenderTarget()
+
   blitScene = new Scene()
   blitMesh = new Mesh(
     new PlaneGeometry(2, 2),
@@ -236,6 +234,42 @@ function init() {
   updateScale()
 
   animate()
+}
+
+// Pixel budget (physical pixels) for the offscreen target: touch devices
+// trade sharpness for fill-rate, desktops keep near-native sharpness.
+const PIXEL_BUDGET = {
+  coarse: 900_000,
+  fine: 2_500_000,
+}
+
+function computeRenderScale(): number {
+  const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches
+  const budget = isCoarsePointer ? PIXEL_BUDGET.coarse : PIXEL_BUDGET.fine
+  const dpr = Math.min(window.devicePixelRatio || 1, isCoarsePointer ? 1.25 : 1.5)
+  const canvasW = Math.round(window.innerWidth * dpr)
+  const canvasH = Math.round(window.innerHeight * dpr)
+  return Math.min(1, Math.max(0.5, Math.sqrt(budget / (canvasW * canvasH))))
+}
+
+function resizeRenderTarget() {
+  const scale = computeRenderScale()
+  const w = Math.max(1, Math.round(window.innerWidth * scale))
+  const h = Math.max(1, Math.round(window.innerHeight * scale))
+  if (!halfTarget) {
+    halfTarget = new WebGLRenderTarget(w, h, {
+      minFilter: LinearFilter,
+      magFilter: LinearFilter,
+      depthBuffer: false,
+      stencilBuffer: false,
+    })
+  } else {
+    halfTarget.setSize(w, h)
+  }
+  // The logo shader derives p-space from gl_FragCoord vs u_resolution, so it
+  // must match the render-target size (not the full-res canvas).
+  const logo = theme.value === 'dark' ? logoMaterial : lightMaterial
+  logo.uniforms.u_resolution.value.set(halfTarget.width, halfTarget.height)
 }
 
 function animate() {
@@ -289,9 +323,7 @@ function updateScale() {
 function onResize() {
   if (!renderer) return
   renderer.setSize(window.innerWidth, window.innerHeight)
-  if (halfTarget) {
-    halfTarget.setSize(Math.max(1, Math.round(window.innerWidth / 2)), Math.max(1, Math.round(window.innerHeight / 2)))
-  }
+  resizeRenderTarget()
   updateScale()
 }
 
