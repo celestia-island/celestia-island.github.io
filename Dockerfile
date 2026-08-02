@@ -12,7 +12,7 @@ RUN apt-get update \
     && pip3 install --break-system-packages Pillow \
     && rm -rf /var/lib/apt/lists/*
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile --ignore-scripts
 
 COPY . .
