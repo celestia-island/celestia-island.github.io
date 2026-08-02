@@ -32,6 +32,7 @@
           「{{ t('site.slogan') }}」
         </span>
         <span>{{ t('site.footer.copyright', { year: new Date().getFullYear() }) }}</span>
+        <span v-if="footerExtra" class="footer-extra" v-html="footerExtra"></span>
       </div>
     </footer>
   </section>
@@ -58,6 +59,20 @@ const renderedAboutText = computed(() => {
 
   const mdContent = (aboutDocs[docPath] as string) || (aboutDocs[fallbackPath] as string) || ''
   return marked.parse(mdContent)
+})
+
+const footerExtra = computed(() => {
+  let extra = ''
+  try {
+    extra = document.querySelector<HTMLMetaElement>('meta[name="celestia-footer-extra"]')?.content?.trim() ?? ''
+  } catch {
+    /* document unavailable in some prerender contexts — fall through */
+  }
+  const unresolved = extra.startsWith('$') || extra.startsWith('__')
+  if (!extra || unresolved) {
+    extra = (import.meta.env.VITE_FOOTER_EXTRA as string | undefined)?.trim() ?? ''
+  }
+  return extra
 })
 
 defineExpose({ el, triggerReveal })
@@ -94,6 +109,18 @@ defineExpose({ el, triggerReveal })
 
 .about-text {
   font-size: 0.8125rem;
+}
+
+.footer-extra :deep(a) {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-decoration-color: var(--border-subtle);
+  text-underline-offset: 4px;
+  transition: color 0.3s ease;
+}
+
+.footer-extra :deep(a:hover) {
+  color: var(--text-primary);
 }
 
 .delay-300 {

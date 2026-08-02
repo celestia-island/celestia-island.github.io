@@ -6,6 +6,14 @@
   <meta name="description" content="Celestia Island — A constellation of open-source projects: AI agents, web frameworks, UI libraries, authentication, and industrial tools." />
   <meta name="theme-color" content="#8b5cf6" />
 
+  <!--
+    Extra footer content (e.g. the ICP filing line). The Docker image
+    substitutes $FOOTER_EXTRA at container start (see docker/entrypoint.sh);
+    on static hosts the literal placeholder stays in this meta tag, which the
+    app detects and hides. A build-time VITE_FOOTER_EXTRA is honoured too.
+  -->
+  <meta name="celestia-footer-extra" content="$FOOTER_EXTRA" />
+
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Celestia Island" />
   <meta property="og:description" content="An independent open-source organization exploring the frontiers of systems engineering" />
