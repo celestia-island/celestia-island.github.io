@@ -12,9 +12,21 @@ let savedLocale: string | null = null
 try { savedLocale = localStorage.getItem('celestia-locale') } catch { /* localStorage 不可用时优雅降级 */ }
 const browserLocale = navigator.language
 
+// Pre-BCP-47 locale codes persisted in localStorage by older versions.
+const LEGACY_LOCALE_MAP: Record<string, string> = {
+  zhs: 'zh-Hans',
+  zht: 'zh-Hant',
+  'zh-CN': 'zh-Hans',
+  'zh-TW': 'zh-Hant',
+  zh: 'zh-Hans',
+}
+
 function detectLocale(): string {
-  if (savedLocale && ['en', 'zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'fr', 'ru'].includes(savedLocale)) {
-    return savedLocale
+  if (savedLocale) {
+    const normalized = LEGACY_LOCALE_MAP[savedLocale] ?? savedLocale
+    if (['en', 'zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'fr', 'ru'].includes(normalized)) {
+      return normalized
+    }
   }
   if (browserLocale.startsWith('zh')) {
     return browserLocale.includes('TW') || browserLocale.includes('HK') ? 'zh-Hant' : 'zh-Hans'
@@ -33,8 +45,8 @@ const i18n = createI18n({
   fallbackLocale: 'en',
   messages: {
     en,
-    zhs,
-    zht,
+    'zh-Hans': zhs,
+    'zh-Hant': zht,
     ja,
     ko,
     es,
