@@ -1,0 +1,5 @@
+# CRLF would break the shebang of docker/entrypoint.sh inside the nginx
+# image — container files must always stay LF regardless of platform.
+*.sh text eol=lf
+Dockerfile text eol=lf
+nginx.conf text eol=lf
