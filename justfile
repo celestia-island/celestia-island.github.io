@@ -2,6 +2,10 @@ set shell := ["bash", "-c"]
 set windows-shell := ["bash.exe", "-c"]
 set unstable
 set lists
+# The shared celestia-devtools recipes define their own `dev` (devtools
+# daemon); this file's recipes must win on name collisions, and just resolves
+# duplicates in favour of the importing file.
+set allow-duplicate-recipes
 
 # Shared celestia-devtools recipes — NOT in git. Stage with: just fetch.
 # `import?` silently skips when absent, so this justfile parses pre-fetch.
@@ -26,7 +30,7 @@ fetch URL='':
       cp "$src" "$out"
     else
       echo "[fetch] github raw -> $out"
-      curl -fsSL "https://raw.githubusercontent.com/celestia-island/celestia-devtools/dev/src/celestia_devtools/common.just" -o "$out"
+      curl -fsSL "https://raw.githubusercontent.com/celestia-island/celestia-devtools/master/src/celestia_devtools/common.just" -o "$out"
     fi
     echo "[fetch] wrote $out"
 
