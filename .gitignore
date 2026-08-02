@@ -24,6 +24,11 @@ Thumbs.db
 __pycache__/
 *.py[cod]
 
+# Local environment (docker compose reads .env; keep .env.example in git)
+.env
+.env.local
+!.env.example
+
 # celestia-devtools: staged-on-demand shared justfile recipes (just fetch)
 /.just/
 /celestia-devtools.just

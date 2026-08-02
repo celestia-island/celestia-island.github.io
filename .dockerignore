@@ -1,0 +1,12 @@
+node_modules
+dist
+.git
+.github
+.just
+__pycache__
+*.log
+*.tsbuildinfo
+
+# Secrets — the whole point of runtime injection: never bake .env into images.
+.env
+.env.local

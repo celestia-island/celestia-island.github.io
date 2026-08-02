@@ -1,0 +1,22 @@
+# Deploy the Celestia Island homepage on a company website node.
+#
+#   cp .env.example .env        # set FOOTER_EXTRA (e.g. the ICP filing line)
+#   docker compose up -d --build
+#
+# FOOTER_EXTRA is injected into the built index.html at container start, so
+# editing .env and restarting the container is enough — no rebuild needed.
+services:
+  web:
+    build: .
+    container_name: celestia-island-home
+    ports:
+      - "8080:80"
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
