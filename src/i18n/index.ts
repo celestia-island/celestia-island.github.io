@@ -1,7 +1,7 @@
 import { createI18n } from 'vue-i18n'
 import en from '../../res/i18n/en.json'
-import zhs from '../../res/i18n/zhs.json'
-import zht from '../../res/i18n/zht.json'
+import zhHans from '../../res/i18n/zh-Hans.json'
+import zhHant from '../../res/i18n/zh-Hant.json'
 import ja from '../../res/i18n/ja.json'
 import ko from '../../res/i18n/ko.json'
 import es from '../../res/i18n/es.json'
@@ -45,8 +45,8 @@ const i18n = createI18n({
   fallbackLocale: 'en',
   messages: {
     en,
-    'zh-Hans': zhs,
-    'zh-Hant': zht,
+    'zh-Hans': zhHans,
+    'zh-Hant': zhHant,
     ja,
     ko,
     es,
