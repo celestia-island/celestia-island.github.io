@@ -35,7 +35,7 @@ jobs:
       - uses: docker/metadata-action@v5
         id: meta
         with:
-          images: crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo/celestia-island.github.io
+          images: crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
             type=sha
