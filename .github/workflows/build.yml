@@ -29,6 +29,11 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
+        with:
+          # Separate install dir per workflow: the self-installer replaces the
+          # whole directory when upgrading pnpm, and the Build/Lint jobs run
+          # concurrently on the same self-hosted runner (ENOTEMPTY races).
+          dest: ~/setup-pnpm-build
       - uses: actions/setup-node@v7
         with:
           node-version: "20"
