@@ -81,10 +81,14 @@ function scrollToPage(index: number) {
 const PAGE_LOCK_MS = 650
 const WHEEL_THRESHOLD = 48
 const TOUCH_THRESHOLD = 24
+const TOUCH_AXIS_SLOP = 10
 
 let lastPageChange = 0
 let wheelAccum = 0
 let touchTracking = false
+let touchOnCardRow = false
+let touchAxis: 'x' | 'y' | null = null
+let touchStartX = 0
 let touchStartY = 0
 let touchAccum = 0
 let snapContainerEl: HTMLDivElement | null = null
@@ -115,14 +119,39 @@ function onTouchStart(e: TouchEvent) {
     return
   }
   touchTracking = true
+  touchOnCardRow = e.target instanceof Element && !!e.target.closest('.scroll-container')
+  touchAxis = null
+  touchStartX = e.touches[0].clientX
   touchStartY = e.touches[0].clientY
   touchAccum = 0
 }
 
 function onTouchMove(e: TouchEvent) {
   if (!touchTracking || e.touches.length !== 1) return
+  const dx = e.touches[0].clientX - touchStartX
+  const dy = e.touches[0].clientY - touchStartY
+
+  // Lock the gesture axis at the first significant displacement. Only
+  // vertical gestures feed the page snap; horizontal ones are handed back
+  // to the browser so card rows can be panned natively.
+  if (touchAxis === null) {
+    if (Math.abs(dx) < TOUCH_AXIS_SLOP && Math.abs(dy) < TOUCH_AXIS_SLOP) {
+      // On card rows, keep letting the browser watch the gesture until the
+      // axis is known; everywhere else claim it immediately so the one-page
+      // lock is never lost to native vertical scrolling.
+      if (!touchOnCardRow) e.preventDefault()
+      return
+    }
+    touchAxis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'
+  }
+
+  if (touchAxis === 'x') {
+    touchTracking = false
+    return
+  }
+
   e.preventDefault()
-  touchAccum = e.touches[0].clientY - touchStartY
+  touchAccum = dy
 }
 
 function onTouchEnd() {

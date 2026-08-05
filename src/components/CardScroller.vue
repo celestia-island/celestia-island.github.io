@@ -188,6 +188,7 @@ onBeforeUnmount(() => {
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
   scrollbar-width: none;
   flex: 1;
   min-width: 0;
