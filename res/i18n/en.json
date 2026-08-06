@@ -98,6 +98,12 @@
     "description": "Per-agent workspaces, append-only logs, and git protocol compatibility — designed for agents that branch and rewrite constantly.",
     "shortLabel": "Distributed Version Control"
   },
+  "fuuka": {
+    "name": "Fuuka",
+    "tagline": "CI execution plane for celestia-island",
+    "description": "GitHub stays the control plane — pull requests, reviews and branch protection — while fuuka runs the execution side: job scheduling, sandboxed containers, artifacts and deployment.",
+    "shortLabel": "Self-Hosted CI"
+  },
   "evernight": {
     "name": "Evernight",
     "tagline": "Industrial protocols, bridged to the cloud",

@@ -98,6 +98,12 @@
     "description": "Espaces de travail par agent, logs en ajout seul et compatibilité avec le protocole git — pensé pour les agents qui créent des branches et réécrivent constamment.",
     "shortLabel": "Contrôle de Version Distribué"
   },
+  "fuuka": {
+    "name": "Fuuka",
+    "tagline": "Plan d'exécution CI pour celestia-island",
+    "description": "GitHub reste le plan de contrôle — pull requests, revues et protection de branches — tandis que fuuka gère l'exécution : ordonnancement des jobs, conteneurs sandbox, artefacts et déploiement.",
+    "shortLabel": "CI auto-hébergée"
+  },
   "evernight": {
     "name": "Evernight",
     "tagline": "Protocoles industriels, reliés au cloud",

@@ -28,7 +28,7 @@ const { t } = useI18n()
 const { visible, triggerReveal } = useReveal()
 const el = ref<HTMLElement>()
 
-const items = projects.filter(p => ['aoba', 'kirino', 'ratatui-markdown', 'yuuka', 'ichika', 'hifumi', 'noa', 'malkuth', 'seia', 'aris', 'kei'].includes(p.id))
+const items = projects.filter(p => ['aoba', 'kirino', 'ratatui-markdown', 'yuuka', 'ichika', 'hifumi', 'noa', 'fuuka', 'malkuth', 'seia', 'aris', 'kei'].includes(p.id))
 
 defineExpose({ el, triggerReveal })
 </script>

@@ -98,6 +98,12 @@
     "description": "에이전트별 워크스페이스, 추가 전용 로그, git 프로토콜 호환성——끊임없이 브랜치를 만들고 히스토리를 다시 쓰는 에이전트를 위해 설계.",
     "shortLabel": "분산 버전 관리"
   },
+  "fuuka": {
+    "name": "Fuuka",
+    "tagline": "celestia-island의 CI 실행 플레인",
+    "description": "GitHub는 컨트롤 플레인(PR·리뷰·브랜치 보호)을 유지하고 fuuka가 실행 측(작업 스케줄링, 샌드박스 컨테이너, 아티팩트, 배포)을 담당합니다.",
+    "shortLabel": "셀프 호스팅 CI"
+  },
   "evernight": {
     "name": "Evernight",
     "tagline": "산업 프로토콜, 클라우드로 브리징",

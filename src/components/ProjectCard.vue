@@ -88,6 +88,7 @@ import yuukaLogo from '@res/logos/yuuka.webp'
 import ichikaLogo from '@res/logos/ichika.webp'
 import hifumiLogo from '@res/logos/hifumi.webp'
 import noaLogo from '@res/logos/noa.webp'
+import fuukaLogo from '@res/logos/fuuka.webp'
 import kouLogo from '@res/logos/kou.webp'
 import malkuthLogo from '@res/logos/malkuth.webp'
 import seiaLogo from '@res/logos/seia.webp'
@@ -115,6 +116,7 @@ const logoMap: Record<string, string> = {
   ichika: ichikaLogo,
   hifumi: hifumiLogo,
   noa: noaLogo,
+  fuuka: fuukaLogo,
   kou: kouLogo,
   malkuth: malkuthLogo,
   seia: seiaLogo,

@@ -98,6 +98,12 @@
     "description": "按智能體隔離工作區、僅追加日誌，以及 git 協定相容性——專為不斷分叉、頻繁重寫歷史的智能體設計。",
     "shortLabel": "分散式版本控制"
   },
+  "fuuka": {
+    "name": "Fuuka",
+    "tagline": "celestia-island 的 CI 執行面",
+    "description": "GitHub 保留控制面——PR、審查與分支保護——fuuka 接管執行面：作業調度、沙箱容器、產物與部署。",
+    "shortLabel": "自託管 CI"
+  },
   "evernight": {
     "name": "Evernight",
     "tagline": "工業協定，橋接至雲端",

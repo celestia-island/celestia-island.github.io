@@ -98,6 +98,12 @@
     "description": "エージェントごとのワークスペース、追記型ログ、gitプロトコル互換性——頻繁にブランチを切り、履歴を書き換えるエージェント向けに設計。",
     "shortLabel": "分散バージョン管理"
   },
+  "fuuka": {
+    "name": "Fuuka",
+    "tagline": "celestia-island の CI 実行面",
+    "description": "GitHub はコントロールプレーン（PR・レビュー・ブランチ保護）を担い、fuuka は実行面（ジョブスケジューリング、サンドボックスコンテナ、成果物、デプロイ）を担当します。",
+    "shortLabel": "セルフホストCI"
+  },
   "evernight": {
     "name": "Evernight",
     "tagline": "産業プロトコル、クラウドへ橋渡し",
