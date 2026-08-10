@@ -112,6 +112,7 @@ function onWheel(e: WheelEvent) {
   }
 
   e.preventDefault()
+  e.stopPropagation()
 
   _wheelAccum += delta
 
