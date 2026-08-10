@@ -17,6 +17,7 @@ on:
       - 'index.html'
       - 'justfile'
 
+    types: [opened, reopened, ready_for_review]
 jobs:
   build:
     name: Build site

@@ -9,6 +9,7 @@ on:
       - '**/*.md'
       - 'justfile'
       - 'celestia-devtools.just'
+    types: [opened, reopened, ready_for_review]
   push:
     branches: [main]
 
