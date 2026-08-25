@@ -76,9 +76,9 @@
   },
   "yuuka": {
     "name": "Yuuka",
-    "tagline": "一次宏调用生成嵌套类型",
-    "description": "一个 proc-macro，通过紧凑的 DSL 生成深层嵌套的 struct 和 enum，并自动接入 serde。",
-    "shortLabel": "嵌套类型生成器"
+    "tagline": "JSON 合并/补丁运行时与嵌套结构宏",
+    "description": "一个 JSON 合并/补丁基础库——RFC 7396 merge patch、set/replace/del 操作补丁、diff 与视口快照——外加通过紧凑 DSL 构建深层嵌套结构的宏。",
+    "shortLabel": "JSON 补丁库"
   },
   "ichika": {
     "name": "Ichika",
@@ -100,8 +100,8 @@
   },
   "fuuka": {
     "name": "Fuuka",
-    "tagline": "celestia-island 的 CI 执行面",
-    "description": "GitHub 保留控制面——PR、评审与分支保护——fuuka 接管执行面：作业调度、沙箱容器、制品与部署。",
+    "tagline": "在你自己的机器上运行 GitHub Actions",
+    "description": "一个自托管 CI 执行面：在你自己的节点上领取排队中的 GitHub Actions 作业，把每个步骤都放进隔离的容器沙箱里运行，收集制品，并将构建出的二进制文件部署到目标主机。",
     "shortLabel": "自托管 CI"
   },
   "evernight": {
@@ -151,5 +151,11 @@
     "tagline": "Rust 原生的浏览器自动化",
     "description": "通过一个 Rust 引擎驱动任何支持 CDP 的浏览器——它甚至会为你固定一个 Chrome 版本。",
     "shortLabel": "无头浏览器自动化"
+  },
+  "cherino": {
+    "name": "Cherino",
+    "tagline": "把沙箱容器装进一个 trait",
+    "description": "一个容器沙箱工具集：单一的 ContainerOps trait，以 Docker 为主后端、rootless youki 为回退后端，并提供实验性 CLI 后端——内置安全配置、AppArmor、seccomp 与 egress 策略。",
+    "shortLabel": "容器沙箱工具集"
   }
 }

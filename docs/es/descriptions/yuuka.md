@@ -1,5 +1,5 @@
 # Yuuka
 
-Tipos anidados desde una sola macro
+Runtime de merge/patch JSON y macros de estructuras anidadas
 
-Una proc-macro que genera structs y enums profundamente anidados desde un DSL compacto, con cableado serde.
+Una biblioteca base de merge/patch JSON — merge patch RFC 7396, parches de operaciones set/replace/del, diffs e instantáneas de viewport — más macros que construyen estructuras profundamente anidadas a partir de un DSL compacto.

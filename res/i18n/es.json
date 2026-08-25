@@ -76,9 +76,9 @@
   },
   "yuuka": {
     "name": "Yuuka",
-    "tagline": "Tipos anidados desde una sola macro",
-    "description": "Una proc-macro que genera structs y enums profundamente anidados desde un DSL compacto, con cableado serde.",
-    "shortLabel": "Generador de Tipos Anidados"
+    "tagline": "Runtime de merge/patch JSON y macros de estructuras anidadas",
+    "description": "Una biblioteca base de merge/patch JSON — merge patch RFC 7396, parches de operaciones set/replace/del, diffs e instantáneas de viewport — más macros que construyen estructuras profundamente anidadas a partir de un DSL compacto.",
+    "shortLabel": "Biblioteca de JSON Patch"
   },
   "ichika": {
     "name": "Ichika",
@@ -100,8 +100,8 @@
   },
   "fuuka": {
     "name": "Fuuka",
-    "tagline": "Plano de ejecución de CI para celestia-island",
-    "description": "GitHub sigue siendo el plano de control (PR, revisiones y protección de ramas), mientras fuuka gestiona el lado de ejecución: programación de trabajos, contenedores aislados, artefactos y despliegue.",
+    "tagline": "Ejecuta GitHub Actions en tus propias máquinas",
+    "description": "Un plano de ejecución de CI autoalojado: recoge de tus propios nodos los trabajos de GitHub Actions en cola, ejecuta cada paso dentro de un sandbox de contenedor aislado, recopila los artefactos y despliega los binarios construidos a los hosts de destino.",
     "shortLabel": "CI autoalojada"
   },
   "evernight": {
@@ -151,5 +151,11 @@
     "tagline": "Automatización de navegador nativa de Rust",
     "description": "Conduce cualquier navegador que hable CDP mediante un único motor Rust — incluso fija un build de Chrome por ti.",
     "shortLabel": "Automatización de Navegador Headless"
+  },
+  "cherino": {
+    "name": "Cherino",
+    "tagline": "Contenedores sandbox detrás de un solo trait",
+    "description": "Un kit de herramientas de sandbox de contenedores: un solo trait ContainerOps con Docker como backend principal, youki rootless como alternativa y backends CLI experimentales — perfiles de seguridad, AppArmor, seccomp y política de egress integrados.",
+    "shortLabel": "Kit de Sandbox de Contenedores"
   }
 }

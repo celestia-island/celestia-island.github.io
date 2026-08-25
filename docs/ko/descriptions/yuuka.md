@@ -1,5 +1,5 @@
 # Yuuka
 
-하나의 매크로로 중첩 타입 생성
+JSON 병합/패치 런타임과 중첩 구조 매크로
 
-간결한 DSL에서 깊게 중첩된 struct와 enum을 생성하는 proc-macro. serde 통합 포함.
+JSON 병합/패치 기반 라이브러리로, RFC 7396 머지 패치, set/replace/del 연산 패치, diff, 뷰포트 스냅샷을 지원하며 간결한 DSL에서 깊게 중첩된 구조를 만들어 내는 매크로도 제공합니다.

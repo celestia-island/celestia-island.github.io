@@ -76,9 +76,9 @@
   },
   "yuuka": {
     "name": "Yuuka",
-    "tagline": "ひとつのマクロでネスト型を生成",
-    "description": "コンパクトなDSLから深くネストされたstructとenumを生成するproc-macro。serde統合付き。",
-    "shortLabel": "ネスト型ジェネレーター"
+    "tagline": "JSON マージ/パッチランタイムとネスト構造マクロ",
+    "description": "JSON マージ/パッチの基盤ライブラリです。RFC 7396 マージパッチ、set/replace/del 操作パッチ、diff、ビューポートスナップショットに対応し、コンパクトな DSL から深くネストされた構造を組み立てるマクロも備えています。",
+    "shortLabel": "JSON パッチライブラリ"
   },
   "ichika": {
     "name": "Ichika",
@@ -100,8 +100,8 @@
   },
   "fuuka": {
     "name": "Fuuka",
-    "tagline": "celestia-island の CI 実行面",
-    "description": "GitHub はコントロールプレーン（PR・レビュー・ブランチ保護）を担い、fuuka は実行面（ジョブスケジューリング、サンドボックスコンテナ、成果物、デプロイ）を担当します。",
+    "tagline": "GitHub Actions を自分のマシンで実行",
+    "description": "セルフホスト CI 実行プレーン：自分のノードで待機中の GitHub Actions ジョブを受け取り、各ステップを分離されたコンテナサンドボックス内で実行し、成果物を収集して、ビルドしたバイナリをターゲットホストへデプロイします。",
     "shortLabel": "セルフホストCI"
   },
   "evernight": {
@@ -151,5 +151,11 @@
     "tagline": "Rustネイティブなブラウザ自動化",
     "description": "一つのRustエンジンでCDP対応のあらゆるブラウザを駆動——Chromeビルドまで固定してくれます。",
     "shortLabel": "ヘッドレスブラウザ自動化"
+  },
+  "cherino": {
+    "name": "Cherino",
+    "tagline": "ひとつの trait に集約されたサンドボックスコンテナ",
+    "description": "コンテナサンドボックスツールキットです。単一の ContainerOps trait が Docker を主要バックエンド、rootless youki をフォールバック、実験的な CLI バックエンドも備え、セキュリティプロファイル、AppArmor、seccomp、egress ポリシーを内蔵しています。",
+    "shortLabel": "コンテナサンドボックスツールキット"
   }
 }

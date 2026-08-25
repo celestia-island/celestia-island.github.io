@@ -76,9 +76,9 @@
   },
   "yuuka": {
     "name": "Yuuka",
-    "tagline": "Nested types from one macro",
-    "description": "A proc-macro that generates deeply nested structs and enums from a compact DSL, with serde wiring.",
-    "shortLabel": "Nested Type Generator"
+    "tagline": "JSON merge/patch runtime and nested-structure macros",
+    "description": "A JSON merge/patch foundation library — RFC 7396 merge patch, set/replace/del operation patches, diffs, and viewport snapshots — plus macros that build deeply nested structures from a compact DSL.",
+    "shortLabel": "JSON Patch Library"
   },
   "ichika": {
     "name": "Ichika",
@@ -100,8 +100,8 @@
   },
   "fuuka": {
     "name": "Fuuka",
-    "tagline": "CI execution plane for celestia-island",
-    "description": "GitHub stays the control plane — pull requests, reviews and branch protection — while fuuka runs the execution side: job scheduling, sandboxed containers, artifacts and deployment.",
+    "tagline": "Run GitHub Actions on your own machines",
+    "description": "A self-hosted CI execution plane: it picks up queued GitHub Actions jobs on your own nodes, runs every step inside an isolated container sandbox, collects the artifacts, and deploys the built binaries to the target hosts.",
     "shortLabel": "Self-Hosted CI"
   },
   "evernight": {
@@ -151,5 +151,11 @@
     "tagline": "Rust-native browser automation",
     "description": "Drive any CDP-speaking browser through one Rust engine — it even pins a Chrome build for you.",
     "shortLabel": "Headless Browser Automation"
+  },
+  "cherino": {
+    "name": "Cherino",
+    "tagline": "Sandboxed containers behind one trait",
+    "description": "A container sandbox toolkit: one ContainerOps trait with Docker as the primary backend, rootless youki as the fallback, and experimental CLI backends — security profiles, AppArmor, seccomp, and egress policy built in.",
+    "shortLabel": "Container Sandbox Toolkit"
   }
 }

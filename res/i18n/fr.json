@@ -76,9 +76,9 @@
   },
   "yuuka": {
     "name": "Yuuka",
-    "tagline": "Types imbriqués depuis une seule macro",
-    "description": "Une proc-macro qui génère des structs et enums profondément imbriqués depuis un DSL compact, avec câblage serde.",
-    "shortLabel": "Générateur de Types Imbriqués"
+    "tagline": "Runtime de merge/patch JSON et macros de structures imbriquées",
+    "description": "Une bibliothèque de base merge/patch JSON — merge patch RFC 7396, patchs d'opérations set/replace/del, diffs et instantanés de viewport — et des macros qui construisent des structures profondément imbriquées à partir d'un DSL compact.",
+    "shortLabel": "Bibliothèque de JSON Patch"
   },
   "ichika": {
     "name": "Ichika",
@@ -100,8 +100,8 @@
   },
   "fuuka": {
     "name": "Fuuka",
-    "tagline": "Plan d'exécution CI pour celestia-island",
-    "description": "GitHub reste le plan de contrôle — pull requests, revues et protection de branches — tandis que fuuka gère l'exécution : ordonnancement des jobs, conteneurs sandbox, artefacts et déploiement.",
+    "tagline": "Exécutez GitHub Actions sur vos propres machines",
+    "description": "Un plan d'exécution CI auto-hébergé : il récupère les jobs GitHub Actions en file d'attente sur vos propres nœuds, exécute chaque étape dans une sandbox conteneurisée isolée, collecte les artefacts et déploie les binaires construits vers les hôtes cibles.",
     "shortLabel": "CI auto-hébergée"
   },
   "evernight": {
@@ -151,5 +151,11 @@
     "tagline": "Automatisation de navigateur native Rust",
     "description": "Pilotez tout navigateur parlant CDP via un seul moteur Rust — il épingle même un build de Chrome pour vous.",
     "shortLabel": "Automatisation de Navigateur Headless"
+  },
+  "cherino": {
+    "name": "Cherino",
+    "tagline": "Des conteneurs sandbox derrière un seul trait",
+    "description": "Une boîte à outils de sandbox conteneurisée : un seul trait ContainerOps avec Docker comme backend principal, youki rootless en solution de repli et des backends CLI expérimentaux — profils de sécurité, AppArmor, seccomp et politique d'egress intégrés.",
+    "shortLabel": "Boîte à Outils de Sandbox Conteneur"
   }
 }

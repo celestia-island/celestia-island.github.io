@@ -1,5 +1,5 @@
 # Yuuka
 
-一次宏调用生成嵌套类型
+JSON 合并/补丁运行时与嵌套结构宏
 
-一个 proc-macro，通过紧凑的 DSL 生成深层嵌套的 struct 和 enum，并自动接入 serde。
+一个 JSON 合并/补丁基础库——RFC 7396 merge patch、set/replace/del 操作补丁、diff 与视口快照——外加通过紧凑 DSL 构建深层嵌套结构的宏。

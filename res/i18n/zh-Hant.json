@@ -76,9 +76,9 @@
   },
   "yuuka": {
     "name": "Yuuka",
-    "tagline": "一次巨集呼叫生成巢狀型別",
-    "description": "一個 proc-macro，透過緊湊的 DSL 生成深層巢狀的 struct 與 enum，並自動接入 serde。",
-    "shortLabel": "巢狀型別生成器"
+    "tagline": "JSON 合併/補丁執行時與巢狀結構巨集",
+    "description": "一個 JSON 合併/補丁基礎函式庫——RFC 7396 merge patch、set/replace/del 操作補丁、diff 與視埠快照——外加透過緊湊 DSL 建構深層巢狀結構的巨集。",
+    "shortLabel": "JSON 補丁函式庫"
   },
   "ichika": {
     "name": "Ichika",
@@ -100,8 +100,8 @@
   },
   "fuuka": {
     "name": "Fuuka",
-    "tagline": "celestia-island 的 CI 執行面",
-    "description": "GitHub 保留控制面——PR、審查與分支保護——fuuka 接管執行面：作業調度、沙箱容器、產物與部署。",
+    "tagline": "在你自己的機器上執行 GitHub Actions",
+    "description": "一個自託管 CI 執行面：在你自己的節點上領取排隊中的 GitHub Actions 作業，把每個步驟都放進隔離的容器沙箱裡執行，蒐集產物，並將建置出的二進位檔部署到目標主機。",
     "shortLabel": "自託管 CI"
   },
   "evernight": {
@@ -151,5 +151,11 @@
     "tagline": "Rust 原生的瀏覽器自動化",
     "description": "透過一個 Rust 引擎驅動任何支援 CDP 的瀏覽器——它甚至會為你固定一個 Chrome 版本。",
     "shortLabel": "無頭瀏覽器自動化"
+  },
+  "cherino": {
+    "name": "Cherino",
+    "tagline": "把沙箱容器裝進一個 trait",
+    "description": "一個容器沙箱工具組：單一的 ContainerOps trait，以 Docker 為主要後端、rootless youki 為備援後端，並提供實驗性 CLI 後端——內建安全設定檔、AppArmor、seccomp 與 egress 策略。",
+    "shortLabel": "容器沙箱工具組"
   }
 }
