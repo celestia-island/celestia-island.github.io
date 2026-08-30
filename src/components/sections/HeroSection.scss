@@ -1,0 +1,5 @@
+// Hero stagger delays (moved from HeroSection.vue SFC styles).
+.hero-item:nth-child(1) { transition-delay: 0.1s; }
+.hero-item:nth-child(2) { transition-delay: 0.25s; }
+.hero-item:nth-child(3) { transition-delay: 0.4s; }
+.hero-item:nth-child(4) { transition-delay: 0.55s; }

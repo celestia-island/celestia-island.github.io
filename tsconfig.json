@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "noEmit": true,
     "jsx": "preserve",
+    "jsxImportSource": "vue",
     "strict": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,

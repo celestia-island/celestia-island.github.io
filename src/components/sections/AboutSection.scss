@@ -1,0 +1,55 @@
+// About + footer styles (moved from AboutSection.vue SFC styles; former
+// scoped :deep() selectors became plain descendant selectors — no scoping
+// hash here, and .about-content/.footer-extra only appear in this component).
+.about-content {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  text-align: center;
+}
+.about-content p {
+  margin-bottom: 1.2em;
+  color: var(--text-secondary);
+}
+.about-content p:last-child {
+  margin-bottom: 0;
+}
+.about-content a {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--border-subtle);
+  text-underline-offset: 4px;
+  transition: all 0.3s ease;
+}
+.about-content a:hover {
+  color: #a78bfa;
+  text-decoration-color: #a78bfa;
+}
+.about-content strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.about-text {
+  font-size: 0.8125rem;
+}
+
+.footer-extra a {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-decoration-color: var(--border-subtle);
+  text-underline-offset: 4px;
+  transition: color 0.3s ease;
+}
+
+.footer-extra a:hover {
+  color: var(--text-primary);
+}
+
+.delay-300 {
+  transition-delay: 0.3s;
+}
+
+.about-section {
+  min-height: 100vh;
+  min-height: 100dvh;
+}

@@ -18,6 +18,15 @@
   --glow-color-strong: rgba(139, 92, 246, 0.7);
 }
 
+// Mobile web parity (2026-08-30, sibling of hikari foundation.scss): kill
+// the browser's default tap highlight — the translucent blue/gray overlay
+// Android/WebKit paints over tappable elements on touch. The property is
+// inherited, so one declaration on the root covers every element.
+html {
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+}
+
 [data-theme="light"] {
   --bg-primary: #f4f5f8;
   --bg-secondary: rgba(15, 23, 42, 0.04);

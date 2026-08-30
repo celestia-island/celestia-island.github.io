@@ -22,6 +22,7 @@
     "@types/three": "^0.*",
     "@unocss/reset": "^*",
     "@vitejs/plugin-vue": "^*",
+    "@vitejs/plugin-vue-jsx": "^5.1.6",
     "sass": "^*",
     "typescript": "^*",
     "unocss": "^*",
