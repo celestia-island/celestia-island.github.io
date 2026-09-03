@@ -47,5 +47,8 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
+          # Aliyun ACR rejects buildx attestation manifests
+          # (application/vnd.oci.empty.v1+json), so provenance must stay off.
+          provenance: false
           cache-from: type=gha
           cache-to: type=gha,mode=max
