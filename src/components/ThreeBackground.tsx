@@ -221,9 +221,16 @@ export default defineComponent({
       resizeRenderTarget()
 
       blitScene = new Scene()
+      // transparent:true is load-bearing here: an opaque material gets three's
+      // OPAQUE define, which forces the fragment alpha to 1.0, so the blit
+      // would paint the offscreen target's transparent pixels as opaque black
+      // and hide the page background behind the canvas (invisible on the dark
+      // theme, wrong on the light one). With blending kept on, the framebuffer
+      // receives texel-alpha and premultiplied RGB, matching the canvas
+      // context's premultipliedAlpha default.
       blitMesh = new Mesh(
         new PlaneGeometry(2, 2),
-        new MeshBasicMaterial({ map: halfTarget.texture })
+        new MeshBasicMaterial({ map: halfTarget.texture, transparent: true, depthWrite: false })
       )
       blitScene.add(blitMesh)
 

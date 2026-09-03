@@ -11,11 +11,7 @@ export default defineComponent({
         <ThreeBackground />
         <NavBar />
         <main class="relative z-10">
-          <router-view v-slots={{
-            default: ({ Component }: { Component: unknown }) => (
-              <component is={Component} />
-            ),
-          }} />
+          <router-view />
         </main>
       </div>
     )

@@ -1,5 +1,5 @@
 // Top navigation bar (converted from NavBar.vue → TSX + NavBar.scss).
-import { computed, onBeforeUnmount, onMounted, inject, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, inject, ref, Transition } from 'vue'
 import { defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useTheme } from '@/composables/useTheme'
@@ -68,10 +68,10 @@ export default defineComponent({
                 <div class="i-lucide-github w-5 h-5 group-hover:text-[var(--text-primary)] transition-colors" />
               </a>
 
-              <button onClick={toggleTheme} class="nav-icon-btn" title={theme.value === 'dark' ? 'Light mode' : 'Dark mode'}>
+              <button onClick={toggleTheme} class="nav-icon-btn" title={theme.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}>
                 {theme.value === 'dark'
-                  ? <div class="i-lucide-sun w-5 h-5 transition-transform hover:rotate-45" />
-                  : <div class="i-lucide-moon w-5 h-5 transition-transform hover:-rotate-12" />}
+                  ? <div class="i-lucide-moon w-5 h-5 transition-transform hover:-rotate-12" />
+                  : <div class="i-lucide-sun w-5 h-5 transition-transform hover:rotate-45" />}
               </button>
 
               <div ref={langRef} class="relative">
@@ -80,7 +80,7 @@ export default defineComponent({
                   <span class="hidden sm:inline ml-0.5">{currentLangLabel.value}</span>
                   <div class={`i-lucide-chevron-down w-3.5 h-3.5 ml-0.5 opacity-60 transition-transform ${showLangMenu.value ? 'rotate-180' : ''}`} />
                 </button>
-                <transition name="fade">
+                <Transition name="fade">
                   {showLangMenu.value ? (
                     <div
                       class="absolute right-0 top-full mt-2 bg-[var(--bg-primary)] border border-[var(--border-subtle)] p-2 rounded-xl min-w-[140px] shadow-2xl z-50 flex flex-col gap-1"
@@ -105,7 +105,7 @@ export default defineComponent({
                       ))}
                     </div>
                   ) : null}
-                </transition>
+                </Transition>
               </div>
             </div>
           </div>
