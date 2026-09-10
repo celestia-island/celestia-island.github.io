@@ -8,7 +8,6 @@ import { Scene } from 'three/src/scenes/Scene.js'
 import { OrthographicCamera } from 'three/src/cameras/OrthographicCamera.js'
 import { Mesh } from 'three/src/objects/Mesh.js'
 import { ShaderMaterial } from 'three/src/materials/ShaderMaterial.js'
-import { MeshBasicMaterial } from 'three/src/materials/MeshBasicMaterial.js'
 import { PointsMaterial } from 'three/src/materials/PointsMaterial.js'
 import { Points } from 'three/src/objects/Points.js'
 import { PlaneGeometry } from 'three/src/geometries/PlaneGeometry.js'
@@ -18,10 +17,18 @@ import { WebGLRenderTarget } from 'three/src/renderers/WebGLRenderTarget.js'
 import { CanvasTexture } from 'three/src/textures/CanvasTexture.js'
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
 import { Vector2 } from 'three/src/math/Vector2.js'
-import { AdditiveBlending, NormalBlending, LinearFilter } from 'three/src/constants.js'
+import {
+  AdditiveBlending,
+  CustomBlending,
+  LinearFilter,
+  NormalBlending,
+  OneFactor,
+  OneMinusSrcAlphaFactor,
+} from 'three/src/constants.js'
 import logoVert from '../../shaders/logo.vert?raw'
 import logoFrag from '../../shaders/logo.frag?raw'
 import logoLightFrag from '../../shaders/logo-light.frag?raw'
+import blitFrag from '../../shaders/blit.frag?raw'
 import entelecheiaLogo from '@res/logos/entelecheia.webp'
 
 export default defineComponent({
@@ -221,16 +228,27 @@ export default defineComponent({
       resizeRenderTarget()
 
       blitScene = new Scene()
-      // transparent:true is load-bearing here: an opaque material gets three's
-      // OPAQUE define, which forces the fragment alpha to 1.0, so the blit
-      // would paint the offscreen target's transparent pixels as opaque black
-      // and hide the page background behind the canvas (invisible on the dark
-      // theme, wrong on the light one). With blending kept on, the framebuffer
-      // receives texel-alpha and premultiplied RGB, matching the canvas
-      // context's premultipliedAlpha default.
+      // The blit must reproduce what a direct-to-canvas render used to produce
+      // before the offscreen pass existed, so it passes the target texel through
+      // untouched (blit.frag) and blends it as an already premultiplied source:
+      // ONE / ONE_MINUS_SRC_ALPHA. A built-in material would instead sample the
+      // premultiplied texel as straight color, multiply by alpha a second time
+      // and re-encode it with the output color space — which collapsed the light
+      // theme's ~0.1-alpha logo into an achromatic gray silhouette and also
+      // brightened the dark theme's ribbon past what its shader intends.
       blitMesh = new Mesh(
         new PlaneGeometry(2, 2),
-        new MeshBasicMaterial({ map: halfTarget.texture, transparent: true, depthWrite: false })
+        new ShaderMaterial({
+          uniforms: { u_map: { value: halfTarget.texture } },
+          vertexShader: logoVert,
+          fragmentShader: blitFrag,
+          transparent: true,
+          depthTest: false,
+          depthWrite: false,
+          blending: CustomBlending,
+          blendSrc: OneFactor,
+          blendDst: OneMinusSrcAlphaFactor,
+        })
       )
       blitScene.add(blitMesh)
 
@@ -358,7 +376,7 @@ export default defineComponent({
       }
       halfTarget?.dispose()
       blitMesh?.geometry.dispose()
-      ;(blitMesh?.material as MeshBasicMaterial | undefined)?.dispose()
+      ;(blitMesh?.material as ShaderMaterial | undefined)?.dispose()
       starMaterial?.map?.dispose()
       starPoints?.geometry.dispose()
       starMaterial?.dispose()
