@@ -15,7 +15,7 @@ on:
       - 'justfile'
     types: [opened, reopened, ready_for_review]
   push:
-    branches: [main, dev]
+    branches: [main]
 
 jobs:
   lint:
