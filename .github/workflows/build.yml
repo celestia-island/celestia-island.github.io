@@ -22,6 +22,7 @@ jobs:
   build:
     name: Build site
     runs-on: [self-hosted, linux, x64, local]
+    timeout-minutes: 120
     env:
       # actions/setup-python cannot download standalone builds for Debian, so
       # use the runner's system Python (3.11) and let pip install into the

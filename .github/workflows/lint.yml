@@ -21,6 +21,7 @@ jobs:
   lint:
     name: Typecheck (vue-tsc)
     runs-on: [self-hosted, linux, x64, local]
+    timeout-minutes: 120
     env:
       # See build.yml: use the runner's system Python (3.11) with user-site
       # pip installs; setup-python has no Debian standalone builds.
