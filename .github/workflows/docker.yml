@@ -1,8 +1,8 @@
 name: Docker
 
 # Builds the site image once and publishes it to the company Aliyun ACR registry
-# (what the website nodes pull — GHCR is unreliable from mainland China). A
-# second job then mirrors that exact manifest list to GHCR.
+# (the copy the website nodes pull). A second job then mirrors that exact
+# manifest list to GHCR.
 #
 # The mirror is deliberately a separate job rather than a second entry in the
 # build's `images:` list: the ACR copy is what production pulls, so a GHCR-side
@@ -35,8 +35,11 @@ jobs:
     name: Build and publish image
     runs-on: ubuntu-latest
     outputs:
-      # Bare tag names (latest / sha-<commit> / <version>). The mirror job reuses
-      # them so the tag policy stays defined in exactly one place.
+      # Bare tag names (latest / sha-<commit> / <version>), deliberately NOT the
+      # `tags` output: the full refs embed the ACR path, whose `langyo` segment
+      # is a masked secret, and the runner drops job outputs whose value changes
+      # under the secret masker. The mirror step fails loudly if this arrives
+      # empty rather than reporting a green no-op.
       tags: ${{ steps.meta.outputs.tag-names }}
     steps:
       - uses: actions/checkout@v7
@@ -99,9 +102,17 @@ jobs:
           GHCR_IMAGE: ghcr.io/${{ github.repository }}
         run: |
           set -euo pipefail
+          # An empty tag list would make the loop below iterate zero times and
+          # still exit 0 — a green run that mirrored nothing.
+          if [ -z "${TAGS//[[:space:]]/}" ]; then
+            echo "::error::the build job exported no tag names"
+            exit 1
+          fi
           for tag in $TAGS; do
             echo "mirroring ${ACR_IMAGE}:${tag} -> ${GHCR_IMAGE}:${tag}"
             docker buildx imagetools create \
               --tag "${GHCR_IMAGE}:${tag}" \
               "${ACR_IMAGE}:${tag}"
+            # Verify each copy: a partial mirror must not pass as a full one.
+            docker buildx imagetools inspect "${GHCR_IMAGE}:${tag}" > /dev/null
           done

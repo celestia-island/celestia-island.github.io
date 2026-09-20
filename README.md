@@ -43,12 +43,12 @@ instead of build:
 
 | Registry | Image |
 | --- | --- |
-| Aliyun ACR (mainland-China network) | `crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io` |
-| GHCR (canonical copy) | `ghcr.io/celestia-island/celestia-island.github.io` |
+| Aliyun ACR (the copy the website nodes pull) | `crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io` |
+| GHCR (GitHub-side copy) | `ghcr.io/celestia-island/celestia-island.github.io` |
 
-GHCR receives the same manifest list as ACR, with the same tags: `latest`,
-`sha-<short-sha>`, and the bare version on release tags — a `v1.2.3` git tag
-publishes `1.2.3`.
+GHCR receives the same manifest list as ACR, with the same tags. A `main` push
+publishes `latest` and `sha-<short-sha>`; the `v1.2.3` release tag publishes
+`1.2.3` and moves `latest`.
 
 ```bash
 docker pull ghcr.io/celestia-island/celestia-island.github.io:latest

@@ -17,8 +17,7 @@ Browser ──► Cloudflare edge (TLS, HTTP→HTTPS redirect)
 ```
 
 - The Docker image is built on GitHub Actions, pushed to the company Aliyun ACR
-  registry (the copy this node pulls — GHCR is unreliable from mainland China)
-  and then mirrored to GHCR as the canonical copy.
+  registry (the copy this node pulls) and then mirrored to GHCR.
 - The origin only accepts connections from Cloudflare edge IP ranges
   (`/etc/nginx/cloudflare/celestia-allow-cf.conf`), so direct scanning of the
   origin IP returns 403.
@@ -32,10 +31,10 @@ Browser ──► Cloudflare edge (TLS, HTTP→HTTPS redirect)
 `.github/workflows/docker.yml`:
 
 - **`build` job** — on `push` to `main` it builds `linux/amd64` + `linux/arm64`
-  once and pushes to the company ACR registry with tags `latest`,
-  `sha-<short-sha>`, and the bare version on release tags (a `v1.2.3` git tag
-  publishes `1.2.3`). This is the copy the website nodes pull. On PRs it builds
-  only, without pushing.
+  once and pushes to the company ACR registry: a `main` push publishes `latest`
+  and `sha-<short-sha>`, while the `v1.2.3` release tag publishes `1.2.3` and
+  moves `latest`. This is the copy the website nodes pull. On PRs it builds only,
+  without pushing.
 - **`mirror-ghcr` job** — `needs: build`, so it only runs once the ACR push
   succeeded; it copies that same manifest list to
   `ghcr.io/celestia-island/celestia-island.github.io` with
@@ -61,9 +60,8 @@ Everything lives in `/root/celestia-world/`:
 
 > **A pushed image is not a deployment.** Nothing on this node polls the registry,
 > so a merged change stays invisible on `celestia.world` until `deploy.sh` runs
-> here. The light-theme logo fix (#48, merged 2026-09-10) was still not live when
-> it was reported on 2026-09-20 — if a UI change looks like it had no effect, this
-> node's container age is part of the evidence.
+> here. If a UI change looks like it had no effect, this node's container age is
+> part of the evidence.
 
 Steps:
 
