@@ -16,8 +16,9 @@ Browser ──► Cloudflare edge (TLS, HTTP→HTTPS redirect)
                                       (celestia-island-home)
 ```
 
-- The Docker image is built on GitHub Actions and pushed to the company Aliyun
-  ACR registry (not GHCR — GHCR is unreliable from mainland China).
+- The Docker image is built on GitHub Actions and pushed to both the company
+  Aliyun ACR registry (the copy this node pulls — GHCR is unreliable from
+  mainland China) and GHCR (the canonical public copy).
 - The origin only accepts connections from Cloudflare edge IP ranges
   (`/etc/nginx/cloudflare/celestia-allow-cf.conf`), so direct scanning of the
   origin IP returns 403.
@@ -30,11 +31,17 @@ Browser ──► Cloudflare edge (TLS, HTTP→HTTPS redirect)
 
 `.github/workflows/docker.yml`:
 
-- On `push` to `main`: builds `linux/amd64` + `linux/arm64` and pushes to
-  `crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io`
-  with tags `latest`, `sha-<hash>`, `v<semver>` (release tags).
+- On `push` to `main`: builds `linux/amd64` + `linux/arm64` once and pushes the
+  same manifest list to two registries, with tags `latest`, `sha-<hash>`,
+  `v<semver>` (release tags):
+  - `crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io`
+    — the copy this node pulls;
+  - `ghcr.io/celestia-island/celestia-island.github.io` — the canonical public copy.
 - On PRs: builds only (no push).
-- Credentials: repo secrets `ACR_USERNAME` / `ACR_PASSWORD`.
+- Credentials: repo secrets `ACR_USERNAME` / `ACR_PASSWORD` for ACR; GHCR uses
+  the workflow's own `GITHUB_TOKEN` (`permissions: packages: write`).
+- `provenance` stays off for both copies: ACR rejects buildx attestation
+  manifests, and a single build feeds both.
 
 ## Deploying on the company node
 
@@ -47,6 +54,12 @@ Everything lives in `/root/celestia-world/`:
 | `deploy.sh` | pull image → compose down → up → status (the update routine) |
 | `setup-tls.sh` | issue/renew the Let's Encrypt cert via certbot DNS-01 (Cloudflare API) |
 | `nginx/celestia.443.conf` | HTTPS vhost (activate after cert is issued) |
+
+> **A pushed image is not a deployment.** Nothing on this node polls the registry,
+> so a merged change stays invisible on `celestia.world` until `deploy.sh` runs
+> here. The light-theme logo fix (#48, merged 2026-09-10) was still not live when
+> it was reported on 2026-09-20 — if a UI change looks like it had no effect, this
+> node's container age is part of the evidence.
 
 Steps:
 

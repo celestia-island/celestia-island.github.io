@@ -38,12 +38,24 @@ docker compose up -d --build
 | ----------------- | ------------------------------------------------------------------------------------------ |
 | `FOOTER_EXTRA`    | Extra footer content rendered below the copyright line — one line per entry. Accepts a JSON array of `{ "title", "url" }` objects (each renders as a link, e.g. `[{"title":"ICP filing number","url":"https://beian.miit.gov.cn/"}]`), a JSON array of raw-HTML strings, or a single raw-HTML string. Injected into `index.html` at startup via `docker/entrypoint.sh`; omitted/empty on GitHub Pages renders nothing. |
 
-The image is also published to GHCR (`ghcr.io/celestia-island/celestia-island.github.io`) on
-every `main` push, so nodes can pull instead of build:
+The image is published to two registries on every `main` push, so nodes can pull
+instead of build:
+
+| Registry | Image |
+| --- | --- |
+| Aliyun ACR (mainland-China network) | `crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io` |
+| GHCR (canonical public copy) | `ghcr.io/celestia-island/celestia-island.github.io` |
+
+Both carry the same tags: `latest` (default branch), `sha-<commit>`, and
+`v<semver>` for release tags.
 
 ```bash
 docker pull ghcr.io/celestia-island/celestia-island.github.io:latest
 ```
+
+A new GHCR package is private even when the repository is public — visibility is
+not inherited — so anonymous pulls need it switched to public once in the
+package settings.
 
 ## License
 

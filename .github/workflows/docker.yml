@@ -1,8 +1,9 @@
 name: Docker
 
-# Builds the site image and publishes it to the company Aliyun ACR registry so
-# website nodes can pull it without touching GHCR (which is unreliable from
-# mainland China). On pull requests the image is only built, not pushed.
+# Builds the site image and publishes it to both the company Aliyun ACR registry
+# (what the website nodes pull — GHCR is unreliable from mainland China) and GHCR
+# (the canonical public copy). On pull requests the image is only built, not
+# pushed.
 on:
   pull_request:
     paths:
@@ -18,6 +19,8 @@ on:
 
 permissions:
   contents: read
+  # Needed to push the image to GHCR with the workflow's own GITHUB_TOKEN.
+  packages: write
 
 jobs:
   build:
@@ -32,10 +35,18 @@ jobs:
           registry: crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
+      - uses: docker/login-action@v4
+        if: github.event_name != 'pull_request'
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - uses: docker/metadata-action@v6
         id: meta
         with:
-          images: crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io
+          images: |
+            crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io
+            ghcr.io/${{ github.repository }}
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
             type=sha
@@ -49,6 +60,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           # Aliyun ACR rejects buildx attestation manifests
           # (application/vnd.oci.empty.v1+json), so provenance must stay off.
+          # Both registries are fed by this single build, so GHCR ships without
+          # attestations too — the two copies stay byte-identical.
           provenance: false
           cache-from: type=gha
           cache-to: type=gha,mode=max
