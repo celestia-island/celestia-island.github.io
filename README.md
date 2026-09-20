@@ -44,11 +44,13 @@ instead of build:
 | Registry | Image |
 | --- | --- |
 | Aliyun ACR (the copy the website nodes pull) | `crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io` |
-| GHCR (GitHub-side copy) | `ghcr.io/celestia-island/celestia-island.github.io` |
+| GHCR (GitHub-side copy — kept in sync so the `docker pull` example below is not stale) | `ghcr.io/celestia-island/celestia-island.github.io` |
 
-GHCR receives the same manifest list as ACR, with the same tags. A `main` push
-publishes `latest` and `sha-<short-sha>`; the `v1.2.3` release tag publishes
-`1.2.3` and moves `latest`.
+GHCR receives the same manifest list as ACR, with the same tags: a `main` push
+publishes `latest` and `sha-<short-sha>`; a `v1.2.3` release tag publishes
+`1.2.3`, `sha-<short-sha>` and moves `latest`. A prerelease tag such as
+`v1.2.3-rc.1` publishes `1.2.3-rc.1` and `sha-<short-sha>` without touching
+`latest`.
 
 ```bash
 docker pull ghcr.io/celestia-island/celestia-island.github.io:latest
