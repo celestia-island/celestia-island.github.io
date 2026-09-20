@@ -1,8 +1,14 @@
 name: Docker
 
-# Builds the site image and publishes it to the company Aliyun ACR registry so
-# website nodes can pull it without touching GHCR (which is unreliable from
-# mainland China). On pull requests the image is only built, not pushed.
+# Builds the site image once and publishes it to the company Aliyun ACR registry
+# (the copy the website nodes pull). A second job then mirrors that exact
+# manifest list to GHCR.
+#
+# The mirror is deliberately a separate job rather than a second entry in the
+# build's `images:` list: the ACR copy is what production pulls, so a GHCR-side
+# failure must not be able to stop the publish production depends on.
+#
+# On pull requests the image is only built, not pushed.
 on:
   pull_request:
     paths:
@@ -19,23 +25,35 @@ on:
 permissions:
   contents: read
 
+env:
+  # Declared once so the build job and the GHCR mirror cannot drift apart.
+  ACR_REGISTRY: crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com
+  ACR_IMAGE: crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io
+
 jobs:
   build:
     name: Build and publish image
     runs-on: ubuntu-latest
+    outputs:
+      # Bare tag names (latest / sha-<commit> / <version>), deliberately NOT the
+      # `tags` output: the full refs embed the ACR path, whose `langyo` segment
+      # is a masked secret, and the runner drops job outputs whose value changes
+      # under the secret masker. The mirror step fails loudly if this arrives
+      # empty rather than reporting a green no-op.
+      tags: ${{ steps.meta.outputs.tag-names }}
     steps:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v4
       - uses: docker/login-action@v4
         if: github.event_name != 'pull_request'
         with:
-          registry: crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com
+          registry: ${{ env.ACR_REGISTRY }}
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
       - uses: docker/metadata-action@v6
         id: meta
         with:
-          images: crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io
+          images: ${{ env.ACR_IMAGE }}
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
             type=sha
@@ -49,6 +67,52 @@ jobs:
           platforms: linux/amd64,linux/arm64
           # Aliyun ACR rejects buildx attestation manifests
           # (application/vnd.oci.empty.v1+json), so provenance must stay off.
+          # GHCR receives this same manifest list by copy, so it has no
+          # attestation either.
           provenance: false
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  mirror-ghcr:
+    name: Mirror the image to GHCR
+    needs: build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Needed to push to GHCR with the workflow's own GITHUB_TOKEN.
+      packages: write
+    steps:
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
+        with:
+          registry: ${{ env.ACR_REGISTRY }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      # Registry-to-registry copy of the manifest list the build job just
+      # pushed: no second build, so both copies keep the same index digest.
+      - name: Copy every tag to GHCR
+        env:
+          TAGS: ${{ needs.build.outputs.tags }}
+          GHCR_IMAGE: ghcr.io/${{ github.repository }}
+        run: |
+          set -euo pipefail
+          # An empty tag list would make the loop below iterate zero times and
+          # still exit 0 — a green run that mirrored nothing.
+          if [ -z "${TAGS//[[:space:]]/}" ]; then
+            echo "::error::the build job exported no tag names"
+            exit 1
+          fi
+          for tag in $TAGS; do
+            echo "mirroring ${ACR_IMAGE}:${tag} -> ${GHCR_IMAGE}:${tag}"
+            docker buildx imagetools create \
+              --tag "${GHCR_IMAGE}:${tag}" \
+              "${ACR_IMAGE}:${tag}"
+            # Verify each copy: a partial mirror must not pass as a full one.
+            docker buildx imagetools inspect "${GHCR_IMAGE}:${tag}" > /dev/null
+          done
