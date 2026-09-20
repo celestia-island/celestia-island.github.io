@@ -16,9 +16,9 @@ Browser ──► Cloudflare edge (TLS, HTTP→HTTPS redirect)
                                       (celestia-island-home)
 ```
 
-- The Docker image is built on GitHub Actions and pushed to both the company
-  Aliyun ACR registry (the copy this node pulls — GHCR is unreliable from
-  mainland China) and GHCR (the canonical public copy).
+- The Docker image is built on GitHub Actions, pushed to the company Aliyun ACR
+  registry (the copy this node pulls — GHCR is unreliable from mainland China)
+  and then mirrored to GHCR as the canonical copy.
 - The origin only accepts connections from Cloudflare edge IP ranges
   (`/etc/nginx/cloudflare/celestia-allow-cf.conf`), so direct scanning of the
   origin IP returns 403.
@@ -31,17 +31,21 @@ Browser ──► Cloudflare edge (TLS, HTTP→HTTPS redirect)
 
 `.github/workflows/docker.yml`:
 
-- On `push` to `main`: builds `linux/amd64` + `linux/arm64` once and pushes the
-  same manifest list to two registries, with tags `latest`, `sha-<hash>`,
-  `v<semver>` (release tags):
-  - `crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io`
-    — the copy this node pulls;
-  - `ghcr.io/celestia-island/celestia-island.github.io` — the canonical public copy.
-- On PRs: builds only (no push).
-- Credentials: repo secrets `ACR_USERNAME` / `ACR_PASSWORD` for ACR; GHCR uses
-  the workflow's own `GITHUB_TOKEN` (`permissions: packages: write`).
-- `provenance` stays off for both copies: ACR rejects buildx attestation
-  manifests, and a single build feeds both.
+- **`build` job** — on `push` to `main` it builds `linux/amd64` + `linux/arm64`
+  once and pushes to the company ACR registry with tags `latest`,
+  `sha-<short-sha>`, and the bare version on release tags (a `v1.2.3` git tag
+  publishes `1.2.3`). This is the copy the website nodes pull. On PRs it builds
+  only, without pushing.
+- **`mirror-ghcr` job** — `needs: build`, so it only runs once the ACR push
+  succeeded; it copies that same manifest list to
+  `ghcr.io/celestia-island/celestia-island.github.io` with
+  `docker buildx imagetools create`. No second build, so both copies keep the
+  same index digest. It is a separate job on purpose — a GHCR-side failure must
+  not be able to stop the ACR publish that production depends on.
+- Credentials: repo secrets `ACR_USERNAME` / `ACR_PASSWORD` for ACR; the mirror
+  job uses the workflow's own `GITHUB_TOKEN` (`permissions: packages: write`).
+- `provenance` stays off: ACR rejects buildx attestation manifests, and GHCR
+  receives the same manifest list by copy.
 
 ## Deploying on the company node
 

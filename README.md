@@ -44,18 +44,19 @@ instead of build:
 | Registry | Image |
 | --- | --- |
 | Aliyun ACR (mainland-China network) | `crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io` |
-| GHCR (canonical public copy) | `ghcr.io/celestia-island/celestia-island.github.io` |
+| GHCR (canonical copy) | `ghcr.io/celestia-island/celestia-island.github.io` |
 
-Both carry the same tags: `latest` (default branch), `sha-<commit>`, and
-`v<semver>` for release tags.
+GHCR receives the same manifest list as ACR, with the same tags: `latest`,
+`sha-<short-sha>`, and the bare version on release tags — a `v1.2.3` git tag
+publishes `1.2.3`.
 
 ```bash
 docker pull ghcr.io/celestia-island/celestia-island.github.io:latest
 ```
 
-A new GHCR package is private even when the repository is public — visibility is
-not inherited — so anonymous pulls need it switched to public once in the
-package settings.
+That pull needs the package to be public first: GHCR packages do not inherit the
+repository's visibility, and this one is private. Switch it under the package
+settings, or run `docker login ghcr.io` before pulling.
 
 ## License
 
