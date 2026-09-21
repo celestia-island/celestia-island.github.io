@@ -38,12 +38,27 @@ docker compose up -d --build
 | ----------------- | ------------------------------------------------------------------------------------------ |
 | `FOOTER_EXTRA`    | Extra footer content rendered below the copyright line — one line per entry. Accepts a JSON array of `{ "title", "url" }` objects (each renders as a link, e.g. `[{"title":"ICP filing number","url":"https://beian.miit.gov.cn/"}]`), a JSON array of raw-HTML strings, or a single raw-HTML string. Injected into `index.html` at startup via `docker/entrypoint.sh`; omitted/empty on GitHub Pages renders nothing. |
 
-The image is also published to GHCR (`ghcr.io/celestia-island/celestia-island.github.io`) on
-every `main` push, so nodes can pull instead of build:
+The image is published to two registries on every `main` push, so nodes can pull
+instead of build:
+
+| Registry | Image |
+| --- | --- |
+| Aliyun ACR (the copy the website nodes pull) | `crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io` |
+| GHCR (GitHub-side copy — kept in sync so the `docker pull` example below is not stale) | `ghcr.io/celestia-island/celestia-island.github.io` |
+
+GHCR receives the same manifest list as ACR, with the same tags: a `main` push
+publishes `latest` and `sha-<short-sha>`; a `v1.2.3` release tag publishes
+`1.2.3`, `sha-<short-sha>` and moves `latest`. A prerelease tag such as
+`v1.2.3-rc.1` publishes `1.2.3-rc.1` and `sha-<short-sha>` without touching
+`latest`.
 
 ```bash
 docker pull ghcr.io/celestia-island/celestia-island.github.io:latest
 ```
+
+That pull needs the package to be public first: GHCR packages do not inherit the
+repository's visibility, and this one is private. Switch it under the package
+settings, or run `docker login ghcr.io` before pulling.
 
 ## License
 

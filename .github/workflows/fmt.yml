@@ -17,6 +17,7 @@ jobs:
   format:
     name: Markdown format
     runs-on: [self-hosted, linux, x64, local]
+    timeout-minutes: 60
     env:
       # See build.yml: setup-python has no Debian standalone builds; use the
       # runner's system Python (3.11) with user-site pip installs (PEP 668).

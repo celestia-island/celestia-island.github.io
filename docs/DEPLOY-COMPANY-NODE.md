@@ -16,8 +16,9 @@ Browser ──► Cloudflare edge (TLS, HTTP→HTTPS redirect)
                                       (celestia-island-home)
 ```
 
-- The Docker image is built on GitHub Actions and pushed to the company Aliyun
-  ACR registry (not GHCR — GHCR is unreliable from mainland China).
+- The Docker image is built on GitHub Actions, pushed to the company Aliyun ACR
+  registry (the copy this node pulls — the node holds ACR credentials, per #29)
+  and then mirrored to GHCR.
 - The origin only accepts connections from Cloudflare edge IP ranges
   (`/etc/nginx/cloudflare/celestia-allow-cf.conf`), so direct scanning of the
   origin IP returns 403.
@@ -30,11 +31,22 @@ Browser ──► Cloudflare edge (TLS, HTTP→HTTPS redirect)
 
 `.github/workflows/docker.yml`:
 
-- On `push` to `main`: builds `linux/amd64` + `linux/arm64` and pushes to
-  `crpi-88d7shkt0yo9qvvt.cn-shanghai.personal.cr.aliyuncs.com/langyo_personal/celestia-island.github.io`
-  with tags `latest`, `sha-<hash>`, `v<semver>` (release tags).
-- On PRs: builds only (no push).
-- Credentials: repo secrets `ACR_USERNAME` / `ACR_PASSWORD`.
+- **`build` job** — on `push` to `main` it builds `linux/amd64` + `linux/arm64`
+  once and pushes to the company ACR registry: a `main` push publishes `latest`
+  and `sha-<short-sha>`; a `v1.2.3` release tag publishes `1.2.3`,
+  `sha-<short-sha>` and moves `latest` (a prerelease tag publishes its own
+  version and `sha-<short-sha>` without touching `latest`). This is the copy the
+  website nodes pull. On PRs it builds only, without pushing.
+- **`mirror-ghcr` job** — `needs: build`, so it only runs once the ACR push
+  succeeded; it copies that same manifest list to
+  `ghcr.io/celestia-island/celestia-island.github.io` with
+  `docker buildx imagetools create`. No second build, so both copies keep the
+  same index digest. It is a separate job on purpose — a GHCR-side failure must
+  not be able to stop the ACR publish that production depends on.
+- Credentials: repo secrets `ACR_USERNAME` / `ACR_PASSWORD` for ACR; the mirror
+  job uses the workflow's own `GITHUB_TOKEN` (`permissions: packages: write`).
+- `provenance` stays off: ACR rejects buildx attestation manifests, and GHCR
+  receives the same manifest list by copy.
 
 ## Deploying on the company node
 
@@ -47,6 +59,11 @@ Everything lives in `/root/celestia-world/`:
 | `deploy.sh` | pull image → compose down → up → status (the update routine) |
 | `setup-tls.sh` | issue/renew the Let's Encrypt cert via certbot DNS-01 (Cloudflare API) |
 | `nginx/celestia.443.conf` | HTTPS vhost (activate after cert is issued) |
+
+> **A pushed image is not a deployment.** Nothing on this node polls the registry,
+> so a merged change stays invisible on `celestia.world` until `deploy.sh` runs
+> here. If a UI change looks like it had no effect, this node's container age is
+> part of the evidence.
 
 Steps:
 
