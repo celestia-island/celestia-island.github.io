@@ -16,6 +16,18 @@
   -->
   <script type="application/json" id="celestia-footer-extra">$FOOTER_EXTRA</script>
 
+  <!--
+    Google Analytics 4 measurement id for THIS site (celestia.world). This
+    repo is the site's own source and GitHub Pages serves the dist as-is
+    (no container-start envsubst step), so the id ships in the document;
+    the src/analytics.ts bootstrap still does the dynamic enabling — the
+    gtag.js loader is injected from the TS entry at runtime, only for a
+    well-formed id, and never for localhost hosts. A Docker deployment
+    could substitute this value the FOOTER_EXTRA way without a rebuild.
+    Measurement ids are public page-surface values, not secrets.
+  -->
+  <script type="application/json" id="celestia-ga-measurement-id">G-SDM897SQCV</script>
+
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Celestia Island" />
   <meta property="og:description" content="An independent open-source organization exploring the frontiers of systems engineering" />
