@@ -122,6 +122,12 @@
     "description": "面向 ARM64 和 RISC-V 边缘设备的 Rust OS 内核，派生自 Asterinas，附带工业驱动和 no_std 传感器库。",
     "shortLabel": "IoT OS 内核"
   },
+  "hare": {
+    "name": "Hare",
+    "tagline": "传感器与网关共用的同一份契约",
+    "description": "一个 #![no_std] 嵌入式桥接库——硬件清单、紧凑的线协议、协议编解码类型与 HAL trait，由 embassy 传感器节点和 evernight 网关共用。",
+    "shortLabel": "嵌入式桥接库"
+  },
   "lagrange": {
     "name": "Lagrange",
     "tagline": "多语言 Markdown 静态站点",

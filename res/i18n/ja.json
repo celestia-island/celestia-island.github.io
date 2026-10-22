@@ -122,6 +122,12 @@
     "description": "ARM64およびRISC-Vエッジデバイス向けのRust OSカーネル。Asterinas由来で、産業ドライバとno_stdセンサライブラリを同梱。",
     "shortLabel": "IoT OSカーネル"
   },
+  "hare": {
+    "name": "Hare",
+    "tagline": "センサーとゲートウェイが共有する単一の契約",
+    "description": "embassy ベースのセンサーノードと evernight ゲートウェイが共有する、ハードウェアマニフェスト・コンパクトなワイヤプロトコル・プロトコルコーデック・HAL トレイトを備えた #![no_std] 組み込みブリッジライブラリ。",
+    "shortLabel": "組み込みブリッジライブラリ"
+  },
   "lagrange": {
     "name": "Lagrange",
     "tagline": "多言語Markdown静的サイト",

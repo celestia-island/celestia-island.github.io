@@ -122,6 +122,12 @@
     "description": "ARM64 및 RISC-V 엣지 디바이스용 Rust OS 커널. Asterinas에서 파생되었으며, 산업 드라이버와 no_std 센서 라이브러리를 포함합니다.",
     "shortLabel": "IoT OS 커널"
   },
+  "hare": {
+    "name": "Hare",
+    "tagline": "센서와 게이트웨이가 공유하는 하나의 계약",
+    "description": "embassy 기반 센서 노드와 evernight 게이트웨이가 공유하는 하드웨어 매니페스트, 간결한 와이어 프로토콜, 프로토콜 코덱, HAL 트레이트를 제공하는 #![no_std] 임베디드 브리지 라이브러리입니다.",
+    "shortLabel": "임베디드 브리지 라이브러리"
+  },
   "lagrange": {
     "name": "Lagrange",
     "tagline": "다국어 Markdown 정적 사이트",
