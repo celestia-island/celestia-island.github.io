@@ -122,6 +122,12 @@
     "description": "Un núcleo de SO en Rust para edge devices ARM64 y RISC-V, derivado de Asterinas, con controladores industriales y una biblioteca de sensores no_std.",
     "shortLabel": "Kernel de SO IoT"
   },
+  "hare": {
+    "name": "Hare",
+    "tagline": "Un solo contrato para sensores y pasarelas",
+    "description": "Una biblioteca de puente embebida #![no_std]: manifiestos de hardware, un protocolo de comunicación compacto, identificadores de tipo de protocolo y traits HAL compartidos por los nodos de sensores embassy y la pasarela evernight.",
+    "shortLabel": "Biblioteca de puente embebida"
+  },
   "lagrange": {
     "name": "Lagrange",
     "tagline": "Sitio estático Markdown multilingüe",

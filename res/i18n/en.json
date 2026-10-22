@@ -122,6 +122,12 @@
     "description": "A Rust OS kernel for ARM64 and RISC-V edge devices, derived from Asterinas, with industrial drivers and a no_std sensor library.",
     "shortLabel": "IoT OS Kernel"
   },
+  "hare": {
+    "name": "Hare",
+    "tagline": "One contract for sensors and gateways",
+    "description": "A #![no_std] embedded bridge library — hardware manifests, a compact wire protocol, protocol type identifiers, and HAL traits shared by embassy sensor nodes and the evernight gateway.",
+    "shortLabel": "Embedded Bridge Library"
+  },
   "lagrange": {
     "name": "Lagrange",
     "tagline": "Multilingual Markdown static site",

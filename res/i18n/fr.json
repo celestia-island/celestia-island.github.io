@@ -122,6 +122,12 @@
     "description": "Un noyau OS en Rust pour appareils edge ARM64 et RISC-V, dérivé d'Asterinas, avec pilotes industriels et une bibliothèque de capteurs no_std.",
     "shortLabel": "Noyau OS IoT"
   },
+  "hare": {
+    "name": "Hare",
+    "tagline": "Un seul contrat pour capteurs et passerelles",
+    "description": "Une bibliothèque de pont embarquée #![no_std] — manifestes matériels, protocole filaire compact, identifiants de type de protocole et traits HAL partagés par les nœuds capteurs embassy et la passerelle evernight.",
+    "shortLabel": "Bibliothèque de pont embarquée"
+  },
   "lagrange": {
     "name": "Lagrange",
     "tagline": "Site statique Markdown multilingue",

@@ -9,6 +9,7 @@ import shittimLogo from '@res/logos/shittim-chest.webp'
 import evernightLogo from '@res/logos/evernight.webp'
 import arisLogo from '@res/logos/aris.webp'
 import keiLogo from '@res/logos/kei.webp'
+import hareLogo from '@res/logos/hare.webp'
 import tairitsuLogo from '@res/logos/tairitsu.webp'
 import hikariLogo from '@res/logos/hikari.webp'
 import lagrangeLogo from '@res/logos/lagrange.webp'
@@ -32,6 +33,7 @@ const logoMap: Record<string, string> = {
   evernight: evernightLogo,
   aris: arisLogo,
   kei: keiLogo,
+  hare: hareLogo,
   tairitsu: tairitsuLogo,
   hikari: hikariLogo,
   lagrange: lagrangeLogo,
