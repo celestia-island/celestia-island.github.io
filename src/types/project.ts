@@ -101,7 +101,7 @@ export const projects: Project[] = [
     shortLabelKey: 'hare.shortLabel',
     tagline: 'One contract for sensors and gateways',
     taglineKey: 'hare.tagline',
-    description: 'A #![no_std] embedded bridge library — hardware manifests, a compact wire protocol, protocol codecs, and HAL traits shared by embassy sensor nodes and the evernight gateway.',
+    description: 'A #![no_std] embedded bridge library — hardware manifests, a compact wire protocol, protocol type identifiers, and HAL traits shared by embassy sensor nodes and the evernight gateway.',
     descriptionKey: 'hare.description',
     techStack: ['Rust', 'no_std', 'embassy', 'IoT'],
     status: 'active',

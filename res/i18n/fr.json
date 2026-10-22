@@ -125,7 +125,7 @@
   "hare": {
     "name": "Hare",
     "tagline": "Un seul contrat pour capteurs et passerelles",
-    "description": "Une bibliothèque de pont embarquée #![no_std] — manifestes matériels, protocole filaire compact, codecs de protocole et traits HAL partagés par les nœuds capteurs embassy et la passerelle evernight.",
+    "description": "Une bibliothèque de pont embarquée #![no_std] — manifestes matériels, protocole filaire compact, identifiants de type de protocole et traits HAL partagés par les nœuds capteurs embassy et la passerelle evernight.",
     "shortLabel": "Bibliothèque de pont embarquée"
   },
   "lagrange": {

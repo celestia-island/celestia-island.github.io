@@ -125,7 +125,7 @@
   "hare": {
     "name": "Hare",
     "tagline": "센서와 게이트웨이가 공유하는 하나의 계약",
-    "description": "embassy 기반 센서 노드와 evernight 게이트웨이가 공유하는 하드웨어 매니페스트, 간결한 와이어 프로토콜, 프로토콜 코덱, HAL 트레이트를 제공하는 #![no_std] 임베디드 브리지 라이브러리입니다.",
+    "description": "embassy 기반 센서 노드와 evernight 게이트웨이가 공유하는 하드웨어 매니페스트, 간결한 와이어 프로토콜, 프로토콜 타입 식별자, HAL 트레이트를 제공하는 #![no_std] 임베디드 브리지 라이브러리입니다.",
     "shortLabel": "임베디드 브리지 라이브러리"
   },
   "lagrange": {
