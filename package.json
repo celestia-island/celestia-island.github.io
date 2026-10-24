@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "private": true,
   "license": "SySL-1.0",
-  "packageManager": "pnpm@10.15.0",
+  "packageManager": "pnpm@11.22.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
