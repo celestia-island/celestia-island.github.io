@@ -1,5 +1,10 @@
 packages:
   - .
+# pnpm 11 holds back freshly published packages; the base is required because
+# `minimumReleaseAgeExclude` is ignored wholesale without it (frontend-pnpm).
+# This repository consumes no first-party `@celestia-island/*` packages, so the
+# exact-name exclude list stays empty by design.
+minimumReleaseAge: 1440
 allowBuilds:
   '@parcel/watcher': true
 overrides:
