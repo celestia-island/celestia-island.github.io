@@ -20,11 +20,19 @@ on:
       - 'vite.config.ts'
       - 'uno.config.ts'
       - 'justfile'
-    types: [opened, reopened, ready_for_review]
+    # synchronize is load-bearing: the type-escape gate lives in this workflow,
+    # and without it a re-push would never re-run the gate (ci-ops §8.3.6).
+    types: [opened, reopened, ready_for_review, synchronize]
   push:
     branches: [main]
 
 jobs:
+
+  type-escapes:
+    name: Type escape hatches
+    uses: celestia-island/celestia-devtools/.github/workflows/type-escapes.yml@46e95519848940ebbaae60023dc03bb7a114c5ec
+    with:
+      devtools-ref: 46e95519848940ebbaae60023dc03bb7a114c5ec
   lint:
     # Fork pull requests pay for their own CI: this job is heavy (it compiles,
     # builds, tests or audits) and a fork's run would spend shared runner time on
