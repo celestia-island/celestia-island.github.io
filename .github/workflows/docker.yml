@@ -10,15 +10,7 @@ name: Docker
 #
 # On pull requests the image is only built, not pushed.
 on:
-  pull_request:
-    paths:
-      - 'Dockerfile'
-      - 'nginx.conf'
-      - 'docker/**'
-      - 'docker-compose.yml'
-      - '.github/workflows/docker.yml'
   push:
-    branches: [main]
     tags: ['v*']
   workflow_dispatch:
 
