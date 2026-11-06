@@ -42,6 +42,18 @@ jobs:
         run: |
           curl -sSL https://github.com/casey/just/releases/download/1.55.1/just-1.55.1-x86_64-unknown-linux-musl.tar.gz | tar xz
           sudo install just /usr/local/bin
+      - name: Stage the shared devtools just recipes
+        # `.just/` is gitignored and can only ever be staged by `just fetch`
+        # itself, so a pristine checkout has no `fetch` recipe at all — that is
+        # why this bootstrap must exist. Install the control-plane CLI at the
+        # same pinned ref the reusable workflows above use (never a floating
+        # branch) and let it drop the bundled common.just into `.just/`; the
+        # `just fetch` below then finds the staged copy already current.
+        run: |
+          python3 -m pip install --quiet --upgrade --user \
+            "celestia-devtools @ git+https://github.com/celestia-island/celestia-devtools@3779c1961f8f08bf60b21458894667a9b6c3599a"
+          python3 -c 'import sysconfig; print(sysconfig.get_path("scripts"))' >> "$GITHUB_PATH"
+          python3 -m celestia_devtools fetch-just
       - run: just fetch
       - run: just install
       - run: just build
