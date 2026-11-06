@@ -9,22 +9,7 @@ concurrency:
 
 on:
   workflow_dispatch:
-  pull_request:
-    paths:
-      - '.github/workflows/build.yml'
-      - 'src/**'
-      - 'scripts/**'
-      - 'shaders/**'
-      - 'res/**'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - 'tsconfig.json'
-      - 'vite.config.ts'
-      - 'uno.config.ts'
-      - 'index.html'
-      - 'justfile'
 
-    types: [opened, reopened, ready_for_review]
 jobs:
   build:
     # Fork pull requests pay for their own CI: this job is heavy (it compiles,
