@@ -11,18 +11,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "marked": "^*",
-    "three": "^0.*",
-    "vue": "^*",
-    "vue-i18n": "^*",
-    "vue-router": "^*"
+    "marked": "^18",
+    "three": "^0.185",
+    "vue": "^3",
+    "vue-i18n": "^11",
+    "vue-router": "^5"
   },
   "devDependencies": {
     "@iconify-json/lucide": "^*",
     "@types/three": "^0.*",
     "@unocss/reset": "^*",
     "@vitejs/plugin-vue": "^*",
-    "@vitejs/plugin-vue-jsx": "^5.1.6",
+    "@vitejs/plugin-vue-jsx": "^5",
     "sass": "^*",
     "typescript": "^*",
     "unocss": "^*",
