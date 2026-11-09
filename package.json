@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@iconify-json/lucide": "^*",
-    "@types/three": "^0.*",
+    "@types/three": "^0.185",
     "@unocss/reset": "^*",
     "@vitejs/plugin-vue": "^*",
     "@vitejs/plugin-vue-jsx": "^5",
