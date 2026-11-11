@@ -1,0 +1,131 @@
+/* Arcaea · Prismatic Gothic — original CSS-only glass/arch/spectrum skin. */
+
+:root[data-theme="arcaea-gothic"] {
+  --theme-display-font: Georgia, "Times New Roman", var(--font-reading);
+  --theme-data-font: var(--font-mono);
+  --theme-title-tracking: 0.045em;
+  --theme-data-tracking: 0.035em;
+  --theme-button-tracking: 0.035em;
+  --theme-badge-tracking: 0.025em;
+  --theme-motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --theme-motion-spring: cubic-bezier(0.3, 1.16, 0.46, 1);
+  --theme-motion-snap: cubic-bezier(0.4, 0, 0.2, 1);
+  --theme-line: rgb(var(--color-border) / 15%);
+  --theme-line-strong: rgb(var(--color-border) / 34%);
+  --theme-card-bg: color-mix(in srgb, rgb(var(--color-surface)) 84%, transparent);
+  --theme-field-bg: color-mix(in srgb, rgb(var(--color-surface)) 62%, transparent);
+  --theme-tooltip-bg: rgb(var(--color-surface));
+  --theme-toast-bg: rgb(var(--color-surface));
+  --theme-card-radius: var(--radius-lg);
+  --theme-primary-fill: linear-gradient(118deg, rgb(var(--color-primary)), color-mix(in srgb, rgb(var(--color-primary)) 68%, rgb(var(--color-accent))) 52%, color-mix(in srgb, rgb(var(--color-primary)) 72%, rgb(var(--color-secondary))));
+  --theme-secondary-fill: linear-gradient(118deg, rgb(var(--color-secondary)), color-mix(in srgb, rgb(var(--color-secondary)) 62%, rgb(var(--color-primary))));
+  --theme-primary-border: 1px solid rgb(var(--color-secondary) / 38%);
+  --theme-control-texture: linear-gradient(125deg, rgb(var(--color-primary) / 4%), transparent 44%, rgb(var(--color-secondary) / 3%));
+  --theme-card-texture:
+    radial-gradient(ellipse 90% 52% at 50% 0%, rgb(var(--color-primary) / 9%), transparent 72%),
+    linear-gradient(125deg, transparent 0 66%, rgb(var(--color-secondary) / 3%) 66.3% 66.8%, transparent 67%);
+  --theme-band-texture:
+    radial-gradient(ellipse 72% 130% at 50% 0%, rgb(var(--color-primary) / 10%), transparent 72%),
+    linear-gradient(90deg, rgb(var(--color-accent) / 4%), transparent 42%, rgb(var(--color-secondary) / 4%));
+  --theme-field-texture: linear-gradient(115deg, rgb(var(--color-primary) / 5%), transparent 48%, rgb(var(--color-secondary) / 3%));
+  --theme-active-texture: linear-gradient(100deg, rgb(var(--color-primary) / 14%), rgb(var(--color-accent) / 5%) 56%, rgb(var(--color-secondary) / 6%));
+  --theme-indicator-fill: linear-gradient(112deg, rgb(var(--color-primary) / 18%), rgb(var(--color-accent) / 8%), rgb(var(--color-secondary) / 12%));
+  --theme-progress-texture: repeating-linear-gradient(118deg, rgb(var(--color-on-solid-icon) / 15%) 0 5px, transparent 5px 11px);
+  --theme-skeleton-texture: linear-gradient(100deg, rgb(var(--color-primary) / 7%) 25%, rgb(var(--color-secondary) / 17%) 50%, rgb(var(--color-accent) / 7%) 75%);
+  --theme-float-texture:
+    radial-gradient(ellipse 86% 40% at 50% 0%, rgb(var(--color-primary) / 8%), transparent 74%),
+    linear-gradient(128deg, transparent 0 78%, rgb(var(--color-secondary) / 3%) 78.3% 78.8%, transparent 79%);
+  --theme-mobile-float-texture: radial-gradient(ellipse 92% 30% at 50% 0%, rgb(var(--color-primary) / 7%), transparent 76%);
+  --theme-dock-texture:
+    radial-gradient(ellipse 78% 160% at 50% 100%, rgb(var(--color-primary) / 8%), transparent 74%),
+    linear-gradient(100deg, rgb(var(--color-accent) / 3%), transparent 44%, rgb(var(--color-secondary) / 4%));
+  --theme-empty-texture:
+    radial-gradient(circle at 50% 36%, rgb(var(--color-primary) / 7%), transparent 32%),
+    linear-gradient(125deg, transparent 0 58%, rgb(var(--color-secondary) / 3%) 58.4% 58.8%, transparent 59%);
+  --theme-scanline: linear-gradient(90deg, transparent, rgb(var(--color-primary) / 76%) 25%, rgb(var(--color-accent) / 68%) 48%, rgb(var(--color-secondary) / 80%) 70%, transparent);
+}
+
+:root[data-theme="arcaea-gothic"]:not([data-radius]),
+:root[data-theme="arcaea-gothic"][data-radius="small"] {
+  --theme-card-radius: 4px;
+  --hk-modal-radius: 6px;
+}
+
+:root[data-theme="arcaea-gothic"][data-radius="none"] {
+  --theme-card-radius: 0;
+  --hk-modal-radius: 0;
+}
+
+:root[data-theme="arcaea-gothic"][data-radius="large"] {
+  --theme-card-radius: 20px;
+  --hk-modal-radius: 24px;
+}
+
+:root[data-theme="arcaea-gothic"][data-mode="dark"] {
+  --theme-primary-fill: linear-gradient(118deg, #f5f1f8, #d9f4f4 48%, #f0d7e5);
+  --theme-primary-border: 1px solid rgb(var(--color-secondary) / 52%);
+  --theme-body-texture:
+    radial-gradient(ellipse 70% 48% at 50% -8%, rgb(var(--color-primary) / 16%), transparent 72%),
+    radial-gradient(circle at 8% 84%, rgb(var(--color-secondary) / 6%), transparent 28%),
+    linear-gradient(128deg, transparent 0 68%, rgb(var(--color-secondary) / 3%) 68.2% 68.5%, transparent 68.7%),
+    linear-gradient(52deg, transparent 0 82%, rgb(var(--color-accent) / 3%) 82.2% 82.5%, transparent 82.7%);
+  --theme-body-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  --theme-chrome-texture:
+    radial-gradient(ellipse 70% 190% at 50% 0%, rgb(var(--color-primary) / 10%), transparent 74%),
+    linear-gradient(90deg, rgb(var(--color-accent) / 3%), transparent 46%, rgb(var(--color-secondary) / 5%));
+  --theme-scrim: rgb(7 3 12 / 72%);
+  --page-tint: rgb(9 5 14 / 76%);
+  --separator-color: rgb(var(--color-secondary) / 10%);
+  --code-keyword: #c76bff;
+  --code-builtin: #66d9e8;
+  --code-string: #a9d9c7;
+  --code-number: #f2a6c6;
+  --code-comment: #9b8ca8;
+  --code-function: #76cfe8;
+  --code-type: #e7bd6e;
+  --code-variable: #ff7b9c;
+}
+
+:root[data-theme="arcaea-gothic"][data-mode="light"] {
+  --theme-body-texture:
+    radial-gradient(ellipse 70% 48% at 50% -8%, rgb(var(--color-primary) / 11%), transparent 72%),
+    radial-gradient(circle at 8% 84%, rgb(var(--color-secondary) / 5%), transparent 28%),
+    linear-gradient(128deg, transparent 0 68%, rgb(var(--color-secondary) / 3%) 68.2% 68.5%, transparent 68.7%),
+    linear-gradient(52deg, transparent 0 82%, rgb(var(--color-accent) / 3%) 82.2% 82.5%, transparent 82.7%);
+  --theme-body-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  --theme-chrome-texture:
+    radial-gradient(ellipse 70% 190% at 50% 0%, rgb(var(--color-primary) / 8%), transparent 74%),
+    linear-gradient(90deg, rgb(var(--color-accent) / 3%), transparent 46%, rgb(var(--color-secondary) / 4%));
+  --theme-scrim: rgb(34 20 43 / 36%);
+  --page-tint: rgb(246 241 249 / 82%);
+  --separator-color: rgb(var(--color-primary) / 10%);
+  --code-keyword: #7b2cbf;
+  --code-builtin: #087f8c;
+  --code-string: #197456;
+  --code-number: #b13d73;
+  --code-comment: #75677e;
+  --code-function: #176c84;
+  --code-type: #866018;
+  --code-variable: #b92f57;
+}
+
+/* One restrained prism flare when the theme itself is commissioned. */
+:root[data-theme="arcaea-gothic"].s-theme-transitioning .hk-btn-primary {
+  animation: ct-arcaea-prism 0.48s var(--theme-motion-ease) 1;
+}
+
+@keyframes ct-arcaea-prism {
+  0% { filter: saturate(0.72) brightness(0.92); }
+  58% { filter: saturate(1.28) brightness(1.12); }
+  100% { filter: saturate(1) brightness(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme="arcaea-gothic"].s-theme-transitioning .hk-btn-primary {
+    animation: none;
+  }
+}
+
+:root[data-theme="arcaea-gothic"].reduce-motion.s-theme-transitioning .hk-btn-primary {
+  animation: none;
+}

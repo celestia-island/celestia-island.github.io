@@ -1,0 +1,74 @@
+{
+  "formatVersion": "0.1",
+  "id": "endfield-wuling",
+  "name": "Endfield · Wuling Industrial",
+  "name_i18n": {
+    "ar": "إندفيلد · وولينغ الصناعية",
+    "de": "Endfield · Wuling-Industrie",
+    "en": "Endfield · Wuling Industrial",
+    "es": "Endfield · Industria de Wuling",
+    "fr": "Endfield · Wuling industriel",
+    "ja": "エンドフィールド・武陵インダストリアル",
+    "ko": "엔드필드 · 무릉 인더스트리얼",
+    "pt": "Endfield · Industrial de Wuling",
+    "ru": "Endfield · Индустриальный Улин",
+    "zh-Hans": "终末地 · 武陵工业绿",
+    "zh-Hant": "終末地 · 武陵工業綠"
+  },
+  "preset": false,
+  "tokens": {
+    "dark": {
+      "primary": "#8AC8AA",
+      "secondary": "#82C7DD",
+      "accent": "#F0D44E",
+      "text": "#E8EEE7",
+      "muted": "#A9B5AA",
+      "border": "#B7C4B6",
+      "focusedBorder": "#A4D8B9",
+      "background": "#111714",
+      "surface": "#18201C",
+      "selectedBackground": "#28483A",
+      "selectedText": "#F0F6EF",
+      "statusBarBackground": "#0D1210",
+      "success": "#87CDA1",
+      "error": "#F08A80",
+      "warning": "#F0B67A",
+      "info": "#82C7DD",
+      "onSolidText": "#10251C",
+      "onSolidIcon": "#10251C"
+    },
+    "light": {
+      "primary": "#2F6F5E",
+      "secondary": "#32728A",
+      "accent": "#A05A20",
+      "text": "#1C2421",
+      "muted": "#56635C",
+      "border": "#25392B",
+      "focusedBorder": "#2F6F5E",
+      "background": "#F2F4EF",
+      "surface": "#FAFBF7",
+      "selectedBackground": "#DDEBE2",
+      "selectedText": "#1E4A3D",
+      "statusBarBackground": "#DEE6DD",
+      "success": "#2F7256",
+      "error": "#AD3D36",
+      "warning": "#8A4B12",
+      "info": "#32728A",
+      "onSolidText": "#FFFFFF",
+      "onSolidIcon": "#FFFFFF"
+    }
+  },
+  "css_mounts": [
+    {
+      "name": "Celestia theme assets",
+      "templates": [
+        "https://cdn.jsdelivr.net/gh/celestia-island/celestia-island.github.io@main/public/themes/{{ file }}",
+        "https://raw.githubusercontent.com/celestia-island/celestia-island.github.io/main/public/themes/{{ file }}"
+      ],
+      "files": [
+        "hikari-foundation.css",
+        "endfield-wuling.css"
+      ]
+    }
+  ]
+}

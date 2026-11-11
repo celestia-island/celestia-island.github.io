@@ -1,0 +1,129 @@
+/* Endfield · Wuling Industrial — original CSS-only industrial/jade skin. */
+
+:root[data-theme="endfield-wuling"] {
+  --theme-display-font: "Arial Narrow", "Roboto Condensed", var(--font-sans);
+  --theme-data-font: var(--font-mono);
+  --theme-title-tracking: 0.035em;
+  --theme-data-tracking: 0.04em;
+  --theme-button-tracking: 0.02em;
+  --theme-badge-tracking: 0.02em;
+  --theme-motion-ease: cubic-bezier(0.22, 0.8, 0.26, 1);
+  --theme-motion-spring: cubic-bezier(0.3, 1.1, 0.4, 1);
+  --theme-motion-snap: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --theme-line: rgb(var(--color-border) / 14%);
+  --theme-line-strong: rgb(var(--color-border) / 32%);
+  --theme-card-bg: color-mix(in srgb, rgb(var(--color-surface)) 88%, transparent);
+  --theme-field-bg: color-mix(in srgb, rgb(var(--color-surface)) 68%, transparent);
+  --theme-tooltip-bg: rgb(var(--color-surface));
+  --theme-toast-bg: rgb(var(--color-surface));
+  --theme-card-radius: var(--radius-lg);
+  --theme-primary-fill: linear-gradient(135deg, rgb(var(--color-primary)), color-mix(in srgb, rgb(var(--color-primary)) 82%, rgb(var(--color-secondary))));
+  --theme-secondary-fill: linear-gradient(135deg, rgb(var(--color-secondary)), color-mix(in srgb, rgb(var(--color-secondary)) 82%, rgb(var(--color-primary))));
+  --theme-primary-border: 1px solid rgb(var(--color-primary) / 42%);
+  --theme-control-texture: repeating-linear-gradient(135deg, rgb(var(--color-primary) / 3%) 0 1px, transparent 1px 8px);
+  --theme-card-texture:
+    linear-gradient(105deg, rgb(var(--color-primary) / 7%), transparent 34%),
+    repeating-linear-gradient(0deg, transparent 0 15px, rgb(var(--color-border) / 2.5%) 15px 16px);
+  --theme-band-texture:
+    linear-gradient(90deg, rgb(var(--color-primary) / 9%), transparent 58%),
+    repeating-linear-gradient(135deg, rgb(var(--color-border) / 3%) 0 6px, transparent 6px 12px);
+  --theme-field-texture: linear-gradient(90deg, rgb(var(--color-primary) / 4%), transparent 42%);
+  --theme-active-texture: linear-gradient(90deg, rgb(var(--color-primary) / 13%), rgb(var(--color-secondary) / 4%) 62%, transparent);
+  --theme-indicator-fill: linear-gradient(110deg, rgb(var(--color-primary) / 18%), rgb(var(--color-secondary) / 9%));
+  --theme-progress-texture: repeating-linear-gradient(135deg, rgb(var(--color-on-solid-icon) / 17%) 0 6px, transparent 6px 12px);
+  --theme-skeleton-texture: linear-gradient(90deg, rgb(var(--color-primary) / 6%) 25%, rgb(var(--color-accent) / 17%) 50%, rgb(var(--color-primary) / 6%) 75%);
+  --theme-float-texture:
+    linear-gradient(120deg, rgb(var(--color-primary) / 6%), transparent 36%),
+    repeating-linear-gradient(135deg, transparent 0 18px, rgb(var(--color-border) / 2%) 18px 19px);
+  --theme-mobile-float-texture: linear-gradient(120deg, rgb(var(--color-primary) / 5%), transparent 42%);
+  --theme-dock-texture:
+    linear-gradient(90deg, rgb(var(--color-primary) / 8%), transparent 44%),
+    repeating-linear-gradient(135deg, rgb(var(--color-border) / 3%) 0 5px, transparent 5px 11px);
+  --theme-empty-texture:
+    linear-gradient(135deg, rgb(var(--color-primary) / 5%), transparent 50%),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgb(var(--color-border) / 3%) 31px 32px);
+  --theme-scanline: linear-gradient(90deg, transparent, rgb(var(--color-accent) / 82%) 32%, rgb(var(--color-primary) / 78%) 58%, transparent);
+}
+
+:root[data-theme="endfield-wuling"]:not([data-radius]),
+:root[data-theme="endfield-wuling"][data-radius="small"] {
+  --theme-card-radius: 2px;
+  --hk-modal-radius: 4px;
+}
+
+:root[data-theme="endfield-wuling"][data-radius="none"] {
+  --theme-card-radius: 0;
+  --hk-modal-radius: 0;
+}
+
+:root[data-theme="endfield-wuling"][data-radius="large"] {
+  --theme-card-radius: 20px;
+  --hk-modal-radius: 24px;
+}
+
+:root[data-theme="endfield-wuling"][data-mode="dark"] {
+  --theme-body-texture:
+    radial-gradient(circle at 86% -10%, rgb(var(--color-primary) / 12%), transparent 44%),
+    linear-gradient(115deg, transparent 0 72%, rgb(var(--color-accent) / 4%) 72.2% 72.5%, transparent 72.7%),
+    repeating-linear-gradient(0deg, rgb(var(--color-border) / 2.8%) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, rgb(var(--color-border) / 2.8%) 0 1px, transparent 1px 32px);
+  --theme-body-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+  --theme-chrome-texture:
+    linear-gradient(90deg, rgb(var(--color-primary) / 8%), transparent 40%),
+    repeating-linear-gradient(135deg, rgb(var(--color-border) / 3%) 0 5px, transparent 5px 13px);
+  --theme-scrim: rgb(5 10 7 / 68%);
+  --page-tint: rgb(7 12 8 / 74%);
+  --separator-color: rgb(var(--color-primary) / 10%);
+  --code-keyword: #8ac8aa;
+  --code-builtin: #82c7dd;
+  --code-string: #a9c98a;
+  --code-number: #f0d44e;
+  --code-comment: #7f9182;
+  --code-function: #82c7dd;
+  --code-type: #f0d44e;
+  --code-variable: #f08a80;
+}
+
+:root[data-theme="endfield-wuling"][data-mode="light"] {
+  --theme-body-texture:
+    radial-gradient(circle at 86% -10%, rgb(var(--color-primary) / 10%), transparent 46%),
+    linear-gradient(115deg, transparent 0 72%, rgb(var(--color-accent) / 4%) 72.2% 72.5%, transparent 72.7%),
+    repeating-linear-gradient(0deg, rgb(var(--color-border) / 3.2%) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, rgb(var(--color-border) / 3.2%) 0 1px, transparent 1px 32px);
+  --theme-body-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+  --theme-chrome-texture:
+    linear-gradient(90deg, rgb(var(--color-primary) / 7%), transparent 40%),
+    repeating-linear-gradient(135deg, rgb(var(--color-border) / 3%) 0 5px, transparent 5px 13px);
+  --theme-scrim: rgb(27 39 29 / 38%);
+  --page-tint: rgb(237 242 232 / 82%);
+  --separator-color: rgb(var(--color-primary) / 12%);
+  --code-keyword: #2f6f5e;
+  --code-builtin: #32728a;
+  --code-string: #4c7037;
+  --code-number: #8a4b12;
+  --code-comment: #68776a;
+  --code-function: #32728a;
+  --code-type: #a05a20;
+  --code-variable: #ad3d36;
+}
+
+/* A finite commissioning sweep on the primary action, not a perpetual glow. */
+:root[data-theme="endfield-wuling"].s-theme-transitioning .hk-btn-primary {
+  animation: ct-endfield-commission 0.42s var(--theme-motion-ease) 1;
+}
+
+@keyframes ct-endfield-commission {
+  0% { filter: brightness(0.9) saturate(0.8); }
+  55% { filter: brightness(1.14) saturate(1.14); }
+  100% { filter: brightness(1) saturate(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme="endfield-wuling"].s-theme-transitioning .hk-btn-primary {
+    animation: none;
+  }
+}
+
+:root[data-theme="endfield-wuling"].reduce-motion.s-theme-transitioning .hk-btn-primary {
+  animation: none;
+}

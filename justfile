@@ -28,6 +28,11 @@ install:
 lint:
     npx vue-tsc -b --noEmit
 
+# Validate custom hikari theme payloads, CSS containment and contrast.
+theme-check:
+    node scripts/check_theme_assets.mjs
+    node scripts/check_theme_assets.mjs --selftest
+
 # Build the static site into dist/ (delegates to scripts/build.py).
 build:
     pnpm build

@@ -1,0 +1,74 @@
+{
+  "formatVersion": "0.1",
+  "id": "arcaea-gothic",
+  "name": "Arcaea · Prismatic Gothic",
+  "name_i18n": {
+    "ar": "أركيا · القوطية المنشورية",
+    "de": "Arcaea · Prismatische Gotik",
+    "en": "Arcaea · Prismatic Gothic",
+    "es": "Arcaea · Gótico prismático",
+    "fr": "Arcaea · Gothique prismatique",
+    "ja": "Arcaea・プリズムゴシック",
+    "ko": "Arcaea · 프리즘 고딕",
+    "pt": "Arcaea · Gótico prismático",
+    "ru": "Arcaea · Призматическая готика",
+    "zh-Hans": "Arcaea · 棱镜哥特",
+    "zh-Hant": "Arcaea · 稜鏡哥德"
+  },
+  "preset": false,
+  "tokens": {
+    "dark": {
+      "primary": "#C76BFF",
+      "secondary": "#66D9E8",
+      "accent": "#F2A6C6",
+      "text": "#F1EAF6",
+      "muted": "#B0A2BA",
+      "border": "#D6C3E3",
+      "focusedBorder": "#8FE8F2",
+      "background": "#0D0912",
+      "surface": "#1A1222",
+      "selectedBackground": "#3E2850",
+      "selectedText": "#F8F1FC",
+      "statusBarBackground": "#130D1A",
+      "success": "#68D6B1",
+      "error": "#FF7B9C",
+      "warning": "#E7BD6E",
+      "info": "#76CFE8",
+      "onSolidText": "#160C1F",
+      "onSolidIcon": "#160C1F"
+    },
+    "light": {
+      "primary": "#7B2CBF",
+      "secondary": "#087F8C",
+      "accent": "#B13D73",
+      "text": "#2A2131",
+      "muted": "#6F6277",
+      "border": "#493653",
+      "focusedBorder": "#7B2CBF",
+      "background": "#F3EFF5",
+      "surface": "#FCFAFD",
+      "selectedBackground": "#DDCCE8",
+      "selectedText": "#321B40",
+      "statusBarBackground": "#E4DCE9",
+      "success": "#197456",
+      "error": "#B92F57",
+      "warning": "#866018",
+      "info": "#176C84",
+      "onSolidText": "#FFFFFF",
+      "onSolidIcon": "#FFFFFF"
+    }
+  },
+  "css_mounts": [
+    {
+      "name": "Celestia theme assets",
+      "templates": [
+        "https://cdn.jsdelivr.net/gh/celestia-island/celestia-island.github.io@main/public/themes/{{ file }}",
+        "https://raw.githubusercontent.com/celestia-island/celestia-island.github.io/main/public/themes/{{ file }}"
+      ],
+      "files": [
+        "hikari-foundation.css",
+        "arcaea-gothic.css"
+      ]
+    }
+  ]
+}

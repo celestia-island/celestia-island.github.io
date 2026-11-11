@@ -94,6 +94,9 @@ def main() -> None:
     print("=== Installing dependencies ===")
     run(["pnpm", "install", "--ignore-scripts"])
 
+    print("\n=== Checking hikari theme assets ===")
+    run(["node", "scripts/check_theme_assets.mjs"])
+
     print("\n=== Type checking ===")
     run(["npx", "vue-tsc", "-b", "--noEmit"])
 

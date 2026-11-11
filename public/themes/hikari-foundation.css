@@ -1,0 +1,390 @@
+/*
+ * Shared, opt-in skin for Celestia instance themes.
+ * Every selector is fenced to a registered theme id. Geometry, overlay
+ * choreography, pointer semantics and popup stacking stay hikari-owned.
+ */
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) {
+  --motion-ease: var(--theme-motion-ease);
+  --motion-spring: var(--theme-motion-spring);
+  --motion-snap: var(--theme-motion-snap);
+  --hk-modal-border-color: var(--theme-line-strong);
+  --hk-modal-divider-color: var(--theme-line);
+  --hk-modal-overlay-bg: var(--theme-scrim);
+  --hk-modal-title-color: rgb(var(--color-text));
+  --hk-modal-title-font-weight: 650;
+  --hk-drawer-overlay-bg: var(--theme-scrim);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) body {
+  background-image: var(--theme-body-texture);
+  background-size: var(--theme-body-size);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) ::selection {
+  background: rgb(var(--color-primary) / 28%);
+  color: rgb(var(--color-text));
+}
+
+/* Chrome: the theme reads as a frame around the unchanged application. */
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.s-glass-header, .s-status-bar, .s-sidebar, .hk-sidebar-panel) {
+  border-color: var(--theme-line-strong);
+  background-image: var(--theme-chrome-texture);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .s-status-bar::before {
+  content: "";
+  position: absolute;
+  inset: -1px 0 auto;
+  height: 2px;
+  pointer-events: none;
+  background: var(--theme-scanline);
+  background-size: 220% 100%;
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]).s-theme-transitioning .s-status-bar::before {
+  animation: ct-chrome-scan 0.55s var(--theme-motion-ease) 1;
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.s-header-hud-item, .s-status-bar-clock, .s-status-bar-time, .hk-table-header-cell) {
+  font-family: var(--theme-data-font);
+  letter-spacing: var(--theme-data-tracking);
+}
+
+/* Buttons retain hikari's sizing and icon contracts; only surface feedback changes. */
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-btn {
+  letter-spacing: var(--theme-button-tracking);
+  transition-timing-function: var(--theme-motion-ease);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-btn-primary {
+  background: var(--theme-primary-fill);
+  border: var(--theme-primary-border);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-btn-primary:hover:not(:disabled):not(:focus-visible) {
+  filter: brightness(1.08) saturate(1.06);
+  box-shadow: var(--shadow-button);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-btn-primary:active:not(:disabled) {
+  filter: brightness(0.96) saturate(1.04);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-btn:focus-visible {
+  box-shadow:
+    0 0 0 2px rgb(var(--color-surface)),
+    0 0 0 4px rgb(var(--color-focused-border)),
+    0 0 18px rgb(var(--color-primary) / 24%);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-icon-button {
+  transition-timing-function: var(--theme-motion-ease);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-icon-button-primary {
+  background-image: var(--theme-primary-fill);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-btn-secondary, .hk-btn-outline, .hk-btn-ghost) {
+  background-image: var(--theme-control-texture);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-btn-danger {
+  background-image: linear-gradient(135deg, rgb(var(--color-error)), color-mix(in srgb, rgb(var(--color-error)) 78%, #000));
+}
+
+/* Cards, sections, kanban lanes: tonal layering without transform/layout changes. */
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-card, .hk-section-card, .hk-kanban-lane) {
+  background-color: var(--theme-card-bg);
+  background-image: var(--theme-card-texture);
+  border-color: var(--theme-line);
+  border-radius: var(--theme-card-radius);
+  box-shadow: var(--shadow-elevated);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-card-hoverable {
+  transition:
+    border-color var(--duration-normal) var(--theme-motion-ease),
+    box-shadow var(--duration-normal) var(--theme-motion-ease),
+    background-color var(--duration-normal) var(--theme-motion-ease);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-card-hoverable:hover {
+  border-color: rgb(var(--color-primary) / 52%);
+  box-shadow: var(--shadow-panel);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-card-header, .hk-card-footer, .hk-section-card-footer) {
+  border-color: var(--theme-line);
+  background-image: var(--theme-band-texture);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-card-title, .hk-page-header-title, .hk-modal-title, .hk-drawer-title) {
+  font-family: var(--theme-display-font);
+  letter-spacing: var(--theme-title-tracking);
+}
+
+/* Form fields: a visible quiet state, a spectral/industrial focus state. */
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-input-box, .hk-select-trigger) {
+  background-color: var(--theme-field-bg);
+  background-image: var(--theme-field-texture);
+  border-color: var(--theme-line-strong);
+  transition-timing-function: var(--theme-motion-ease);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-input-box, .hk-select-trigger):hover:not(.hk-input-box-disabled):not([data-disabled]) {
+  border-color: rgb(var(--color-primary) / 52%);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-input-box:focus-within,
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-select-trigger:focus-visible,
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-select-trigger[data-state="open"] {
+  border-color: rgb(var(--color-focused-border));
+  background-color: rgb(var(--color-surface));
+  box-shadow:
+    0 0 0 3px rgb(var(--color-primary) / 13%),
+    inset 0 -2px 0 rgb(var(--color-primary) / 48%);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-textarea-field {
+  background-color: var(--theme-field-bg);
+  background-image: var(--theme-field-texture);
+  border-color: var(--theme-line-strong);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-textarea-field:focus {
+  border-color: rgb(var(--color-focused-border));
+  box-shadow: 0 0 0 3px rgb(var(--color-primary) / 13%);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-checkbox-box, .hk-radio-box) {
+  transition-timing-function: var(--theme-motion-ease);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-checkbox-box, .hk-radio-box)[data-checked] {
+  background: var(--theme-primary-fill);
+  box-shadow: 0 0 12px rgb(var(--color-primary) / 24%);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-switch-primary[data-checked] .hk-switch-track {
+  background-image: var(--theme-primary-fill);
+  box-shadow: inset 0 0 0 1px rgb(var(--color-on-solid-icon) / 12%);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-switch-secondary[data-checked] .hk-switch-track {
+  background-image: var(--theme-secondary-fill);
+  box-shadow: inset 0 0 0 1px rgb(var(--color-on-solid-icon) / 12%);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-switch-thumb {
+  box-shadow:
+    0 1px 3px rgb(0 0 0 / 28%),
+    0 0 0 1px rgb(var(--color-primary) / 16%);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-slider-fill, .hk-slider-thumb, .hk-slider-tick[data-active]) {
+  background-image: var(--theme-primary-fill);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-slider-thumb {
+  box-shadow:
+    0 0 0 2px rgb(var(--color-surface) / 90%),
+    0 0 12px rgb(var(--color-primary) / 32%);
+}
+
+/* Tabs: the existing measured indicator slides; only its material is themed. */
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-tabs-list {
+  background-image: var(--theme-control-texture);
+  border-color: var(--theme-line);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-tabs-indicator {
+  background: var(--theme-indicator-fill);
+  box-shadow: inset 0 -2px 0 rgb(var(--color-primary) / 58%);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-tabs-trigger[data-active] {
+  color: rgb(var(--color-primary));
+  text-shadow: 0 0 14px rgb(var(--color-primary) / 18%);
+}
+
+/* Menus and options: active/hover remain distinct and disabled rows inert. */
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-menu-row, .hk-menu-sidebar-row, .hk-menu-action-item, .hk-select-option) {
+  transition:
+    background-color var(--duration-short) var(--theme-motion-ease),
+    border-color var(--duration-short) var(--theme-motion-ease),
+    color var(--duration-short) var(--theme-motion-ease),
+    box-shadow var(--duration-short) var(--theme-motion-ease);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-menu-row, .hk-menu-sidebar-row, .hk-menu-action-item)[data-active],
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-select-option[data-checked] {
+  background-image: var(--theme-active-texture);
+  box-shadow: inset 2px 0 0 rgb(var(--color-primary) / 72%);
+}
+
+/* Tables: sectioned stripe specificity is preserved deliberately. */
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-table-header-row {
+  background-image: var(--theme-band-texture);
+  border-color: var(--theme-line-strong);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-table-hover .hk-table-row:hover,
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-table-striped.hk-table-hover .hk-table-section-body .hk-table-row:hover {
+  background-color: rgb(var(--color-primary) / 7%);
+  background-image: var(--theme-active-texture);
+}
+
+/* Loading/progress: movement is confined to paint-only background positions. */
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-progress-bar-fill-loading, .hk-progress-bar-indeterminate-loading) {
+  background-image: var(--theme-progress-texture);
+  background-size: 180% 100%;
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-progress-bar-fill-loading:not(.hk-progress-bar-indeterminate) {
+  animation: ct-progress-flow 1.15s linear infinite;
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-progress-ring-track {
+  stroke: rgb(var(--color-muted) / 20%);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-skeleton[data-animated],
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-skeleton[data-tone="muted"][data-animated] {
+  background-image: var(--theme-skeleton-texture);
+  background-size: 200% 100%;
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-spinner {
+  border-color: rgb(var(--color-primary) / 18%);
+  border-top-color: rgb(var(--color-primary));
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-spinner-current {
+  border-color: color-mix(in srgb, currentcolor 30%, transparent);
+  border-top-color: currentcolor;
+}
+
+/* Floating layers: decorate their existing surfaces, never their transforms. */
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-modal-content, .hk-drawer-panel, .hk-popover-panel, .hk-select-popout, .hk-select-sheet-panel) {
+  background-image: var(--theme-float-texture);
+  border-color: var(--theme-line-strong);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-modal-content {
+  box-shadow: var(--shadow-modal);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-drawer-panel, .hk-popover-panel, .hk-select-popout, .hk-select-sheet-panel) {
+  box-shadow: var(--shadow-dropdown);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-modal-header, .hk-drawer-header, .hk-select-sheet-header) {
+  background-image: var(--theme-band-texture);
+  border-color: var(--theme-line);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.s-dock-bar-surface, .hk-dock-bar-surface, .s-chat-input-bar) {
+  background-image: var(--theme-dock-texture);
+  border-color: var(--theme-line-strong);
+  box-shadow: var(--shadow-panel);
+}
+
+/* Toast, tooltip, alerts and badges use the same edge code as the frame. */
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-tooltip-popup {
+  background: var(--theme-tooltip-bg);
+  color: rgb(var(--color-text));
+  border: 1px solid var(--theme-line-strong);
+  border-inline-start: 2px solid rgb(var(--color-primary));
+  box-shadow: var(--shadow-tooltip);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-tooltip-popup, .hk-touch-hint-bar) {
+  background-color: var(--theme-tooltip-bg);
+  color: rgb(var(--color-text));
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-toast-item {
+  background-color: var(--theme-toast-bg);
+  background-image: var(--theme-float-texture);
+  border: 1px solid var(--theme-line-strong);
+  border-inline-start: 2px solid rgb(var(--color-primary));
+  box-shadow: var(--shadow-dropdown);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-toast-error { border-inline-start-color: rgb(var(--color-error)); }
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-toast-success { border-inline-start-color: rgb(var(--color-success)); }
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-toast-warning { border-inline-start-color: rgb(var(--color-warning)); }
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-toast-info,
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-toast-loading { border-inline-start-color: rgb(var(--color-info)); }
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-alert {
+  background-image: var(--theme-card-texture);
+  border-color: var(--theme-line-strong);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-badge {
+  background-image: var(--theme-control-texture);
+  letter-spacing: var(--theme-badge-tracking);
+}
+
+/* Empty states, scrollbars and code remain quiet but recognisably in-family. */
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-empty-state--boxed,
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-loading-veil-body {
+  background-image: var(--theme-empty-texture);
+  border-color: var(--theme-line);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-empty-icon {
+  color: rgb(var(--color-primary));
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-scrollbar-thumb {
+  background: color-mix(in srgb, rgb(var(--color-primary)) 38%, transparent);
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-scrollbar-thumb:is(.is-dragging, :hover),
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-scrollbar-track.is-hovering .hk-scrollbar-thumb {
+  background: color-mix(in srgb, rgb(var(--color-primary)) 62%, transparent);
+}
+
+@keyframes ct-chrome-scan {
+  from { background-position: 110% 0; }
+  to { background-position: -110% 0; }
+}
+
+@keyframes ct-progress-flow {
+  from { background-position: 100% 0; }
+  to { background-position: -80% 0; }
+}
+
+/* The app-level reduced-motion contract also stops these theme-owned loops. */
+@media (prefers-reduced-motion: reduce) {
+  :root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .s-status-bar::before,
+  :root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-progress-bar-fill-loading:not(.hk-progress-bar-indeterminate) {
+    animation: none;
+  }
+
+  :root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-btn,
+  :root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) .hk-card-hoverable {
+    transition-duration: 0s;
+  }
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]).reduce-motion .s-status-bar::before,
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]).reduce-motion .hk-progress-bar-fill-loading:not(.hk-progress-bar-indeterminate) {
+  animation: none;
+}
+
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]).reduce-motion .hk-btn,
+:root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]).reduce-motion .hk-card-hoverable {
+  transition-duration: 0s;
+}
+
+/* Mobile keeps all hikari sheet choreography and avoids expensive added blur. */
+@media (max-width: 767px) {
+  :root:is([data-theme="endfield-wuling"], [data-theme="arcaea-gothic"]) :is(.hk-modal-content, .hk-drawer-panel, .hk-select-sheet-panel) {
+    background-image: var(--theme-mobile-float-texture);
+  }
+}
