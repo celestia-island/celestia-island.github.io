@@ -8,7 +8,8 @@ name: Docker
 # build's `images:` list: the ACR copy is what production pulls, so a GHCR-side
 # failure must not be able to stop the publish production depends on.
 #
-# On pull requests the image is only built, not pushed.
+# Runs only on `v*` tag pushes and manual dispatch (the trigger-policy rework
+# of 2026-11-06 removed PR-time runs org-wide) — every push publishes.
 on:
   push:
     tags: ['v*']
@@ -24,12 +25,6 @@ env:
 
 jobs:
   build:
-    # Fork pull requests pay for their own CI: this job is heavy (it compiles,
-    # builds, tests or audits) and a fork's run would spend shared runner time on
-    # untrusted content. The required commit-lint and PR-title checks are the
-    # deliberate exception: they are sub-minute, execute no pull request code, and
-    # hold no secrets.
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     name: Build and publish image
     runs-on: ubuntu-latest
     outputs:
@@ -43,7 +38,6 @@ jobs:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v4
       - uses: docker/login-action@v4
-        if: github.event_name != 'pull_request'
         with:
           registry: ${{ env.ACR_REGISTRY }}
           username: ${{ secrets.ACR_USERNAME }}
@@ -59,7 +53,7 @@ jobs:
       - uses: docker/build-push-action@v7
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
@@ -74,7 +68,6 @@ jobs:
   mirror-ghcr:
     name: Mirror the image to GHCR
     needs: build
-    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
