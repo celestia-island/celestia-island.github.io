@@ -6,14 +6,12 @@ the deployment pipeline.
 
 ## Architecture
 
-```
-Browser ──► Cloudflare edge (TLS, HTTP→HTTPS redirect)
-                │  (CF IP ranges only — origin refuses everything else)
-                ▼
-            nginx 1.30.x (systemd)  ──► 127.0.0.1:8080
-                                             │
-                                      docker container
-                                      (celestia-island-home)
+```mermaid
+flowchart TD
+    B["Browser"] --> CF["Cloudflare edge (TLS, HTTP→HTTPS redirect)"]
+    CF -->|"(CF IP ranges only — origin refuses everything else)"| N["nginx 1.30.x (systemd)"]
+    N --> P["127.0.0.1:8080"]
+    P --> D["docker container (celestia-island-home)"]
 ```
 
 - The Docker image is built on GitHub Actions, pushed to the company Aliyun ACR
