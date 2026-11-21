@@ -1,7 +1,9 @@
 # Deploying to the company website node
 
 The production site (`celestia.world`) is served from the company website node
-(Alibaba Cloud Linux, `106.14.124.153`) behind Cloudflare. This page documents
+(Alibaba Cloud Linux; origin IP intentionally withheld — it was publicly
+documented here until 2026-11-21, so treat it as known; the Cloudflare
+allowlist is what actually protects the origin) behind Cloudflare. This page documents
 the deployment pipeline.
 
 ## Architecture
