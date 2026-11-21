@@ -163,5 +163,11 @@
     "tagline": "ひとつの trait に集約されたサンドボックスコンテナ",
     "description": "コンテナサンドボックスツールキットです。単一の ContainerOps trait が Docker を主要バックエンド、rootless youki をフォールバック、実験的な CLI バックエンドも備え、セキュリティプロファイル、AppArmor、seccomp、egress ポリシーを内蔵しています。",
     "shortLabel": "コンテナサンドボックスツールキット"
+  },
+  "lacrymira": {
+    "name": "Lacrymira",
+    "shortLabel": "型付きデータアクセス層",
+    "tagline": "ひとつのコマンド面で SQL と KV を",
+    "description": "型付きマルチモデルデータアクセス層——PostgreSQL と redb を単一の Command/Reply 面で扱う。衛生的なエンティティマクロ、コンパイル時型付き条件、楽観/悲観ロック、JSONB パスクエリ、コアはそのまま WASI へ。"
   }
 }

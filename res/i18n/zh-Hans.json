@@ -163,5 +163,11 @@
     "tagline": "把沙箱容器装进一个 trait",
     "description": "一个容器沙箱工具集：单一的 ContainerOps trait，以 Docker 为主后端、rootless youki 为回退后端，并提供实验性 CLI 后端——内置安全配置、AppArmor、seccomp 与 egress 策略。",
     "shortLabel": "容器沙箱工具集"
+  },
+  "lacrymira": {
+    "name": "Lacrymira",
+    "shortLabel": "类型化数据访问层",
+    "tagline": "一套命令面，通吃 SQL 与 KV",
+    "description": "类型化多模型数据访问层——PostgreSQL 与 redb 共用一套 Command/Reply 面：卫生的实体宏、编译期类型化条件、乐观/悲观锁、JSONB 路径查询，核心可直接进 WASI 组件。"
   }
 }

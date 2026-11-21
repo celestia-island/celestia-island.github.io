@@ -163,5 +163,11 @@
     "tagline": "Contenedores sandbox detrás de un solo trait",
     "description": "Un kit de herramientas de sandbox de contenedores: un solo trait ContainerOps con Docker como backend principal, youki rootless como alternativa y backends CLI experimentales — perfiles de seguridad, AppArmor, seccomp y política de egress integrados.",
     "shortLabel": "Kit de Sandbox de Contenedores"
+  },
+  "lacrymira": {
+    "name": "Lacrymira",
+    "shortLabel": "Capa de acceso a datos tipada",
+    "tagline": "SQL y KV bajo una sola superficie de comandos",
+    "description": "Una capa de acceso a datos multimodelo tipada — PostgreSQL y redb bajo una sola superficie Command/Reply: macros de entidad higiénicos, condiciones tipadas en tiempo de compilación, bloqueo optimista y pesimista, consultas JSONB por rutas y núcleo listo para WASI."
   }
 }
