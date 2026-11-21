@@ -163,5 +163,11 @@
     "tagline": "把沙箱容器裝進一個 trait",
     "description": "一個容器沙箱工具組：單一的 ContainerOps trait，以 Docker 為主要後端、rootless youki 為備援後端，並提供實驗性 CLI 後端——內建安全設定檔、AppArmor、seccomp 與 egress 策略。",
     "shortLabel": "容器沙箱工具組"
+  },
+  "lacrymira": {
+    "name": "Lacrymira",
+    "shortLabel": "型別化資料存取層",
+    "tagline": "一套命令面，通吃 SQL 與 KV",
+    "description": "型別化多模型資料存取層——PostgreSQL 與 redb 共用一套 Command/Reply 面：衛生的實體巨集、編譯期型別化條件、樂觀/悲觀鎖、JSONB 路徑查詢，核心可直接進 WASI 元件。"
   }
 }

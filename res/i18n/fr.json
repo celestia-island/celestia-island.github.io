@@ -163,5 +163,11 @@
     "tagline": "Des conteneurs sandbox derrière un seul trait",
     "description": "Une boîte à outils de sandbox conteneurisée : un seul trait ContainerOps avec Docker comme backend principal, youki rootless en solution de repli et des backends CLI expérimentaux — profils de sécurité, AppArmor, seccomp et politique d'egress intégrés.",
     "shortLabel": "Boîte à Outils de Sandbox Conteneur"
+  },
+  "lacrymira": {
+    "name": "Lacrymira",
+    "shortLabel": "Couche d'accès aux données typée",
+    "tagline": "SQL et KV sous une seule surface de commande",
+    "description": "Une couche d'accès aux données multi-modèle typée — PostgreSQL et redb derrière une seule surface Command/Reply : macros d'entités hygiéniques, conditions typées à la compilation, verrouillage optimiste et pessimiste, requêtes JSONB par chemins, cœur prêt pour WASI."
   }
 }

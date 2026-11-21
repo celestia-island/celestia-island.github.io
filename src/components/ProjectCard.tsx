@@ -25,6 +25,7 @@ import kouLogo from '@res/logos/kou.webp'
 import malkuthLogo from '@res/logos/malkuth.webp'
 import seiaLogo from '@res/logos/seia.webp'
 import shirabeLogo from '@res/logos/shirabe.webp'
+import lacrymiraLogo from '@res/logos/lacrymira.webp'
 import './ProjectCard.scss'
 
 const logoMap: Record<string, string> = {
@@ -49,6 +50,7 @@ const logoMap: Record<string, string> = {
   malkuth: malkuthLogo,
   seia: seiaLogo,
   shirabe: shirabeLogo,
+  lacrymira: lacrymiraLogo,
 }
 
 const statusMap: Record<string, { bg: string; color: string }> = {

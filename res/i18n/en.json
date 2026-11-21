@@ -163,5 +163,11 @@
     "tagline": "Sandboxed containers behind one trait",
     "description": "A container sandbox toolkit: one ContainerOps trait with Docker as the primary backend, rootless youki as the fallback, and experimental CLI backends — security profiles, AppArmor, seccomp, and egress policy built in.",
     "shortLabel": "Container Sandbox Toolkit"
+  },
+  "lacrymira": {
+    "name": "Lacrymira",
+    "shortLabel": "Typed Data Access Layer",
+    "tagline": "SQL and KV under one command surface",
+    "description": "A typed multi-model data access layer — PostgreSQL and redb behind one Command/Reply surface: hygienic entity macros, compile-time-typed conditions, optimistic and pessimistic locking, JSONB path queries, and a WASI-ready core."
   }
 }
