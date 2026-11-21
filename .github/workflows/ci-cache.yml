@@ -4,7 +4,10 @@ on:
   # Basic check (sub-minute, no compile): runs after a squash merge, never on
   # the pull request itself (2026-11-06 trigger policy).
   push:
-    branches: [master]
+    # This repo's trunk is `main` (it is the org site, not a library crate);
+    # the original `master` arm predated the repo and never fired — the
+    # basic check had silently never run on trunk.
+    branches: [main]
   workflow_dispatch:
 jobs:
   cache-policy:
