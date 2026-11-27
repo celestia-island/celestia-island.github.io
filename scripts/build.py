@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Build celestia-island.github.io — install deps, typecheck, bundle, generate favicons, copy assets."""
+"""Build celestia-island.github.io — install deps, typecheck, bundle, generate favicons, copy assets, verify logo wiring."""
 
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -19,6 +20,8 @@ DIST = ROOT / "dist"
 RES = ROOT / "res"
 LOGOS = RES / "logos"
 SOURCE_LOGO = LOGOS / "celestia.webp"
+PROJECTS_TS = ROOT / "src" / "types" / "project.ts"
+PROJECT_CARD_TSX = ROOT / "src" / "components" / "ProjectCard.tsx"
 
 
 def run(cmd: list[str], *, cwd: Path | None = None) -> None:
@@ -90,6 +93,73 @@ def copy_logos() -> None:
         print(f"  logos/{f.name}")
 
 
+def verify_logo_wiring() -> None:
+    """Fail the build when a project logo is tracked but not wired into the card.
+
+    The card component resolves logos through the explicit ``logoMap``; the
+    icon fallback path cannot save an unwired card because presetIcons never
+    generates data-driven icon classes (verified 2026-11-27: ``vue-tsc`` and
+    ``vite build`` both stay green while the emitted logo asset silently
+    disappears). This check is the standing, fail-closed gate for that class:
+
+    1. every ``project.ts`` id with a tracked ``res/logos/<id>.webp`` must
+       appear in ``logoMap`` (logo home extras without a project entry are
+       fine — ``res/logos/`` is the org-wide logo store);
+    2. every ``logoMap`` key must be a ``project.ts`` id AND have its logo
+       file tracked (dangling entries = typos);
+    3. every wired id must have its hashed asset emitted under
+       ``dist/assets/<id>-*.webp`` (proves vite actually bundled the import).
+    """
+    print("\n=== Verifying logo wiring ===")
+    problems: list[str] = []
+
+    projects_src = PROJECTS_TS.read_text(encoding="utf-8")
+    project_ids = re.findall(r"id: '([a-z0-9-]+)'", projects_src)
+    duplicate_ids = sorted({i for i in project_ids if project_ids.count(i) > 1})
+    if duplicate_ids:
+        problems.append(f"duplicate project.ts ids: {duplicate_ids}")
+    id_set = set(project_ids)
+
+    card_src = PROJECT_CARD_TSX.read_text(encoding="utf-8")
+    map_keys = re.findall(r"^  '?([A-Za-z0-9-]+)'?: [A-Za-z0-9]+Logo,$", card_src, flags=re.M)
+    duplicate_keys = sorted({k for k in map_keys if map_keys.count(k) > 1})
+    if duplicate_keys:
+        problems.append(f"duplicate logoMap keys: {duplicate_keys}")
+    wired = set(map_keys)
+
+    dangling = sorted(wired - id_set)
+    if dangling:
+        problems.append(f"logoMap keys that are not project ids: {dangling}")
+
+    tracked = {p.stem for p in LOGOS.glob("*.webp")}
+    unwired = sorted({i for i in id_set if i in tracked} - wired)
+    if unwired:
+        problems.append(
+            f"project ids with a tracked res/logos/<id>.webp but no logoMap entry: {unwired}"
+        )
+    missing_files = sorted(i for i in wired & id_set if i not in tracked)
+    if missing_files:
+        problems.append(f"logoMap entries without a tracked res/logos/<id>.webp: {missing_files}")
+
+    unwired_emitted: list[str] = []
+    for project_id in sorted(wired & id_set):
+        if not list(DIST.glob(f"assets/{project_id}-*.webp")):
+            unwired_emitted.append(project_id)
+    if unwired_emitted:
+        problems.append(f"wired ids whose logo asset was not emitted under dist/assets: {unwired_emitted}")
+
+    if problems:
+        for problem in problems:
+            print(f"  LOGO WIRING ERROR: {problem}")
+        print(
+            "  Fix: import the logo in ProjectCard.tsx and add it to logoMap "
+            "(or remove the stale logoMap entry / logo file, whichever is wrong)."
+        )
+        sys.exit(1)
+
+    print(f"  ok: {len(id_set)} project ids, {len(wired)} wired logos, all assets emitted")
+
+
 def main() -> None:
     print("=== Installing dependencies ===")
     run(["pnpm", "install", "--ignore-scripts"])
@@ -102,6 +172,7 @@ def main() -> None:
 
     generate_favicons()
     copy_logos()
+    verify_logo_wiring()
 
     print("\n=== Copying CNAME ===")
     cname = ROOT / "CNAME"
