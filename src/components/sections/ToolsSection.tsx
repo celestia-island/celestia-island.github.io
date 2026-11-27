@@ -6,7 +6,7 @@ import { useReveal } from '@/composables/useReveal'
 import { projects } from '@/types/project'
 import CardScroller from '@/components/CardScroller'
 
-const items = projects.filter((p) => ['aoba', 'kirino', 'yuuka', 'ichika', 'hifumi', 'himari', 'noa', 'shun', 'fuuka', 'malkuth', 'seia', 'aris', 'kei', 'hare', 'kotama'].includes(p.id))
+const items = projects.filter((p) => ['aoba', 'kirino', 'yuuka', 'ichika', 'hifumi', 'himari', 'noa', 'shun', 'fuuka', 'malkuth', 'cherino', 'seia', 'aris', 'kei', 'hare', 'kotama'].includes(p.id))
 
 export default defineComponent({
   name: 'ToolsSection',
