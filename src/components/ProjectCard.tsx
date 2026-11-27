@@ -29,6 +29,7 @@ import ayaneLogo from '@res/logos/ayane.webp'
 import himariLogo from '@res/logos/himari.webp'
 import kotamaLogo from '@res/logos/kotama.webp'
 import shunLogo from '@res/logos/shun.webp'
+import cherinoLogo from '@res/logos/cherino.webp'
 import './ProjectCard.scss'
 
 const logoMap: Record<string, string> = {
@@ -57,6 +58,7 @@ const logoMap: Record<string, string> = {
   himari: himariLogo,
   kotama: kotamaLogo,
   shun: shunLogo,
+  cherino: cherinoLogo,
 }
 
 const statusMap: Record<string, { bg: string; color: string }> = {
