@@ -114,14 +114,14 @@ def verify_logo_wiring() -> None:
     problems: list[str] = []
 
     projects_src = PROJECTS_TS.read_text(encoding="utf-8")
-    project_ids = re.findall(r"id: '([a-z0-9-]+)'", projects_src)
+    project_ids = re.findall(r"\bid\s*:\s*['\"]([^'\"]+)['\"]", projects_src)
     duplicate_ids = sorted({i for i in project_ids if project_ids.count(i) > 1})
     if duplicate_ids:
         problems.append(f"duplicate project.ts ids: {duplicate_ids}")
     id_set = set(project_ids)
 
     card_src = PROJECT_CARD_TSX.read_text(encoding="utf-8")
-    map_keys = re.findall(r"^  '?([A-Za-z0-9-]+)'?: [A-Za-z0-9]+Logo,$", card_src, flags=re.M)
+    map_keys = _logo_map_keys(card_src)
     duplicate_keys = sorted({k for k in map_keys if map_keys.count(k) > 1})
     if duplicate_keys:
         problems.append(f"duplicate logoMap keys: {duplicate_keys}")
@@ -143,6 +143,8 @@ def verify_logo_wiring() -> None:
 
     unwired_emitted: list[str] = []
     for project_id in sorted(wired & id_set):
+        # Assumes vite's hashed `[name]-[hash]` emission; an unhashed future
+        # pattern (`<id>.webp`) fails closed here (loud RED, one-line fix).
         if not list(DIST.glob(f"assets/{project_id}-*.webp")):
             unwired_emitted.append(project_id)
     if unwired_emitted:
@@ -158,6 +160,25 @@ def verify_logo_wiring() -> None:
         sys.exit(1)
 
     print(f"  ok: {len(id_set)} project ids, {len(wired)} wired logos, all assets emitted")
+
+
+def _logo_map_keys(card_src: str) -> list[str]:
+    """Extract the logoMap keys from the card component source.
+
+    Anchored on the ``const logoMap`` block (not on the value shape): any
+    ``key: <value>`` entry line inside the block counts as wired, whatever
+    the local variable is named (renames, casts, dropped trailing commas and
+    any indent are all accepted). Commented-out entries do not count.
+    """
+    block = re.search(r"const logoMap[^{]*\{(.+?)^\}", card_src, flags=re.S | re.M)
+    if block is None:
+        return []
+    keys: list[str] = []
+    for line in block.group(1).splitlines():
+        entry = re.match(r"\s*['\"]?([A-Za-z0-9-]+)['\"]?:\s*\S", line)
+        if entry:
+            keys.append(entry.group(1))
+    return keys
 
 
 def main() -> None:
