@@ -68,12 +68,6 @@
     "description": "通用的 Rust 認證與授權框架，支援完整的 RBAC 和動態信任評分層。",
     "shortLabel": "認證與 RBAC 框架"
   },
-  "ratatui-markdown": {
-    "name": "Ratatui Markdown",
-    "tagline": "面向 TUI 應用的 Markdown 與圖表",
-    "description": "Markdown 渲染、語法高亮、Mermaid 圖表和可摺疊樹——全部基於 ratatui。",
-    "shortLabel": "TUI Markdown"
-  },
   "yuuka": {
     "name": "Yuuka",
     "tagline": "JSON 合併/補丁執行時與巢狀結構巨集",
@@ -169,5 +163,29 @@
     "shortLabel": "型別化資料存取層",
     "tagline": "一套命令面，通吃 SQL 與 KV",
     "description": "型別化多模型資料存取層——PostgreSQL 與 redb 共用一套 Command/Reply 面：衛生的實體巨集、編譯期型別化條件、樂觀/悲觀鎖、JSONB 路徑查詢，核心可直接進 WASI 元件。"
+  },
+  "ayane": {
+    "name": "Ayane",
+    "shortLabel": "自架郵件服務",
+    "tagline": "全套自架的郵件堆疊",
+    "description": "自架郵件服務——管理面、安全渲染 Webmail、垃圾郵件與病毒防護、MCP 介面與部署/DNS 精靈——以獨立行程驅動 Postfix、Dovecot、rspamd 與 ClamAV。"
+  },
+  "himari": {
+    "name": "Himari",
+    "shortLabel": "公式資產設施",
+    "tagline": "公式進，帶量綱 Rust 程式碼出",
+    "description": "公式資產設施——LaTeX 子集、紙面字形與 MATLAB 式三表面函數編譯成帶量綱的中間表示並生成 Rust 程式碼，模式矩陣支援 identity、diag、tridiag。"
+  },
+  "kotama": {
+    "name": "Kotama",
+    "shortLabel": "逆向工程工具庫",
+    "tagline": "解剖、反編譯、再推導",
+    "description": "逆向工程工具庫——靜態反編譯、涵蓋 Windows 與 Linux 的注入式動態分析、hook 打包設施與服務面/MCP——統一的內容定址位址空間橫跨檔案、活體行程與快照。"
+  },
+  "shun": {
+    "name": "Shun",
+    "shortLabel": "負載投遞執行環境",
+    "tagline": "把交付物可靠地送上真機",
+    "description": "流驅動的負載投遞執行環境——安裝器、燒寫器與便攜模式，把建置產物落到真機上；含配對、示範程式與可執行範例。"
   }
 }

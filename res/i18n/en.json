@@ -68,12 +68,6 @@
     "description": "A generic Rust auth and authorization framework with full RBAC and a dynamic trust-scoring layer.",
     "shortLabel": "Auth & RBAC Framework"
   },
-  "ratatui-markdown": {
-    "name": "Ratatui Markdown",
-    "tagline": "Markdown and diagrams for TUI apps",
-    "description": "Markdown rendering, syntax highlighting, Mermaid diagrams, and collapsible trees — all on ratatui.",
-    "shortLabel": "TUI Markdown"
-  },
   "yuuka": {
     "name": "Yuuka",
     "tagline": "JSON merge/patch runtime and nested-structure macros",
@@ -169,5 +163,29 @@
     "shortLabel": "Typed Data Access Layer",
     "tagline": "SQL and KV under one command surface",
     "description": "A typed multi-model data access layer — PostgreSQL and redb behind one Command/Reply surface: hygienic entity macros, compile-time-typed conditions, optimistic and pessimistic locking, JSONB path queries, and a WASI-ready core."
+  },
+  "ayane": {
+    "name": "Ayane",
+    "shortLabel": "Self-Hosted Mail Service",
+    "tagline": "Full-stack mail, self-hosted",
+    "description": "A self-hosted mail service — admin console, security-rendered webmail, spam and virus protection, an MCP interface, and deployment/DNS wizards — driving Postfix, Dovecot, rspamd, and ClamAV as independent processes."
+  },
+  "himari": {
+    "name": "Himari",
+    "shortLabel": "Formula Asset Infrastructure",
+    "tagline": "From formulas to typed Rust code",
+    "description": "A formula asset infrastructure — a LaTeX subset, paper glyphs, and MATLAB-style three-surface functions compiled into a dimensioned IR that generates Rust code, with identity, diagonal, and tridiagonal pattern matrices."
+  },
+  "kotama": {
+    "name": "Kotama",
+    "shortLabel": "Reverse Engineering Toolkit",
+    "tagline": "Dissect, decompile, re-derive",
+    "description": "A reverse-engineering toolkit — static decompilation, cross-platform injected dynamic analysis on Windows and Linux, hook packaging, and a service surface with MCP — over one content-addressed address space spanning files, live processes, and snapshots."
+  },
+  "shun": {
+    "name": "Shun",
+    "shortLabel": "Workload Delivery Runtime",
+    "tagline": "Deliver workloads to real machines",
+    "description": "A flow-driven workload delivery runtime — installers, flashers, and portable mode carry builds onto real machines, with pairing, a demo app, and runnable examples."
   }
 }

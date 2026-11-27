@@ -68,12 +68,6 @@
     "description": "Un framework genérico de autenticación y autorización en Rust con RBAC completo y una capa dinámica de puntuación de confianza.",
     "shortLabel": "Framework de Auth y RBAC"
   },
-  "ratatui-markdown": {
-    "name": "Ratatui Markdown",
-    "tagline": "Markdown y diagramas para apps TUI",
-    "description": "Renderizado Markdown, resaltado de sintaxis, diagramas Mermaid y árboles colapsables — todo sobre ratatui.",
-    "shortLabel": "TUI Markdown"
-  },
   "yuuka": {
     "name": "Yuuka",
     "tagline": "Runtime de merge/patch JSON y macros de estructuras anidadas",
@@ -169,5 +163,29 @@
     "shortLabel": "Capa de acceso a datos tipada",
     "tagline": "SQL y KV bajo una sola superficie de comandos",
     "description": "Una capa de acceso a datos multimodelo tipada — PostgreSQL y redb bajo una sola superficie Command/Reply: macros de entidad higiénicos, condiciones tipadas en tiempo de compilación, bloqueo optimista y pesimista, consultas JSONB por rutas y núcleo listo para WASI."
+  },
+  "ayane": {
+    "name": "Ayane",
+    "shortLabel": "Servicio de correo autoalojado",
+    "tagline": "Correo completo, autoalojado",
+    "description": "Un servicio de correo autoalojado — consola de administración, webmail con renderizado seguro, protección antispam y antivirus, interfaz MCP y asistentes de despliegue/DNS — impulsando Postfix, Dovecot, rspamd y ClamAV como procesos independientes."
+  },
+  "himari": {
+    "name": "Himari",
+    "shortLabel": "Infraestructura de activos de fórmulas",
+    "tagline": "De fórmulas a Rust tipado",
+    "description": "Una infraestructura de activos de fórmulas — un subconjunto de LaTeX, glifos de papel y funciones de tres superficies estilo MATLAB compilados a una IR dimensionada que genera código Rust, con matrices de patrón identidad, diagonal y tridiagonal."
+  },
+  "kotama": {
+    "name": "Kotama",
+    "shortLabel": "Kit de ingeniería inversa",
+    "tagline": "Despiece, decompilación y re-derivación",
+    "description": "Un kit de ingeniería inversa — descompilación estática, análisis dinámico inyectado multiplataforma en Windows y Linux, empaquetado de hooks y superficie de servicios con MCP — sobre un espacio de direcciones con direccionamiento por contenido que abarca archivos, procesos vivos y snapshots."
+  },
+  "shun": {
+    "name": "Shun",
+    "shortLabel": "Runtime de entrega de cargas",
+    "tagline": "Lleva tus builds a máquinas reales",
+    "description": "Un runtime de entrega de cargas guiado por flujos — instaladores, flasheadores y modo portátil para llevar los builds a máquinas reales, con emparejamiento, app de demostración y ejemplos ejecutables."
   }
 }
