@@ -68,12 +68,6 @@
     "description": "완전한 RBAC과 동적 신뢰 점수 레이어를 갖춘 범용 Rust 인증·인가 프레임워크.",
     "shortLabel": "인증·RBAC 프레임워크"
   },
-  "ratatui-markdown": {
-    "name": "Ratatui Markdown",
-    "tagline": "TUI 앱을 위한 Markdown과 다이어그램",
-    "description": "마크다운 렌더링, 구문 강조, Mermaid 다이어그램, 접기 가능 트리——모두 ratatui 위에서.",
-    "shortLabel": "TUI Markdown"
-  },
   "yuuka": {
     "name": "Yuuka",
     "tagline": "JSON 병합/패치 런타임과 중첩 구조 매크로",
@@ -169,5 +163,29 @@
     "shortLabel": "타입화된 데이터 액세스 계층",
     "tagline": "하나의 명령면으로 SQL과 KV를 모두",
     "description": "타입화된 멀티모델 데이터 액세스 계층 — PostgreSQL과 redb를 하나의 Command/Reply 면으로 다루는: 위생적인 엔티티 매크로, 컴파일 타임 타입 조건, 낙관적/비관적 잠금, JSONB 경로 쿼리, 코어는 WASI에 바로 적용 가능."
+  },
+  "ayane": {
+    "name": "Ayane",
+    "shortLabel": "셀프호스트 메일 서비스",
+    "tagline": "셀프호스트 풀스택 메일",
+    "description": "셀프호스트 메일 서비스 — 관리 콘솔, 보안 렌더링 웹메일, 스팸·바이러스 방어, MCP 인터페이스, 배포/DNS 마법사 — Postfix, Dovecot, rspamd, ClamAV를 독립 프로세스로 구동."
+  },
+  "himari": {
+    "name": "Himari",
+    "shortLabel": "수식 자산 인프라",
+    "tagline": "수식에서 타입화된 Rust 코드까지",
+    "description": "수식 자산 인프라 — LaTeX 부분집합, 종이 글리프, MATLAB 스타일 3표면 함수를 차원이 있는 IR로 컴파일해 Rust 코드를 생성하며, identity·diag·tridiagonal 패턴 행렬을 지원."
+  },
+  "kotama": {
+    "name": "Kotama",
+    "shortLabel": "리버스 엔지니어링 도구",
+    "tagline": "해부하고, 디컴파일하고, 다시 유도하다",
+    "description": "리버스 엔지니어링 도구 모음 — 정적 디컴파일, Windows와 Linux를 아우르는 주입식 동적 분석, 훅 패키징, MCP 서비스 면 — 파일·살아있는 프로세스·스냅샷을 아우르는 단일 내용 주소 공간 위에서."
+  },
+  "shun": {
+    "name": "Shun",
+    "shortLabel": "워크로드 전달 런타임",
+    "tagline": "빌드 결과물을 실제 기기까지",
+    "description": "플로우 기반 워크로드 전달 런타임 — 설치 관리자, 플래셔, 휴대용 모드로 빌드 산출물을 실제 기기에 전달하며, 페어링, 데모 앱, 실행 가능한 예제를 포함."
   }
 }

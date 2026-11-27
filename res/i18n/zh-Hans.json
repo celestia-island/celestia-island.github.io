@@ -68,12 +68,6 @@
     "description": "通用的 Rust 认证与授权框架，支持完整的 RBAC 和动态信任评分层。",
     "shortLabel": "认证与 RBAC 框架"
   },
-  "ratatui-markdown": {
-    "name": "Ratatui Markdown",
-    "tagline": "面向 TUI 应用的 Markdown 与图表",
-    "description": "Markdown 渲染、语法高亮、Mermaid 图表和可折叠树——全部基于 ratatui。",
-    "shortLabel": "TUI Markdown"
-  },
   "yuuka": {
     "name": "Yuuka",
     "tagline": "JSON 合并/补丁运行时与嵌套结构宏",
@@ -169,5 +163,29 @@
     "shortLabel": "类型化数据访问层",
     "tagline": "一套命令面，通吃 SQL 与 KV",
     "description": "类型化多模型数据访问层——PostgreSQL 与 redb 共用一套 Command/Reply 面：卫生的实体宏、编译期类型化条件、乐观/悲观锁、JSONB 路径查询，核心可直接进 WASI 组件。"
+  },
+  "ayane": {
+    "name": "Ayane",
+    "shortLabel": "自托管邮件服务",
+    "tagline": "全套自托管的邮件栈",
+    "description": "自托管邮件服务——管理面、安全渲染 Webmail、垃圾邮件与病毒防护、MCP 接口与部署/DNS 向导——以独立进程驱动 Postfix、Dovecot、rspamd 与 ClamAV。"
+  },
+  "himari": {
+    "name": "Himari",
+    "shortLabel": "公式资产设施",
+    "tagline": "公式进，带量纲 Rust 代码出",
+    "description": "公式资产设施——LaTeX 子集、纸面字形与 MATLAB 式三表面函数编译成带量纲的中间表示并生成 Rust 代码，模式矩阵支持 identity、diag、tridiag。"
+  },
+  "kotama": {
+    "name": "Kotama",
+    "shortLabel": "逆向工程工具库",
+    "tagline": "解剖、反编译、再推导",
+    "description": "逆向工程工具库——静态反编译、覆盖 Windows 与 Linux 的注入式动态分析、hook 打包设施与服务面/MCP——统一的内容寻址地址空间横跨文件、活体进程与快照。"
+  },
+  "shun": {
+    "name": "Shun",
+    "shortLabel": "负载投递运行时",
+    "tagline": "把交付物可靠地送上真机",
+    "description": "流驱动的负载投递运行时——安装器、刷写器与便携模式，把构建产物落到真机上；含配对、演示程序与可运行示例。"
   }
 }

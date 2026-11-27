@@ -6,7 +6,7 @@ import { useReveal } from '@/composables/useReveal'
 import { projects } from '@/types/project'
 import CardScroller from '@/components/CardScroller'
 
-const items = projects.filter((p) => ['entelecheia', 'shittim-chest', 'evernight'].includes(p.id))
+const items = projects.filter((p) => ['entelecheia', 'shittim-chest', 'evernight', 'ayane'].includes(p.id))
 
 export default defineComponent({
   name: 'PlatformSection',

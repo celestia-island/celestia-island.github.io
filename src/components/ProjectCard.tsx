@@ -15,7 +15,6 @@ import hikariLogo from '@res/logos/hikari.webp'
 import lagrangeLogo from '@res/logos/lagrange.webp'
 import aobaLogo from '@res/logos/aoba.webp'
 import kirinoLogo from '@res/logos/kirino.webp'
-import ratatuiMarkdownLogo from '@res/logos/ratatui-markdown.webp'
 import yuukaLogo from '@res/logos/yuuka.webp'
 import ichikaLogo from '@res/logos/ichika.webp'
 import hifumiLogo from '@res/logos/hifumi.webp'
@@ -26,6 +25,10 @@ import malkuthLogo from '@res/logos/malkuth.webp'
 import seiaLogo from '@res/logos/seia.webp'
 import shirabeLogo from '@res/logos/shirabe.webp'
 import lacrymiraLogo from '@res/logos/lacrymira.webp'
+import ayaneLogo from '@res/logos/ayane.webp'
+import himariLogo from '@res/logos/himari.webp'
+import kotamaLogo from '@res/logos/kotama.webp'
+import shunLogo from '@res/logos/shun.webp'
 import './ProjectCard.scss'
 
 const logoMap: Record<string, string> = {
@@ -40,7 +43,6 @@ const logoMap: Record<string, string> = {
   lagrange: lagrangeLogo,
   aoba: aobaLogo,
   kirino: kirinoLogo,
-  'ratatui-markdown': ratatuiMarkdownLogo,
   yuuka: yuukaLogo,
   ichika: ichikaLogo,
   hifumi: hifumiLogo,
@@ -51,6 +53,10 @@ const logoMap: Record<string, string> = {
   seia: seiaLogo,
   shirabe: shirabeLogo,
   lacrymira: lacrymiraLogo,
+  ayane: ayaneLogo,
+  himari: himariLogo,
+  kotama: kotamaLogo,
+  shun: shunLogo,
 }
 
 const statusMap: Record<string, { bg: string; color: string }> = {

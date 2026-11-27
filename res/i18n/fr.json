@@ -68,12 +68,6 @@
     "description": "Un framework générique d'authentification et d'autorisation en Rust avec RBAC complet et une couche dynamique de scoring de confiance.",
     "shortLabel": "Framework Auth & RBAC"
   },
-  "ratatui-markdown": {
-    "name": "Ratatui Markdown",
-    "tagline": "Markdown et diagrammes pour apps TUI",
-    "description": "Rendu Markdown, coloration syntaxique, diagrammes Mermaid et arbres repliables — le tout sur ratatui.",
-    "shortLabel": "TUI Markdown"
-  },
   "yuuka": {
     "name": "Yuuka",
     "tagline": "Runtime de merge/patch JSON et macros de structures imbriquées",
@@ -169,5 +163,29 @@
     "shortLabel": "Couche d'accès aux données typée",
     "tagline": "SQL et KV sous une seule surface de commande",
     "description": "Une couche d'accès aux données multi-modèle typée — PostgreSQL et redb derrière une seule surface Command/Reply : macros d'entités hygiéniques, conditions typées à la compilation, verrouillage optimiste et pessimiste, requêtes JSONB par chemins, cœur prêt pour WASI."
+  },
+  "ayane": {
+    "name": "Ayane",
+    "shortLabel": "Service de mail auto-hébergé",
+    "tagline": "La messagerie complète, auto-hébergée",
+    "description": "Un service de messagerie auto-hébergé — console d'administration, webmail à rendu sécurisé, protection anti-spam et antivirus, interface MCP et assistants de déploiement/DNS — pilotant Postfix, Dovecot, rspamd et ClamAV comme processus indépendants."
+  },
+  "himari": {
+    "name": "Himari",
+    "shortLabel": "Infrastructure d'actifs de formules",
+    "tagline": "Des formules au Rust typé",
+    "description": "Une infrastructure d'actifs de formules — un sous-ensemble de LaTeX, des glyphes papier et des fonctions à trois surfaces à la MATLAB compilés en une IR dimensionnée qui génère du code Rust, avec matrices de motifs identité, diagonale et tridiagonale."
+  },
+  "kotama": {
+    "name": "Kotama",
+    "shortLabel": "Boîte à outils de rétro-ingénierie",
+    "tagline": "Disséquer, décompiler, re-dériver",
+    "description": "Une boîte à outils de rétro-ingénierie — décompilation statique, analyse dynamique par injection multiplateforme sous Windows et Linux, packaging de hooks et surface de services avec MCP — sur un espace d'adressage par contenu couvrant fichiers, processus vivants et instantanés."
+  },
+  "shun": {
+    "name": "Shun",
+    "shortLabel": "Runtime de livraison de charges",
+    "tagline": "Vos builds jusqu'aux vraies machines",
+    "description": "Un runtime de livraison de charges piloté par flux — installateurs, flasheurs et mode portable pour déployer les builds sur de vraies machines, avec appairage, app de démo et exemples exécutables."
   }
 }

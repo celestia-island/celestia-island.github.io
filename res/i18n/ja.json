@@ -68,12 +68,6 @@
     "description": "完全なRBACと動的信頼スコアリング層を備えた、汎用Rust認証・認可フレームワーク。",
     "shortLabel": "認証・RBACフレームワーク"
   },
-  "ratatui-markdown": {
-    "name": "Ratatui Markdown",
-    "tagline": "TUIアプリ向けのMarkdownとダイアグラム",
-    "description": "Markdownレンダリング、シンタックスハイライト、Mermaidダイアグラム、折りたたみツリー——すべてratatui上で。",
-    "shortLabel": "TUI Markdown"
-  },
   "yuuka": {
     "name": "Yuuka",
     "tagline": "JSON マージ/パッチランタイムとネスト構造マクロ",
@@ -169,5 +163,29 @@
     "shortLabel": "型付きデータアクセス層",
     "tagline": "ひとつのコマンド面で SQL と KV を",
     "description": "型付きマルチモデルデータアクセス層——PostgreSQL と redb を単一の Command/Reply 面で扱う。衛生的なエンティティマクロ、コンパイル時型付き条件、楽観/悲観ロック、JSONB パスクエリ、コアはそのまま WASI へ。"
+  },
+  "ayane": {
+    "name": "Ayane",
+    "shortLabel": "セルフホストメールサービス",
+    "tagline": "セルフホストのフルスタックメール",
+    "description": "セルフホストメールサービス——管理コンソール、安全レンダリングのウェブメール、スパム/ウイルス対策、MCP インターフェース、デプロイ/DNS ウィザード——Postfix・Dovecot・rspamd・ClamAV を独立プロセスで駆動。"
+  },
+  "himari": {
+    "name": "Himari",
+    "shortLabel": "数式アセット基盤",
+    "tagline": "数式から型付き Rust コードを生成",
+    "description": "数式アセット基盤——LaTeX サブセット、紙面グリフ、MATLAB 形式の三表面関数を次元付き IR にコンパイルし Rust コードを生成。パターン行列は identity・diag・tridiag に対応。"
+  },
+  "kotama": {
+    "name": "Kotama",
+    "shortLabel": "リバースエンジニアリング基盤",
+    "tagline": "解剖し、逆コンパイルし、再導出する",
+    "description": "リバースエンジニアリングツールキット——静的逆コンパイル、Windows と Linux を跨ぐ注入式ダイナミック解析、フックのパッケージ化、MCP 付きサービス面——ファイル・生プロセス・スナップショットを跨ぐ単一の内容アドレス空間。"
+  },
+  "shun": {
+    "name": "Shun",
+    "shortLabel": "ワークロード配送ランタイム",
+    "tagline": "成果物を確実に実機へ届ける",
+    "description": "フローベースで駆動するワークロード配送ランタイム——インストーラー、フラッシャー、ポータブルモードでビルド成果物を実機に届ける。ペアリング、デモアプリ、実行可能なサンプル付き。"
   }
 }
